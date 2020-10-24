@@ -32,3 +32,12 @@ Update the resources:
 > tns migrate
 > npm i
 > tns run android
+
+Visual Studio Extensions:
+
+- NativeScript XML Snippets | tsvetan-ganev.nativescript-xml-snippets
+- NativeScript | nativescript.nativescript
+- Angular Language Service | angular.ng-template
+- Angular Snippets (Version 9) | johnpapa.angular2
+- Angular Schematics | cyrilletuzi.angular-schematics
+- Angular Files | alexiv.vscode-angular2-files
