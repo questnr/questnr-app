@@ -1,7 +1,7 @@
 import { NativeScriptConfig } from '@nativescript/core';
 
 export default {
-	id: 'com.questnr',
+	id: 'com.questnr.app',
 	appResourcesPath: 'App_Resources',
 	android: {
 		v8Flags: '--expose_gc',

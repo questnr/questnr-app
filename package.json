@@ -4,14 +4,15 @@
   "license": "SEE LICENSE IN <your-license-filename>",
   "version": "1.0.0",
   "nativescript": {
-    "id": "org.questnr",
+    "id": {
+      "ios": "com.questnr.android",
+      "android": "com.questnr.ios"
+    },
     "ios": {
-      "id": "org.questnr.ios",
-      "version": "5.0.0"
+      "version": "1.0.0"
     },
     "android": {
-      "id": "org.questnr.android",
-      "version": "5.1.0"
+      "version": "1.0.0"
     }
   },
   "repository": "<fill-your-repository-here>",
