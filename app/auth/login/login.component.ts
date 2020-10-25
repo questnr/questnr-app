@@ -74,6 +74,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  // ngAfterViewChecked(): void {
+  // let emailTextField: TextField = this.emailField.nativeElement;
+  // console.log("emailTextField");
+  // emailTextField.android.setGravity(17);
+  // }
+
   public hasEmailErrors() {
     const hasErrorMsg = !!this.emailError;
     if (!hasErrorMsg)
