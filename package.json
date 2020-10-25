@@ -5,8 +5,8 @@
   "version": "1.0.0",
   "nativescript": {
     "id": {
-      "ios": "com.questnr.android",
-      "android": "com.questnr.ios"
+      "android": "com.questnr.android",
+      "ios": "com.questnr.ios"
     },
     "ios": {
       "version": "1.0.0"

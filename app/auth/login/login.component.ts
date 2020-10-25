@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
   @ViewChild('passwordComp') passwordField: ElementRef;
   @ViewChild('emailComp') emailField: ElementRef;
   group: FormGroup;
-  email = new FormControl('', { validators: [Validators.required, Validators.pattern(REGEX.EMAIL)] });
-  password = new FormControl('', Validators.required);
+  email = new FormControl('brijeshlakkad22@gmail.com', { validators: [Validators.required, Validators.pattern(REGEX.EMAIL)] });
+  password = new FormControl('123456bB', Validators.required);
 
   user: LoginUser;
   isAuthenticating = false;

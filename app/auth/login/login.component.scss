@@ -8,11 +8,10 @@
 .logo-container {
     clip-path: ellipse(70% 80% at 50% 20%);
     background-color: $heading;
-}
-
-.image-container {
-    width: 33%;
-    opacity: 1;
+    .image-container {
+        width: 90%;
+        opacity: 1;
+    }
 }
 
 .container-padding {
