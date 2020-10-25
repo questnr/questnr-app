@@ -1,6 +1,22 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+        "~/*": [
+            "app/*",
+            "assets/*"
+        ],
+        "app/*": [
+          "app/*"
+        ],
+        "assets/*": [
+          "assets/*"
+        ],
+        "*": [
+          "./node_modules/tns-core-modules/*",
+          "./node_modules/*"
+        ]
+    },
     "module": "ESNext",
     "target": "es2017",
     "moduleResolution": "node",

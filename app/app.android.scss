@@ -1,4 +1,23 @@
 // Import common styles
-@import 'app-common';
-
+@import "app-common";
 // Place any CSS rules you want to apply only on Android here
+
+.eloha-font-light {
+    @include eloha-font("OpenSans-Light");
+}
+
+.eloha-font-regular {
+    @include eloha-font("OpenSans-Regular");
+}
+
+.eloha-font-semibold {
+    @include eloha-font("OpenSans-SemiBold");
+}
+
+.eloha-font-bold {
+    @include eloha-font("OpenSans-Bold");
+}
+
+.eloha-font-size {
+    @include eloha-font("OpenSans-Bold");
+}

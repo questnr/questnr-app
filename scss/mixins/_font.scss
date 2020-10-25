@@ -1,0 +1,17 @@
+@mixin eloha-font($family, $weight: 0) {
+    font-family: $family;
+    @if $weight != 0 {
+        font-weight: $weight;
+    }
+}
+@function calc-font-size($val1, $val2) {
+    @return $val1 + $val2;
+}
+@mixin make-font-size($level, $platform_id: 0) {
+    @if $platform_id == 0 {
+        font-size: calc-font-size(14, $level);
+    }
+    @if $platform_id == 1 {
+        font-size: calc-font-size(13, $level);
+    }
+}

@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { RouterExtensions } from '@nativescript/angular';
+import { AuthService } from '../services/auth.service';
+import { UtilityService } from '../services/utility.service';
 
 @Component({
   selector: 'qn-home',
@@ -6,18 +9,27 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  title = 'questnr-app';
-  private counter = 42;
+  isLoading = false;
 
-  constructor() { }
+  // This pattern makes use of Angular’s dependency injection implementation to inject an instance of the ItemService service into this class.
+  // Angular knows about this service because it is included in your app’s main NgModule, defined in app.module.ts.
+  constructor(private authSerivce: AuthService,
+    private routerExtension: RouterExtensions,
+    private utilityService: UtilityService) { }
 
-  public getMessage() {
-    return this.counter > 0 ?
-      `${this.counter} taps left` :
-      'Hoorraaay! You unlocked the NativeScript clicker achievement!';
+  ngOnInit(): void {
   }
 
-  public onTap() {
-    this.counter--;
+  logout() {
+    this.isLoading = true;
+    this.authSerivce.logout()
+      .then(() => {
+        this.routerExtension.navigate(['/login']);
+        this.isLoading = false;
+      });
+  }
+
+  isTablet() {
+    return this.utilityService.isTablet();
   }
 }

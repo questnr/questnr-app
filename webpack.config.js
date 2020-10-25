@@ -251,8 +251,8 @@ module.exports = env => {
     devtool: hiddenSourceMap
       ? 'hidden-source-map'
       : sourceMap
-      ? 'inline-source-map'
-      : 'none',
+        ? 'inline-source-map'
+        : 'none',
     optimization: {
       runtimeChunk: 'single',
       noEmitOnErrors: noEmitOnErrorFromTSConfig,
@@ -337,22 +337,22 @@ module.exports = env => {
         {
           test: /[\/|\\]app\.css$/,
           use: [
-              '@nativescript/webpack/helpers/style-hot-loader',
-              {
-                  loader: "@nativescript/webpack/helpers/css2json-loader",
-                  options: { useForImports: true }
-              },
+            '@nativescript/webpack/helpers/style-hot-loader',
+            {
+              loader: "@nativescript/webpack/helpers/css2json-loader",
+              options: { useForImports: true }
+            },
           ],
         },
         {
           test: /[\/|\\]app\.scss$/,
           use: [
-              '@nativescript/webpack/helpers/style-hot-loader',
-              {
-                  loader: "@nativescript/webpack/helpers/css2json-loader",
-                  options: { useForImports: true }
-              },
-              'sass-loader',
+            '@nativescript/webpack/helpers/style-hot-loader',
+            {
+              loader: "@nativescript/webpack/helpers/css2json-loader",
+              options: { useForImports: true }
+            },
+            'sass-loader',
           ],
         },
 
@@ -390,13 +390,13 @@ module.exports = env => {
         process: 'global.process'
       }),
       // Remove all files from the out dir.
-      new CleanWebpackPlugin({ 
+      new CleanWebpackPlugin({
         cleanOnceBeforeBuildPatterns: itemsToClean,
         verbose: !!verbose
       }),
       // Copy assets
       new CopyWebpackPlugin({
-          patterns: copyTargets,
+        patterns: copyTargets,
       }),
       new nsWebpack.GenerateNativeScriptEntryPointsPlugin('bundle'),
       // For instructions on how to set up workers with webpack

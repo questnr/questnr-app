@@ -1,4 +1,29 @@
 // Import common styles
-@import 'app-common';
+@import "app-common";
 
 // Place any CSS rules you want to apply only on iOS here
+
+$opensans-font-family: "Open Sans";
+
+// Fonts from mixins
+
+.eloha-font-light {
+    @include eloha-font($opensans-font-family, 300);
+}
+
+.eloha-font-regular {
+    @include eloha-font($opensans-font-family, 400);
+}
+
+.eloha-font-semibold {
+    @include eloha-font($opensans-font-family, 600);
+}
+
+.eloha-font-bold {
+    @include eloha-font($opensans-font-family, 700);
+}
+
+// Additional Styles for ios only
+.login-input-field {
+    padding: 10;
+}

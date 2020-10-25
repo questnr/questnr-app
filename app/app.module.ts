@@ -3,19 +3,25 @@ import { NativeScriptModule } from '@nativescript/angular';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { AuthModule } from './auth/auth.module';
 import { HomeComponent } from './home/home.component';
+import { UtilityService } from './services/utility.service';
 
 @NgModule({
   declarations: [
-      AppComponent,
-      HomeComponent,
+    AppComponent,
+    HomeComponent,
   ],
   imports: [
-      NativeScriptModule,
-      AppRoutingModule,
+    NativeScriptModule,
+    AppRoutingModule,
+    AuthModule
+  ],
+  providers: [
+    UtilityService,
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class AppModule {}
+export class AppModule { }
 
