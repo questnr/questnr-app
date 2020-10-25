@@ -15,10 +15,11 @@
           <GridLayout row="0" rows="auto, auto, auto, auto" class="container-padding" verticalAlignment="top">
             <GridLayout row="0" rows="auto, auto, auto" class="input-wrapper">
               <Label class="login-field-label m-b-2" row="0" text="Email"></Label>
-              <GridLayout row="1" columns="*" class="input-container"
+              <GridLayout row="1" rows="*" columns="*" class="input-container"
                 [ngClass]="{'input-field-error': hasEmailErrors()}">
-                <TextField #emailComp class="input-field" hint="E.g. user@examples.com" keyboardType="email"
-                  [formControl]="email" autocorrect="false" autocapitalizationType="none" (focus)="onEmailFocus()">
+                <TextField row="0" #emailComp class="input-field" hint="E.g. user@examples.com" keyboardType="email"
+                  [formControl]="email" autocorrect="false" autocapitalizationType="none" (focus)="onEmailFocus()"
+                  verticalAlignment="middle">
                 </TextField>
               </GridLayout>
               <Label *ngIf="hasEmailErrors()" class="m-t-2 login-field-label color-danger" row="2"
@@ -30,7 +31,8 @@
               <GridLayout row="1" columns="*, auto" class="input-container"
                 [ngClass]="{'input-field-error': hasPasswordErrors()}">
                 <TextField #passwordComp col="0" class="input-field" hint="Password" secure="true"
-                  [formControl]="password" (focus)="onPasswordFocus()"></TextField>
+                  [formControl]="password" (focus)="onPasswordFocus()" verticalAlignment="stretch"
+                  horizontalAlignment="stretch"></TextField>
                 <Label col="1" [text]="showHideIcon" class="fa show-hide-icon" (tap)="showHidePassword()"
                   verticalAlignment="middle"></Label>
               </GridLayout>

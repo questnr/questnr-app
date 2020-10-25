@@ -30,23 +30,20 @@
     .input-container {
         border-width: 1;
         border-radius: 4;
-        border-color: #ffffff;
+        border-color: $black;
         background-color: #ffffff;
-        vertical-align: middle;
-        display: flex;
-        align-items: center;
-        height: 100px;
-        padding: 0 10px;
+        padding: 0 1;
     }
 
     .input-field {
         @include make-font-size(1);
         border-bottom-width: 0;
-        padding: 0;
-        margin: 0;
         placeholder-color: rgba(16, 50, 65, 0.45);
-        vertical-align: middle;
+        // TextField needs margin-bottom -2,
+        // to be set on baseline while we remove the border-bottom
+        margin-bottom: -2;
     }
+
     .login-field-label {
         @include make-font-size(-1);
         font-weight: bold;
@@ -55,6 +52,9 @@
     .input-field-error {
         border-width: 2;
         border-color: $red;
+    }
+    .show-hide-icon {
+        padding-right: 10;
     }
 }
 .submit-container {
