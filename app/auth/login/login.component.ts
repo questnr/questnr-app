@@ -9,7 +9,6 @@ import { Page } from "@nativescript/core/ui/page";
 import { LoginResponse } from "~/shared/models/login.model";
 import { AuthService } from "../../services/auth.service";
 import { UtilityService } from "../../services/utility.service";
-import { REGEX } from "../../shared/constants";
 
 declare var android: any;
 
@@ -24,8 +23,9 @@ export class LoginComponent implements OnInit {
   @ViewChild('passwordComp') passwordField: ElementRef;
   @ViewChild('emailComp') emailField: ElementRef;
   group: FormGroup;
-  email = new FormControl('brijeshlakkad22@gmail.com', { validators: [Validators.required, Validators.pattern(REGEX.EMAIL)] });
-  password = new FormControl('123456bB', Validators.required);
+  // email = new FormControl('', { validators: [Validators.required, Validators.pattern(REGEX.EMAIL)] });
+  email = new FormControl('', { validators: [Validators.required] });
+  password = new FormControl('', Validators.required);
   isAuthenticating = false;
 
   public hideIcon = String.fromCharCode(0xf070);
@@ -130,10 +130,12 @@ export class LoginComponent implements OnInit {
 
   updateErrors(checkPass) {
     if (this.email.hasError("required")) {
-      this.emailError = "Email cannot be blank"
-    } else if (this.email.hasError("pattern")) {
-      this.emailError = "Invalid Email.";
-    } else {
+      this.emailError = "Field cannot be blank"
+    }
+    // else if (this.email.hasError("pattern")) {
+    //   this.emailError = "Invalid Email.";
+    // } 
+    else {
       this.emailError = "";
     }
 
@@ -175,6 +177,7 @@ export class LoginComponent implements OnInit {
       // Use the backend service to login
       this.authService.login(this.group.value).subscribe((loginResponse: LoginResponse) => {
         this.isAuthenticating = false;
+        console.log("res", loginResponse);
         if (loginResponse.accessToken && loginResponse.loginSuccess) {
           this.routerExtensions.navigate(["/home"], { clearHistory: true });
         } else {
