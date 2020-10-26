@@ -1,11 +1,19 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { getString, setString } from "@nativescript/core/application-settings";
+import { environment } from "~/environments/environment";
+import { LoginResponse } from "~/shared/models/login.model";
 import { LoginUser } from "../shared/models/user.model";
 
 const _CURRENT_USER = "_CURRENT_USER";
 
 @Injectable()
 export class AuthService {
+  baseUrl = environment.baseUrl;
+
+  constructor(private http: HttpClient) {
+
+  }
 
   public isUserLoggedIn(): boolean {
     let loggedIn = !!this.user;
@@ -14,17 +22,7 @@ export class AuthService {
   }
 
   public login(user: LoginUser) {
-    let that = this;
-    return new Promise(function (resolve, reject) {
-      setTimeout(() => {
-        if (user.email === user.password) {
-          that.user = JSON.stringify(user)
-          resolve();
-        } else {
-          reject({ message: 'Invalid Email/Password, For this example both should be same.' })
-        }
-      }, 1000)
-    });
+    return this.http.post<LoginResponse>(this.baseUrl + 'login', user);
   }
 
   logout() {

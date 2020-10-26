@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { HomeComponent } from './home/home.component';
 import { UtilityService } from './services/utility.service';
+import { MaterialModule } from './shared/material.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { UtilityService } from './services/utility.service';
   imports: [
     NativeScriptModule,
     AppRoutingModule,
-    AuthModule
+    AuthModule,
+    MaterialModule
   ],
   providers: [
     UtilityService,

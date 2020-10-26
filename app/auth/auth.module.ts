@@ -1,6 +1,6 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NativeScriptCommonModule, NativeScriptFormsModule, NativeScriptRouterModule } from '@nativescript/angular';
+import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescript/angular';
+import { MaterialModule } from '~/shared/material.module';
 import { AuthService } from '../services/auth.service';
 import { AuthGuard } from './auth-guard.service';
 import { LoginComponent } from './login/login.component';
@@ -9,8 +9,7 @@ import { LoginComponent } from './login/login.component';
   imports: [
     NativeScriptCommonModule,
     NativeScriptRouterModule,
-    NativeScriptFormsModule,
-    ReactiveFormsModule
+    MaterialModule
   ],
   declarations: [
     LoginComponent

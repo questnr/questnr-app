@@ -6,9 +6,9 @@ import * as app from "@nativescript/core/application";
 import { Device, isAndroid } from "@nativescript/core/platform";
 import { alert } from "@nativescript/core/ui/dialogs";
 import { Page } from "@nativescript/core/ui/page";
+import { LoginResponse } from "~/shared/models/login.model";
 import { AuthService } from "../../services/auth.service";
 import { UtilityService } from "../../services/utility.service";
-import { LoginUser } from "../../shared/models/user.model";
 import { REGEX } from "../../shared/constants";
 
 declare var android: any;
@@ -26,8 +26,6 @@ export class LoginComponent implements OnInit {
   group: FormGroup;
   email = new FormControl('brijeshlakkad22@gmail.com', { validators: [Validators.required, Validators.pattern(REGEX.EMAIL)] });
   password = new FormControl('123456bB', Validators.required);
-
-  user: LoginUser;
   isAuthenticating = false;
 
   public hideIcon = String.fromCharCode(0xf070);
@@ -175,18 +173,17 @@ export class LoginComponent implements OnInit {
     if (this.isValidForm()) {
       this.isAuthenticating = true;
       // Use the backend service to login
-      this.user = new LoginUser();
-      this.user.email = this.email.value;
-      this.user.password = this.password.value;
-
-      this.authService.login(this.user)
-        .then(() => {
-          this.isAuthenticating = false;
+      this.authService.login(this.group.value).subscribe((loginResponse: LoginResponse) => {
+        this.isAuthenticating = false;
+        if (loginResponse.accessToken && loginResponse.loginSuccess) {
           this.routerExtensions.navigate(["/home"], { clearHistory: true });
-        }).catch(error => {
-          this.isAuthenticating = false;
-          this.loginError = error.message;
-        });
+        } else {
+          this.loginError = loginResponse.errorMessage;
+        }
+      }, (error) => {
+        this.isAuthenticating = false;
+        this.loginError = error.message;
+      });
     }
   }
 
