@@ -61,6 +61,10 @@ export class AuthService {
     setString(_CURRENT_USER, theToken);
   }
 
+  getAccessToken(): string {
+    return this.accessToken;
+  }
+
   private get accessToken(): string {
     return getString(_CURRENT_TOKEN);
   }
