@@ -6,6 +6,7 @@ import { environment } from "~/environments/environment";
 import { LoginResponse } from "~/shared/models/login.model";
 import { LocalUser, LoginUser } from "../shared/models/user.model";
 import { JWTService } from "./jwt.service";
+import { LoaderService } from "./loader.service";
 
 const _CURRENT_USER = "_CURRENT_USER";
 const _CURRENT_TOKEN = "_CURRENT_TOKEN";
@@ -14,7 +15,9 @@ const _CURRENT_TOKEN = "_CURRENT_TOKEN";
 export class AuthService {
   baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient, private jwtService: JWTService) {
+  constructor(private http: HttpClient,
+    private jwtService: JWTService,
+    private loaderService: LoaderService) {
   }
 
   public isUserLoggedIn(): boolean {
@@ -45,9 +48,11 @@ export class AuthService {
   }
 
   logout() {
+    this.loaderService.onRequestStart();
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         this.user = "";
+        this.loaderService.onRequestEnd();
         resolve();
       }, 1000);
     });
