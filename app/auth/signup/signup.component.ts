@@ -505,21 +505,15 @@ export class SignupComponent implements OnInit {
   }
 
   redirectToSignIn() {
-    this.routerExtensions.navigate(['/', GlobalConstants.login]);
+    this.routerExtensions.navigate(['/', GlobalConstants.login],
+      { clearHistory: true });
   }
 
   isTablet() {
     return this.utilityService.isTablet();
   }
 
-  // You can configure your backend and present appropriate window for recovery.
   forgotPassword() {
-    alert({
-      title: "Forgot Password",
-      message: "Configure your backend to add a forgot password. Check 'login-kinvey' branch to work with Kinvey backend.",
-      okButtonText: "Close"
-    }).then(function () {
-      console.log("Dialog closed!");
-    });
+    this.routerExtensions.navigate(['/', GlobalConstants.forgotPassword]);
   }
 }
