@@ -1,0 +1,18 @@
+@import "app/variables";
+@import "scss/mixins/index";
+
+.otp-verification-wrapper {
+    .input-field {
+        @include make-font-size(4);
+        border-width: 1;
+        border-radius: 4;
+        border-color: $black;
+        text-align: center;
+    }
+}
+
+.otp-verification-wrapper.tablet {
+    .input-field {
+        @include make-font-size(4, 1);
+    }
+}

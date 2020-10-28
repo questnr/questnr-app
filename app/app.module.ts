@@ -6,10 +6,14 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { HomeComponent } from './home/home.component';
 import { InterceptorService } from './interceptor.service';
+import { CommonService } from './services/common.service';
 import { JWTService } from './services/jwt.service';
 import { LoaderService } from './services/loader.service';
+import { OTPVerificationService } from './services/otp-verification.service';
+import { SnackBarService } from './services/snackbar.service';
 import { UtilityService } from './services/utility.service';
 import { MaterialModule } from './shared/material.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,8 @@ import { MaterialModule } from './shared/material.module';
     NativeScriptModule,
     AppRoutingModule,
     AuthModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ],
   providers: [
     {
@@ -28,9 +33,12 @@ import { MaterialModule } from './shared/material.module';
       useClass: InterceptorService,
       multi: true
     },
+    CommonService,
     LoaderService,
+    JWTService,
+    OTPVerificationService,
+    SnackBarService,
     UtilityService,
-    JWTService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

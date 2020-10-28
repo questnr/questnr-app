@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
-import { NativeScriptRouterModule } from '@nativescript/angular';
 import { Routes } from '@angular/router';
-
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './auth/login/login.component';
+import { NativeScriptRouterModule } from '@nativescript/angular';
 import { AuthGuard } from './auth/auth-guard.service';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { HomeComponent } from './home/home.component';
+import { GlobalConstants } from './shared/constants';
 
 const routes: Routes = [
-  { path: "", redirectTo: "/home", pathMatch: "full" },
-  { path: "login", component: LoginComponent },
-  { path: "home", component: HomeComponent, canActivate: [AuthGuard] },
+  { path: "", redirectTo: "/" + GlobalConstants.feedPath, pathMatch: "full" },
+  { path: GlobalConstants.login, component: LoginComponent },
+  { path: GlobalConstants.signUp, component: SignupComponent },
+  { path: GlobalConstants.feedPath, component: HomeComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

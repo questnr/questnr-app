@@ -6,7 +6,6 @@ const regex: any = /(?:[a-z0-9!#$%&'\*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'\*+/=?^_`{
 
 @Injectable()
 export class UtilityService {
-
     public isValidEmail(email: String) {
         if (!email)
             return false;
@@ -16,5 +15,13 @@ export class UtilityService {
 
     public isTablet() {
         return Device.deviceType === DeviceType.Tablet;
+    }
+
+    public getTabletVariant(): number {
+        return 1.1;
+    }
+
+    public getTabletRelavant(something: number): number {
+        return something * this.getTabletVariant();
     }
 }

@@ -1,0 +1,9 @@
+<FlexboxLayout class="otp-verification-wrapper" [ngClass]="isTablet ? 'tablet' : ''" justifyContent="space-between">
+  <GridLayout [col]="ind" rows="*" *ngFor="let input of inputList, let ind = index;">
+    <TextField [height]="getTextBoxHeight()" [width]="getTextBoxWidth()" horizontalAlignment="stretch"
+      verticalAlignment="stretch" class="input-field" [formControl]="textFieldControls[ind]"
+      (textChange)="onChangeText($event,ind)" textAlignment="center" maxLength="1" keyboardType="number"
+      (loaded)="onLoaded($event)">
+    </TextField>
+  </GridLayout>
+</FlexboxLayout>

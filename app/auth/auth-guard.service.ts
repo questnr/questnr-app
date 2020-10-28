@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CanActivate } from "@angular/router";
 import { RouterExtensions } from "@nativescript/angular";
+import { GlobalConstants } from "~/shared/constants";
 import { AuthService } from "../services/auth.service";
 
 @Injectable()
@@ -11,7 +12,7 @@ export class AuthGuard implements CanActivate {
         if (this.authService.isUserLoggedIn()) {
             return true;
         } else {
-            this.routerExtensions.navigate(["/login"]);
+            this.routerExtensions.navigate(["/", GlobalConstants.login]);
             return false;
         }
     }

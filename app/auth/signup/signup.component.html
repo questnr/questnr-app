@@ -1,0 +1,119 @@
+<ScrollView width="100%" height="100%" class="signup-page-background">
+  <StackLayout width="100%" height="100%">
+    <GridLayout rows="20*, 80*">
+      <GridLayout row="0" class="signup-logo-container">
+        <GridLayout class="image-container">
+          <Image row="0" src="res://main"></Image>
+        </GridLayout>
+      </GridLayout>
+      <GridLayout row="1" rows="auto, auto, *" class="container-padding m-t-2"
+        [ngClass]="{'login-page-tablet': isTablet()}">
+        <GridLayout row="0" columns="90*, 10*" horizontalAlignment="stretch">
+          <Label col="0" class="page-title" [ngClass]="isTablet() ? 'tablet': 'none'" [text]="getPageTitle()"
+            horizontalAlignment="left"></Label>
+          <ActivityIndicator class="progress" col="1" [busy]="hasAuthenticating()" verticalAlignment="center">
+          </ActivityIndicator>
+        </GridLayout>
+        <GridLayout class="p-t-30" row="2" rows="*">
+          <GridLayout *ngIf="ifCurrentStep(0)" row="0" rows="auto, auto, auto" verticalAlignment="top">
+            <GridLayout row="0" rows="auto, auto, auto" class="input-wrapper">
+              <Label class="field-label m-b-2" row="0" text="Email"></Label>
+              <GridLayout row="1" rows="*" columns="*" class="input-container"
+                [ngClass]="{'input-field-error': hasEmailErrors()}">
+                <TextField row="0" #emailComp class="input-field" hint="E.g. user@examples.com" keyboardType="email"
+                  [formControl]="email" autocorrect="false" autocapitalizationType="none" (focus)="onEmailFocus()"
+                  verticalAlignment="middle">
+                </TextField>
+              </GridLayout>
+              <Label *ngIf="hasEmailErrors()" class="m-t-2 field-label color-danger" row="2" [text]="getEmailError()"
+                [ngClass]="{'font-size-md': !isTablet(), 'font-size-md-tablet': isTablet()}"></Label>
+            </GridLayout>
+            <GridLayout row="1" rows="auto, auto" class="submit-container">
+              <Button row="0" [isEnabled]="isNextStepAvailable()" class="submit-btn" [text]="'Next'"
+                (tap)="submitStep()"
+                [ngClass]="{'font-size-lg': !isTablet(), 'font-size-lg-tablet': isTablet()}"></Button>
+              <Label *ngIf="hasStepErrors()" class="color-danger" row="1" [text]="getStepErrors()" textWrap="true"
+                [ngClass]="{'font-size-md': !isTablet(), 'font-size-md-tablet': isTablet()}"></Label>
+            </GridLayout>
+            <GridLayout row="2" class="m-t-20">
+              <Label row="2" horizontalAlignment="center" class="btn-link font-size-md m-t-2" text="Instead, sign in?"
+                (tap)="redirectToSignIn()"></Label>
+            </GridLayout>
+          </GridLayout>
+
+          <GridLayout *ngIf="ifCurrentStep(1)" row="0" rows="auto, auto, auto, auto, auto" verticalAlignment="top">
+            <GridLayout row="0">
+              <qn-otp-verification row="0" #otpVerification></qn-otp-verification>
+            </GridLayout>
+            <GridLayout row="1" rows="auto, auto" class="submit-container">
+              <Button row="0" [isEnabled]="isNextStepAvailable()" class="submit-btn" text="Verify OTP"
+                (tap)="submitStep()"
+                [ngClass]="{'font-size-lg': !isTablet(), 'font-size-lg-tablet': isTablet()}"></Button>
+              <Label *ngIf="hasStepErrors()" class="color-danger" row="1" [text]="getStepErrors()" textWrap="true"
+                [ngClass]="{'font-size-md': !isTablet(), 'font-size-md-tablet': isTablet()}"></Label>
+            </GridLayout>
+            <GridLayout row="2" rows="*" class="p-t-20">
+              <Label row="0" horizontalAlignment="center" class="btn-link font-size-md m-t-2"
+                [ngClass]="!canResend ? 'disabled' : ''" [text]="getResendOTPText()" (tap)="resendOTP()"></Label>
+            </GridLayout>
+            <GridLayout row="3" rows="*" class="p-t-20">
+              <Label row="0" horizontalAlignment="center" class="btn-link font-size-md m-t-2" text="Edit email"
+                (tap)="startOver()"></Label>
+            </GridLayout>
+            <GridLayout row="4" class="m-t-20">
+              <Label horizontalAlignment="center" class="btn-link font-size-md m-t-2" text="Instead, sign in?"
+                (tap)="redirectToSignIn()"></Label>
+            </GridLayout>
+          </GridLayout>
+
+          <GridLayout *ngIf="ifCurrentStep(2)" row="0" rows="auto, auto, auto, auto, auto" verticalAlignment="top">
+            <GridLayout row="0" rows="auto, auto, auto" class="input-wrapper">
+              <Label class="field-label m-b-2" row="0" text="Username"></Label>
+              <GridLayout row="1" rows="*" columns="*" class="input-container"
+                [ngClass]="{'input-field-error': hasUsernameErrors()}">
+                <TextField row="0" #usernameComp class="input-field" hint="Username" [formControl]="username"
+                  autocorrect="false" autocapitalizationType="none" (focus)="onUsernameFocus()"
+                  verticalAlignment="middle">
+                </TextField>
+              </GridLayout>
+              <Label *ngIf="hasUsernameErrors()" class="m-t-2 field-label color-danger" row="2"
+                [text]="getUsernameError()"
+                [ngClass]="{'font-size-md': !isTablet(), 'font-size-md-tablet': isTablet()}"></Label>
+            </GridLayout>
+            <GridLayout row="1" rows="auto, auto, auto" class="m-t-10 input-wrapper">
+              <Label class="field-label m-b-2" row="0" text="Password"></Label>
+              <GridLayout row="1" columns="*, auto" class="input-container"
+                [ngClass]="{'input-field-error': hasPasswordErrors()}">
+                <TextField #passwordComp col="0" class="input-field" hint="Password" secure="true"
+                  [formControl]="password" (focus)="onPasswordFocus()" verticalAlignment="stretch"
+                  horizontalAlignment="stretch"></TextField>
+                <Label col="1" [text]="showHideIcon" class="fa show-hide-icon" (tap)="showHidePassword()"
+                  verticalAlignment="middle"></Label>
+              </GridLayout>
+              <Label *ngIf="hasPasswordErrors()" class="m-t-2 field-label color-danger" row="2"
+                [text]="getPasswordError()"></Label>
+            </GridLayout>
+
+            <GridLayout row="2" rows="auto, auto" class="submit-container">
+              <Button row="0" [isEnabled]="isNextStepAvailable()" class="submit-btn" text="Create Account"
+                (tap)="submitStep()"
+                [ngClass]="{'font-size-lg': !isTablet(), 'font-size-lg-tablet': isTablet()}"></Button>
+              <Label *ngIf="hasStepErrors()" class="color-danger" row="1" [text]="getStepErrors()" textWrap="true"
+                [ngClass]="{'font-size-md': !isTablet(), 'font-size-md-tablet': isTablet()}"></Label>
+            </GridLayout>
+
+            <GridLayout row="3" rows="*" class="p-t-20">
+              <Label row="0" horizontalAlignment="center" class="btn-link font-size-md m-t-2" text="Edit email"
+                (tap)="startOver()"></Label>
+            </GridLayout>
+
+            <GridLayout row="4" class="m-t-20">
+              <Label horizontalAlignment="center" class="btn-link font-size-md m-t-2" text="Instead, sign in?"
+                (tap)="redirectToSignIn()"></Label>
+            </GridLayout>
+          </GridLayout>
+        </GridLayout>
+      </GridLayout>
+    </GridLayout>
+  </StackLayout>
+</ScrollView>

@@ -28,6 +28,7 @@
     "@nativescript/angular": "~10.1.0",
     "@nativescript/core": "~7.0.0",
     "@nativescript/theme": "~2.5.0",
+    "@nstudio/nativescript-snackbar": "^2.1.0",
     "reflect-metadata": "~0.1.12",
     "rxjs": "^6.6.3",
     "tslib": "1.10.0",

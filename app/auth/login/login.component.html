@@ -1,4 +1,4 @@
-<ScrollView width="100%" height="100%" class="eloha-font-semibold login-page-background">
+<ScrollView width="100%" height="100%" class="login-page-background">
   <StackLayout width="100%" height="100%">
     <GridLayout rows="33*, 67*">
       <GridLayout row="0" class="logo-container">
@@ -12,9 +12,9 @@
             verticalAlignment="center"></ActivityIndicator>
         </GridLayout>
         <GridLayout row="0" rows="*">
-          <GridLayout row="0" rows="auto, auto, auto, auto" class="container-padding" verticalAlignment="top">
+          <GridLayout row="0" rows="auto, auto, auto, auto, auto" class="container-padding" verticalAlignment="top">
             <GridLayout row="0" rows="auto, auto, auto" class="input-wrapper">
-              <Label class="login-field-label m-b-2" row="0" text="Email/Username"></Label>
+              <Label class="field-label eloha-font-semibold m-b-2" row="0" text="Email/Username"></Label>
               <GridLayout row="1" rows="*" columns="*" class="input-container"
                 [ngClass]="{'input-field-error': hasEmailErrors()}">
                 <TextField row="0" #emailComp class="input-field" hint="E.g. user@examples.com" keyboardType="email"
@@ -22,12 +22,11 @@
                   verticalAlignment="middle">
                 </TextField>
               </GridLayout>
-              <Label *ngIf="hasEmailErrors()" class="m-t-2 login-field-label color-danger" row="2"
-                [text]="getEmailError()"
+              <Label *ngIf="hasEmailErrors()" class="m-t-2 field-label color-danger" row="2" [text]="getEmailError()"
                 [ngClass]="{'font-size-md': !isTablet(), 'font-size-md-tablet': isTablet()}"></Label>
             </GridLayout>
             <GridLayout row="1" rows="auto, auto, auto" class="m-t-10 input-wrapper">
-              <Label class="login-field-label m-b-2" row="0" text="Password"></Label>
+              <Label class="field-label eloha-font-semibold m-b-2" row="0" text="Password"></Label>
               <GridLayout row="1" columns="*, auto" class="input-container"
                 [ngClass]="{'input-field-error': hasPasswordErrors()}">
                 <TextField #passwordComp col="0" class="input-field" hint="Password" secure="true"
@@ -36,22 +35,28 @@
                 <Label col="1" [text]="showHideIcon" class="fa show-hide-icon" (tap)="showHidePassword()"
                   verticalAlignment="middle"></Label>
               </GridLayout>
-              <Label *ngIf="hasPasswordErrors()" class="m-t-2 login-field-label color-danger" row="2"
+              <Label *ngIf="hasPasswordErrors()" class="m-t-2 field-label color-danger" row="2"
                 [text]="getPasswordError()"></Label>
             </GridLayout>
             <GridLayout row="2" rows="auto, auto" class="submit-container">
-              <Button row="0" [isEnabled]="isSubmitEnabled()" class="login-submit" [text]="'Sign in'" (tap)="login()"
-                [ngClass]="{'font-size-lg': !isTablet(), 'font-size-lg-tablet': isTablet()}"></Button>
+              <Button row="0" [isEnabled]="isSubmitEnabled()" class="submit-btn eloha-font-bold" [text]="'Sign in'"
+                (tap)="login()" [ngClass]="{'font-size-lg': !isTablet(), 'font-size-lg-tablet': isTablet()}"></Button>
               <Label *ngIf="hasLoginErrors()" class="color-danger" row="1" [text]="getLoginError()" textWrap="true"
                 [ngClass]="{'font-size-md': !isTablet(), 'font-size-md-tablet': isTablet()}"></Label>
             </GridLayout>
             <GridLayout row="3" class="p-t-20">
-              <Label row="3" horizontalAlignment="center" class="login-forgot-password font-size-md m-t-2"
-                text="Forgot password?" (tap)="forgotPassword()"></Label>
+              <Label row="3" horizontalAlignment="center"
+                class="new-account-label eloha-font-semibold font-size-md m-t-2" text="Create a new account?"
+                (tap)="createNewAccount()"></Label>
+            </GridLayout>
+            <GridLayout row="4" class="p-t-20">
+              <Label row="4" horizontalAlignment="center"
+                class="forgot-password-label eloha-font-semibold font-size-md m-t-2" text="Forgot password?"
+                (tap)="forgotPassword()"></Label>
             </GridLayout>
           </GridLayout>
         </GridLayout>
-        <GridLayout row="1" rows="auto, auto" verticalAlignment="top" class="m-b-2">
+        <GridLayout row="1" rows="auto, auto" verticalAlignment="top">
           <Label row="0" text="Powered by Yuor Company Inc." class="eloha-font-regular copyright-label"
             [ngClass]="{'font-size-sm': !isTablet(), 'font-size-sm-tablet': isTablet()}"></Label>
           <Label row="1" text="© Copyright 2018" class="eloha-font-regular copyright-label"

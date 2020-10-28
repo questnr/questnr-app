@@ -1,14 +1,23 @@
 @import "~/variables";
 @import "scss/mixins/index";
 
-.login-page-background {
+.signup-page-background {
     background-color: $white;
-    .logo-container {
+    .signup-logo-container {
         clip-path: ellipse(70% 80% at 50% 20%);
         background-color: $heading;
         .image-container {
-            width: 90%;
+            width: 70%;
+            height: auto;
             opacity: 1;
+        }
+    }
+    .page-title {
+        @include make-font-size(10);
+        color: $gray-font-3;
+        font-weight: 500;
+        &.tablet {
+            @include make-font-size(10, 1);
         }
     }
 
@@ -74,15 +83,17 @@
         }
     }
 
-    .forgot-password-label {
+    .btn-link {
         color: $link-primary;
-    }
-
-    .new-account-label {
-        color: $link-primary;
+        &.disabled {
+            opacity: 0.6;
+        }
     }
 
     .login-page-tablet {
         width: 60%;
+    }
+    .progress {
+        color: $primary;
     }
 }

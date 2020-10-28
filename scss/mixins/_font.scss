@@ -7,11 +7,12 @@
 @function calc-font-size($val1, $val2) {
     @return $val1 + $val2;
 }
-@mixin make-font-size($level, $platform_id: 0) {
-    @if $platform_id == 0 {
+$tablet-offset: 5;
+@mixin make-font-size($level, $device: 0) {
+    @if $device == 0 {
         font-size: calc-font-size(14, $level);
     }
-    @if $platform_id == 1 {
-        font-size: calc-font-size(13, $level);
+    @if $device == 1 {
+        font-size: calc-font-size(calc-font-size(13, $tablet-offset), $level);
     }
 }

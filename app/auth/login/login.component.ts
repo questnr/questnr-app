@@ -6,6 +6,7 @@ import * as app from "@nativescript/core/application";
 import { Device, isAndroid } from "@nativescript/core/platform";
 import { alert } from "@nativescript/core/ui/dialogs";
 import { Page } from "@nativescript/core/ui/page";
+import { GlobalConstants } from "~/shared/constants";
 import { LoginResponse } from "~/shared/models/login.model";
 import { AuthService } from "../../services/auth.service";
 import { UtilityService } from "../../services/utility.service";
@@ -13,7 +14,7 @@ import { UtilityService } from "../../services/utility.service";
 declare var android: any;
 
 @Component({
-  selector: "login",
+  selector: "qn-login",
   styleUrls: ['./login.component.scss'],
   moduleId: module.id,
   templateUrl: "./login.component.html"
@@ -179,7 +180,7 @@ export class LoginComponent implements OnInit {
         this.isAuthenticating = false;
         console.log("res", loginResponse);
         if (loginResponse.accessToken && loginResponse.loginSuccess) {
-          this.routerExtensions.navigate(["/home"], { clearHistory: true });
+          this.routerExtensions.navigate(["/", GlobalConstants.feedPath], { clearHistory: true });
         } else {
           this.loginError = loginResponse.errorMessage;
         }
@@ -207,5 +208,9 @@ export class LoginComponent implements OnInit {
     }).then(function () {
       console.log("Dialog closed!");
     });
+  }
+
+  createNewAccount() {
+    this.routerExtensions.navigate(["/", GlobalConstants.signUp]);
   }
 }
