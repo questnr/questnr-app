@@ -2,22 +2,22 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-        "~/*": [
-            "app/*",
-            "assets/*"
-        ],
-        "app/*": [
-          "app/*"
-        ],
-        "assets/*": [
-          "assets/*"
-        ],
-        "*": [
-          "./node_modules/tns-core-modules/*",
-          "./node_modules/*"
-        ]
+      "~/*": [
+        "app/*",
+        "app/assets/*"
+      ],
+      "app/*": [
+        "app/*"
+      ],
+      "assets/*": [
+        "app/assets/*"
+      ],
+      "*": [
+        "./node_modules/tns-core-modules/*",
+        "./node_modules/*"
+      ]
     },
-    "module": "ESNext",
+    "module": "esnext",
     "target": "es2017",
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -29,7 +29,8 @@
       "es2017",
       "dom",
       "es6"
-    ]
+    ],
+    "removeComments": false
   },
   "exclude": [
     "node_modules",

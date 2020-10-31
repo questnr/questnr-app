@@ -1,5 +1,5 @@
 <GridLayout id="body font-size-md eloha-font-regular">
-    <page-router-outlet></page-router-outlet>
+    <page-router-outlet actionBarVisibility="never"></page-router-outlet>
 
     <!-- Busy indicator with an overlay -->
     <GridLayout *ngIf="loaderService.isLoading$ | async" backgroundColor="#33252525" (tap)="true">

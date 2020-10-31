@@ -1,15 +1,15 @@
-import { NativeScriptConfig } from '@nativescript/core';
+import { NativeScriptConfig } from '@nativescript/core'
 
 export default {
-	id: 'com.questnr.app',
-	appResourcesPath: 'App_Resources',
-	android: {
-		v8Flags: '--expose_gc',
-		markingMode: 'none',
-		id: 'com.questnr.android',
-	},
-	appPath: 'app',
-	ios: {
-		id: 'com.questnr.ios',
-	}
-} as NativeScriptConfig;
+  id: 'com.questnr.app',
+  appResourcesPath: 'App_Resources',
+  android: {
+    v8Flags: '--expose_gc',
+    markingMode: 'none',
+    id: 'com.questnr.android',
+  },
+  appPath: 'app',
+  ios: {
+    id: 'com.questnr.ios',
+  },
+} as NativeScriptConfig

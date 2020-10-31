@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { RouterExtensions } from "@nativescript/angular";
 import { getString, setString } from "@nativescript/core/application-settings";
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
@@ -10,6 +11,7 @@ import { LocalUser, LoginUser, User } from "../shared/models/user.model";
 import { JWTService } from "./jwt.service";
 import { LoaderService } from "./loader.service";
 
+const _CURRENT_LOGIN = "_CURRENT_LOGIN";
 const _CURRENT_USER = "_CURRENT_USER";
 const _CURRENT_TOKEN = "_CURRENT_TOKEN";
 
@@ -19,7 +21,8 @@ export class AuthService {
 
   constructor(private http: HttpClient,
     private jwtService: JWTService,
-    private loaderService: LoaderService) {
+    private loaderService: LoaderService,
+    private routerExtension: RouterExtensions) {
   }
   checkUsernameExists(val: string) {
     return this.http.post(this.baseUrl + 'check-username', { username: val });
@@ -33,6 +36,7 @@ export class AuthService {
     return this.http.post<LoginResponse>(this.baseUrl + 'login', user)
       .pipe(map((loginResponse: LoginResponse) => {
         if (loginResponse.accessToken && loginResponse.loginSuccess) {
+          this.loginResponse = JSON.stringify(loginResponse);
           this.accessToken = loginResponse.accessToken;
           this.user = JSON.stringify(this.getLocalUserProfile(loginResponse.accessToken));
         }
@@ -52,6 +56,7 @@ export class AuthService {
     return this.http.post<LoginResponse>(this.baseUrl + 'sign-up', user)
       .pipe(map((loginResponse: LoginResponse) => {
         if (loginResponse.accessToken && loginResponse.loginSuccess) {
+          this.loginResponse = JSON.stringify(loginResponse);
           this.accessToken = loginResponse.accessToken;
           this.user = JSON.stringify(this.getLocalUserProfile(loginResponse.accessToken));
         }
@@ -87,7 +92,10 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         this.user = "";
+        this.accessToken = "";
+        this.loginResponse = "";
         this.loaderService.onRequestEnd();
+        this.routerExtension.navigate(['/login']);
         resolve();
       }, 1000);
     });
@@ -103,6 +111,18 @@ export class AuthService {
 
   getAccessToken(): string {
     return this.accessToken;
+  }
+
+  private get loginResponse(): string {
+    return getString(_CURRENT_LOGIN);
+  }
+
+  private set loginResponse(loginResponseVal: string) {
+    setString(_CURRENT_LOGIN, loginResponseVal);
+  }
+
+  getLoginResponse(): string {
+    return this.loginResponse;
   }
 
   private get accessToken(): string {

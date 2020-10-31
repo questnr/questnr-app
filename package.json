@@ -3,18 +3,6 @@
   "main": "main.js",
   "license": "SEE LICENSE IN <your-license-filename>",
   "version": "1.0.0",
-  "nativescript": {
-    "id": {
-      "android": "com.questnr.android",
-      "ios": "com.questnr.ios"
-    },
-    "ios": {
-      "version": "1.0.0"
-    },
-    "android": {
-      "version": "1.0.0"
-    }
-  },
   "repository": "<fill-your-repository-here>",
   "dependencies": {
     "@angular/animations": "~10.1.0",
@@ -26,9 +14,10 @@
     "@angular/platform-browser-dynamic": "~10.1.0",
     "@angular/router": "~10.1.0",
     "@nativescript/angular": "~10.1.0",
-    "@nativescript/core": "~7.0.0",
+    "@nativescript/core": "^7.0.0",
     "@nativescript/theme": "~2.5.0",
     "@nstudio/nativescript-snackbar": "^2.1.0",
+    "nativescript-webview-interface": "^1.4.3",
     "reflect-metadata": "~0.1.12",
     "rxjs": "^6.6.3",
     "tslib": "1.10.0",

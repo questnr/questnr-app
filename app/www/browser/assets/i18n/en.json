@@ -1,0 +1,124 @@
+{
+  "landingPage": {
+    "heading": "The New Era of Online Communities",
+    "subHeading": "Let's discuss what you love or any issues you have, know similar things from others to improve your skills. Create Post or Blog, or Ask a Question, Now!"
+  },
+  "search": {
+    "placeHolder": "search #hastags"
+  },
+  "community": {
+    "heading": "Community Groups",
+    "members": "Members"
+  },
+  "membersRank": {
+    "heading": "Members Rank",
+    "followers": "Followers",
+    "posts": "Posts"
+  },
+  "popularHastags": {
+    "heading": "Popular hashtags"
+  },
+  "infographics": {
+    "heading1": "Join the Best Community",
+    "subheading1": "Subscribe to questnr now and start your new \n \n social life now!",
+    "heading2": "Be part of our next Community Events.",
+    "subheading2": "Be part of our next Community Events & meet other peoples like you. Share, Discuss & maybe find you partner in crime.",
+    "heading3": "Annoyed by Other <br> Social Networks?",
+    "subheading3": "150.000 members have already created their profile <br> and enjoy a network of friends from hell!<br> So... What are you waiting for?"
+  },
+  "moto": {
+    "heading": "Let's Create a <br> Strong Community ",
+    "subheading1": "Talk to Real <br> People",
+    "desc1": "Members profile are verified everyday. Questnr therefore only contains motivated  members who really want to be part of the community.",
+    "subheading2": "Smooth & Simple <br> Features",
+    "desc2": "Questnr has only simple and effective features to help you find exactly what you want.",
+    "subheading3": "Your Data are <br>Safe",
+    "desc3": "Your data is secure and will never be offered to third parties Companies. Your profile is safe on <br> Questnr."
+  },
+  "footer": {
+    "company": {
+      "heading": "Company",
+      "home": "Home",
+      "blog": "Blog",
+      "commingSoon": "Comming Soon",
+      "AboutUs": "About Us",
+      "terms": " Terms & Conditions"
+    },
+    "products": {
+      "heading": "Products",
+      "social": "Social Wall",
+      "member": "Members Swap",
+      "allMember": "All Members",
+      "communityGroups": "Community Groups",
+      "forums": "Forums"
+    },
+    "community": {
+      "heading": "Community",
+      "tutorial": "Tutorials",
+      "meetups": "MeetUps",
+      "QnA": "Q&A",
+      "writeForDonation": "Write for Donations",
+      "dropletsForDemo": "Droplets for Demo",
+      "hatchAStartupProgram": "Hatch a Startup Programs",
+      "showSwag": "Show Swag",
+      "researchProgram": "Research Programs",
+      "currentResearch": "Current Reasearch",
+      "openSource": "Open Source"
+    },
+    "comtact": {
+      "heading": "ContactUs",
+      "support": "Support",
+      "systemStatus": "System Stats"
+    }
+  },
+  "signup": {
+    "heading": "SIGNUP",
+    "fname": "First Name",
+    "fPlace": "Enter your First Name",
+    "lname": "Last Name",
+    "lPlace": "Enter Your Last Name",
+    "uname": "Username",
+    "uPlace": "Enter your Username",
+    "email": "Email",
+    "ePlace": "Enter your Email",
+    "password": "Password",
+    "pPlace": "Enter your Password",
+    "confirm": "Confirm Password",
+    "cPlace": "Re-enter your Password",
+    "signup": "Sign Up",
+    "or": "OR",
+    "google": "Continue with Google",
+    "facebook": "Continue with Facebook",
+    "accAlready": "Already have and account?",
+    "login": "LOGIN IN"
+  },
+  "login": {
+    "heading": "LOGIN",
+    "email": "Email",
+    "username": "Username",
+    "ePlace": "Enter your Email",
+    "password": "Password",
+    "pPlace": "Enter your Password",
+    "login": "Login",
+    "or": "OR",
+    "forgot": "Forgot your Password?",
+    "google": "Continue with Google",
+    "facebook": "Continue with Facebook",
+    "noAccount": "Don't have an account?",
+    "signup": "SIGN UP"
+  },
+  "button": {
+    "login": "Login",
+    "joinNow": "Join Now!",
+    "signOut": "Sign Out",
+    "joinForFun": "#Join Now for FUN!",
+    "joinCommunity": "#Join the Community",
+    "joinQuestnr": "#Join the QuestNR Now!",
+    "registerNow": "Register Now!!!"
+  },
+  "createCommunity": {
+    "heading": "Fill Community Details",
+    "communityName": "Community Name",
+    "cPlace": "Enter your Community Name"
+  }
+}
