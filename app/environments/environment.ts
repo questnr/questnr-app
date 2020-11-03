@@ -1,11 +1,12 @@
 export const environment = {
-  production: false,
+  production: true,
   //Special alias to your host loopback interface (i.e., 127.0.0.1 on your development machine)
-  baseUrl: 'https://internal.questnr.com/api/v1/',
-  // baseUrl: 'http://10.0.2.2:3010/api/v1/',
+  // baseUrl: 'https://internal.questnr.com/api/v1/',
+  baseUrl: 'http://10.0.2.2:3010/api/v1/',
   allowTracking: false,
   googleKey: '836632017511-na1k4gagi79qlvdp644q1shd0rjffoc9.apps.googleusercontent.com',
   fbKey: '1336590906533811',
+  s3Bucket: 'questnr-beta',
   firebase: {
     apiKey: 'AIzaSyAgfiLd02cWEIMafWhLrl4kBzpQrRE266k',
     authDomain: 'questnr-web-1586188588294.firebaseapp.com',

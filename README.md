@@ -41,3 +41,9 @@ Visual Studio Extensions:
 - Angular Snippets (Version 9) | johnpapa.angular2
 - Angular Schematics | cyrilletuzi.angular-schematics
 - Angular Files | alexiv.vscode-angular2-files
+
+Generate splash screen:
+- tns resources generate splashes <path_to_icon> --background #color
+
+Release App:
+- tns build android --release --key-store-path /Users/brijeshlakkad/Documents/Questnr/credentials/questnr --key-store-password Questnr --key-store-alias key0 --key-store-alias-password Questnr
