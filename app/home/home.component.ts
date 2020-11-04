@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { Device, isAndroid, LoadEventData, Page, WebView } from '@nativescript/core';
-import * as fs from "@nativescript/core/file-system";
+import { isAndroid, LoadEventData, Page, WebView } from '@nativescript/core';
 import * as application from "@nativescript/core/application";
+import { AndroidActivityBackPressedEventData } from '@nativescript/core/application/application-interfaces';
+import * as fs from "@nativescript/core/file-system";
+import { ImagePickerOptions, Mediafilepicker } from 'nativescript-mediafilepicker';
 import * as webViewInterfaceModule from 'nativescript-webview-interface';
+import * as path from 'path';
+import { environment } from '~/environments/environment';
 import { LoaderService } from '~/services/loader.service';
+import { SnackBarService } from '~/services/snackbar.service';
 import { AuthService } from '../services/auth.service';
 import { UtilityService } from '../services/utility.service';
-import * as path from 'path';
-import { AndroidActivityBackPressedEventData } from '@nativescript/core/application/application-interfaces';
-import { SnackBarService } from '~/services/snackbar.service';
-import { environment } from '~/environments/environment';
 
 declare let android: any;
 var oWebViewInterface;
@@ -69,10 +70,12 @@ export class HomeComponent {
       });
     var baseUrl = "file:///" + require("file-system").knownFolders.documents().path;
 
-    oWebViewInterface = new webViewInterfaceModule.WebViewInterface(
-      this.webView, environment.production || true ?
-      `${baseUrl}/app/www/browser/index.html` :
-      'http://10.0.2.2:4200');
+    setTimeout(() => {
+      oWebViewInterface = new webViewInterfaceModule.WebViewInterface(
+        this.webView, environment.production || true ?
+        `${baseUrl}/app/www/browser/index.html` :
+        'http://10.0.2.2:4200');
+    })
 
     if (isAndroid) {
       // var TNSWebViewClient =
@@ -143,6 +146,8 @@ export class HomeComponent {
       console.log("LOGOUT");
       this.authService.logout();
     });
+
+    oWebViewInterface.on('OPEN_MEDIA_PICKER', this.handleMediaPicker);
   }
 
   onStartUpCallJSFunctions() {
@@ -160,7 +165,47 @@ export class HomeComponent {
         JSON.parse(this.authService.getLoginResponse()),
         (result) => {
         });
-    }, 1000);
+    }, 5000);
+  }
+
+  handleMediaPicker(): void {
+    let options: ImagePickerOptions = {
+      android: {
+        isCaptureMood: false, // if true then camera will open directly.
+        isNeedCamera: true,
+        maxNumberFiles: 10,
+        isNeedFolderList: true
+      }, ios: {
+        isCaptureMood: false, // if true then camera will open directly.
+        isNeedCamera: true,
+        maxNumberFiles: 10
+      }
+    };
+
+    let mediafilepicker = new Mediafilepicker();
+    mediafilepicker.openImagePicker(options);
+
+    mediafilepicker.on("getFiles", function (res) {
+      let results = res.object.get('results');
+      console.dir(results);
+      oWebViewInterface.emit('FILES_TO_BE_UPLOADED', results);
+    });
+
+    // for iOS iCloud downloading status
+    // mediafilepicker.on("exportStatus", function (res) {
+    //   let msg = res.object.get('msg');
+    //   console.log(msg);
+    // });
+
+    mediafilepicker.on("error", function (res) {
+      let msg = res.object.get('msg');
+      console.log(msg);
+    });
+
+    mediafilepicker.on("cancel", function (res) {
+      let msg = res.object.get('msg');
+      console.log(msg);
+    });
   }
 
   isTablet() {
