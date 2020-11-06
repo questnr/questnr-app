@@ -1,0 +1,22 @@
+@import "~/variables";
+
+.icon {
+  overflow: hidden;
+  height: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  Label {
+    width: auto;
+    height: 100%;
+    margin: auto;
+    // top: 0;
+    // right: 0;
+    // bottom: 0;
+    // left: 0
+  }
+  Image {
+    width: auto;
+    height: 100%;
+  }
+}

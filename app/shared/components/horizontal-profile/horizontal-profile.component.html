@@ -1,0 +1,15 @@
+<StackLayout class="profile" orientation="horizontal" horizontalAlignment="stretch" (tap)="handleTap($event)" ripple
+    [rippleColor]="rippleColor" [rippleEnabled]="rippleEnabled">
+    <StackLayout class="profile-icon" orientation="horizontal">
+        <qn-profile-icon [isCommunityAvatar]="isCommunityAvatar" [avatar]="avatar" [height]="30" [sizeRef]="'small'">
+        </qn-profile-icon>
+    </StackLayout>
+    <StackLayout class="profile-detail" verticalAlignment="center" horizontalAlignment="stretch">
+        <StackLayout class="head">
+            <Label [text]="head"></Label>
+        </StackLayout>
+        <StackLayout *ngIf="subhead" class="subhead">
+            <Label [text]="subhead"></Label>
+        </StackLayout>
+    </StackLayout>
+</StackLayout>

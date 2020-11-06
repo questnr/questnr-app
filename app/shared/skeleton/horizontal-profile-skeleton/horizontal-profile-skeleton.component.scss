@@ -1,0 +1,24 @@
+@import "~/variables";
+
+.horizontal-profile-skeleton {
+    // Derived
+    padding: 5;
+    .skeleton {
+        margin-top: 5;
+        margin-bottom: 5;
+        .profile-skeleton {
+            width: 30;
+            height: 30;
+            border-radius: 50;
+            background-color: $gray;
+        }
+        .details-skeleton {
+            // Derived
+            margin-left: 10;
+            margin-right: 3;
+
+            border-radius: 10;
+            background-color: $gray;
+        }
+    }
+}

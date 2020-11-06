@@ -1,0 +1,28 @@
+@import "~/variables";
+
+.profile {
+  width: 95%;
+  padding: 5;
+  margin-top: 5;
+  margin-bottom: 5;
+  border-radius: 5;
+  .profile-icon {
+  }
+  .profile-detail {
+    margin-left: 10;
+    margin-right: 3;
+    font-size: 12;
+    // @maybe
+    // display: flex;
+    // flex-direction: row;
+    // align-items: baseline;
+    .head {
+      font-weight: 400;
+    }
+    .subhead {
+      font-size: 10;
+      padding-left: 6;
+      color: $secondary-font-color;
+    }
+  }
+}
