@@ -6,6 +6,8 @@ import {
   NativeScriptHttpClientModule,
   NativeScriptRouterModule
 } from '@nativescript/angular';
+import { NgRippleModule } from 'nativescript-ripple/angular';
+import { TNSImageModule } from '@nativescript-community/ui-image/angular';
 
 @NgModule({
   imports: [
@@ -13,7 +15,9 @@ import {
     NativeScriptRouterModule,
     NativeScriptFormsModule,
     ReactiveFormsModule,
-    NativeScriptHttpClientModule
+    NativeScriptHttpClientModule,
+    NgRippleModule,
+    TNSImageModule
   ],
   declarations: [
   ],
@@ -21,7 +25,10 @@ import {
   ],
   exports: [
     NativeScriptFormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NativeScriptHttpClientModule,
+    NgRippleModule,
+    TNSImageModule
   ],
   schemas: [
     NO_ERRORS_SCHEMA

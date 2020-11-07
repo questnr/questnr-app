@@ -1,11 +1,6 @@
 @import "~/variables";
 
 .icon {
-  overflow: hidden;
-  height: 30;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   Label {
     width: auto;
     height: 100%;
@@ -15,8 +10,8 @@
     // bottom: 0;
     // left: 0
   }
-  Image {
-    width: auto;
-    height: 100%;
-  }
+  // NSImg {
+  //   width: auto;
+  //   height: 100%;
+  // }
 }

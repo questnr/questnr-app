@@ -1,8 +1,8 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { GlobalConstants } from '~/shared/constants';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { AvatarDTO, ProfileIconTemplateType } from '~/shared/models/common.model';
-
+import { FinalEventData, Img } from '@nativescript-community/ui-image'
 
 @Component({
   selector: 'qn-profile-icon',
@@ -20,47 +20,62 @@ export class ProfileIconComponent implements OnInit {
   @Input() alt: string = "image";
   defaultSrc: string = StaticMediaSrc.userFile;
   @Input() isCommunityAvatar: boolean = false;
-  @ViewChild('elementOnHTML', { static: false }) elementOnHTML: ElementRef;
   defaultPath: string = GlobalConstants.userPath;
+  aspectRatio: number = 1;
 
-  constructor(private renderer: Renderer2) {
+  constructor(private renderer: Renderer2, private cd: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
     if (this.isCommunityAvatar) {
+      this.aspectRatio = 4 / 3;
       this.defaultPath = GlobalConstants.communityPath;
       this.defaultSrc = StaticMediaSrc.communityFile;
     }
   }
   ngAfterViewInit() {
-    this.setAvatar(this.avatar);
-    this.renderer.setStyle(this.elementOnHTML.nativeElement, 'height', this.height);
-    this.renderer.setStyle(this.elementOnHTML.nativeElement, 'width', this.height);
-    if (this.template === ProfileIconTemplateType.heading) {
-      this.renderer.addClass(this.elementOnHTML.nativeElement, "heading-border");
-    }
+    this.getAvatarLink();
+    // if (this.template === ProfileIconTemplateType.heading) {
+    //   this.renderer.addClass(this.elementOnHTML.nativeElement, "heading-border");
+    // }
   }
 
   setAvatar(avatar: AvatarDTO) {
     this.avatar = avatar;
-    if (this.avatar) {
-      if (this.sizeRef === "icon" && this.avatar.iconLink) {
+    this.getAvatarLink();
+  }
+
+  getAvatarLink() {
+    if (!this.avatarLink) {
+      if (!this.avatar) {
+        this.avatarLink = this.defaultSrc;
+      } else if (this.sizeRef === "icon" && this.avatar.iconLink) {
         this.avatarLink = this.avatar.iconLink;
       } else if (this.sizeRef === "small" && this.avatar.smallLink) {
         this.avatarLink = this.avatar.smallLink;
       } else if (this.sizeRef === "medium" && this.avatar.mediumLink) {
         this.avatarLink = this.avatar.mediumLink;
-      } else {
+      } else if (this.avatar.avatarLink) {
         this.avatarLink = this.avatar.avatarLink;
+      } else {
+        this.avatarLink = this.defaultSrc;
       }
+      this.cd.detach();
+      return this.avatarLink;
     }
+    return this.avatarLink;
   }
 
-  checkImageSrc(src) {
-    if (src) {
-      return src;
-    } else {
-      return this.defaultSrc;
-    }
+  onFailure(args: FinalEventData): void {
+    let img = args.object as Img;
+    img.src = this.defaultSrc;
   }
+
+  // checkImageSrc(src) {
+  //   if (src) {
+  //     return src;
+  //   } else {
+  //     return this.defaultSrc;
+  //   }
+  // }
 }

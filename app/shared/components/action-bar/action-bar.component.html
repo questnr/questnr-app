@@ -1,0 +1,26 @@
+<ActionBar class="action-bar-wrapper" android:style="padding-top:5" flat="true">
+  <!-- <ActionItem ios.position="center">
+    <StackLayout class="search-wrapper">
+      <SearchBar class="search-bar" hint="Search" backgroundColor="#eee" textFieldHintColor="#f15152"
+        textFieldBackgroundColor="transparent">
+      </SearchBar>
+    </StackLayout>
+  </ActionItem> -->
+  <GridLayout rows="*" columns="auto, *, auto">
+    <StackLayout class="action-logo" col="0" orientation="horizontal">
+      <Image src="res://icon" class="action-image"></Image>
+      <!-- <Label text="uestnr" class="action-label"></Label> -->
+    </StackLayout>
+    <StackLayout col="1" class="search-wrapper" orientation="horizontal" (loaded)="onSearchLayoutLoaded($event)">
+      <SearchBar class="search-bar" hint="Search" (textChange)="onTextChanged($event)" (clear)="onClear($event)"
+        (submit)="onSubmit($event)" (loaded)="onSearchBarLoaded($event)">
+      </SearchBar>
+    </StackLayout>
+    <Label col="2" (tap)="logout()" text="&#xf08b;" class="fa fa-logout" android:style="padding-right:10"></Label>
+  </GridLayout>
+  <!-- <ActionItem ios.position="right" (tap)="logout()">
+    <StackLayout>
+      <Label text="&#xf08b;" class="fa fa-logout" android:style="padding-right:10"></Label>
+    </StackLayout>
+  </ActionItem> -->
+</ActionBar>

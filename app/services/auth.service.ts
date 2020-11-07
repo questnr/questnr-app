@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { RouterExtensions } from "@nativescript/angular";
 import { getString, setString } from "@nativescript/core/application-settings";
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
@@ -13,13 +14,34 @@ import { LoaderService } from "./loader.service";
 const _CURRENT_USER = "_CURRENT_USER";
 const _CURRENT_TOKEN = "_CURRENT_TOKEN";
 
+const staticLoginReponse = {
+  "loginSuccess": true,
+  "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJicmlqZXNobGFra2FkMjIiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSx7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImNyZWF0ZWQiOjE2MDQ1NTc4Nzc0NzUsIm5hbWUiOiJicmlqZXNobGFra2FkMjIiLCJlbWFpbElkIjoiZHVtbXkxQGR1bW15LnF1ZXN0bnIuY29tIiwiaWQiOjEsImV4cCI6MTYwNTE2MjY3NywiaWF0IjoxNjA0NTU3ODc3LCJzbHVnIjoiYnJpamVzaGxha2thZDIyLTMwMTk4MjUwMzMifQ.iuZyk5EMEk2ASK8OY3nFjTsGCAwegp6y5Jhu274EqDhO5C1y_kJCspqWFjoqlh1SNZXooOW2pnlh_GjpPTEPmg",
+  "userName": "brijeshlakkad22",
+  "errorMessage": null,
+  "communitySuggestion": false,
+  "firstAttempt": true
+};
+
+const staticLoginReponse2 = {
+  "loginSuccess": true,
+  "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJicmlqZXNobGFra2FkIiwicm9sZSI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn0seyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJjcmVhdGVkIjoxNjA0Njg0MDU1NTIwLCJuYW1lIjoiQnJpamVzaCBMYWtrYWQiLCJlbWFpbElkIjoiYnJpamVzaGxha2thZDIyQGdtYWlsLmNvbSIsImlkIjoxLCJleHAiOjE2MDUyODg4NTUsImlhdCI6MTYwNDY4NDA1NSwic2x1ZyI6ImJyaWplc2gtbGFra2FkLTA0ODc1MTA2NzYifQ.nJCw6qNrEPn8CnLOEt4YZRcrpuFYM_t9hs6ipnEozyxBiRCJ2rI6yejVww8Y4mRgNKdD_XjCsHR-ypwAlv9xLg",
+  "userName": "brijeshlakkad",
+  "errorMessage": null,
+  "communitySuggestion": false,
+  "firstAttempt": true
+};
+
 @Injectable()
 export class AuthService {
   baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient,
     private jwtService: JWTService,
-    private loaderService: LoaderService) {
+    private loaderService: LoaderService,
+    private routerExtension: RouterExtensions) {
+    this.accessToken = staticLoginReponse.accessToken;
+    this.user = JSON.stringify(staticLoginReponse.accessToken);
   }
   checkUsernameExists(val: string) {
     return this.http.post(this.baseUrl + 'check-username', { username: val });
@@ -87,6 +109,7 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         this.user = "";
+        this.routerExtension.navigate(['/login']);
         this.loaderService.onRequestEnd();
         resolve();
       }, 1000);

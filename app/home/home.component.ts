@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { RouterExtensions } from '@nativescript/angular';
+import { Component, ViewContainerRef } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { UtilityService } from '../services/utility.service';
 
@@ -11,25 +10,31 @@ import { UtilityService } from '../services/utility.service';
 export class HomeComponent {
   isLoading = false;
 
-  // This pattern makes use of Angular’s dependency injection implementation to inject an instance of the ItemService service into this class.
-  // Angular knows about this service because it is included in your app’s main NgModule, defined in app.module.ts.
   constructor(private authSerivce: AuthService,
-    private routerExtension: RouterExtensions,
+    public viewContainerRef: ViewContainerRef,
     private utilityService: UtilityService) { }
 
   ngOnInit(): void {
   }
 
   logout() {
-    this.isLoading = true;
-    this.authSerivce.logout()
-      .then(() => {
-        this.routerExtension.navigate(['/login']);
-        this.isLoading = false;
-      });
+    this.authSerivce.logout();
   }
 
   isTablet() {
     return this.utilityService.isTablet();
   }
 }
+
+// export function openModal(args) {
+//   const mainView: Button = <Button>args.object;
+//   const option: ShowModalOptions = {
+//     context: { username: "test_username", password: "test" },
+//     closeCallback: (username, password) => {
+//       // Receive data from the modal view. e.g. username & password
+//       alert(`Username: ${username} : Password: ${password}`);
+//     },
+//     fullscreen: true
+//   };
+//   mainView.showModal(modalViewModulets, option);
+// }

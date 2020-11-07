@@ -1,10 +1,17 @@
-<StackLayout class="icon" #elementOnHTML>
+<StackLayout class="icon">
     <StackLayout *ngIf="slug">
-        <StackLayout [nsRouterLink]="['/', defaultPath, slug]">
-            <Image [src]="checkImageSrc(avatarLink)" loadMode="async" borderRadius="50"></Image>
+        <StackLayout [nsRouterLink]="['/', defaultPath, slug]" [height]="height" [width]="height"
+            verticalAlignment="center">
+            <NSImg [placeholderImageUri]="defaultSrc" [failureImageUri]="defaultSrc" verticalAlignment="center"
+                [src]="getAvatarLink()" [height]="height" [width]="height" loadMode="async" roundAsCircle="true"
+                stretch="aspectFill" (failure)="onFailure($event)">
+            </NSImg>
         </StackLayout>
     </StackLayout>
-    <StackLayout *ngIf="!slug">
-        <Image [src]="checkImageSrc(avatarLink)" loadMode="async" borderRadius="50"></Image>
+    <StackLayout *ngIf="!slug" [height]="height" [width]="height" verticalAlignment="center">
+        <NSImg [placeholderImageUri]="defaultSrc" [failureImageUri]="defaultSrc" verticalAlignment="center"
+            [src]="getAvatarLink()" [height]="height" [width]="height" loadMode="async" roundAsCircle="true"
+            stretch="aspectFill" (failure)="onFailure($event)">
+        </NSImg>
     </StackLayout>
 </StackLayout>

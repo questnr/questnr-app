@@ -11,7 +11,7 @@ export class PaginationData {
     totalPages: number;
 }
 
-export class Page<T> extends PaginationData {
+export class QPage<T> extends PaginationData {
     content: T[];
 }
 

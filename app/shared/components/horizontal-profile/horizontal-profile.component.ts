@@ -14,6 +14,7 @@ export class HorizontalProfileComponent implements OnInit {
   @Input() head: string;
   @Input() subhead: string;
   @Input() rippleEnabled: boolean = true;
+  @Input() iconSize: string = 'medium';
   rippleColor = qRipple.$horizontalProfile;
 
   defaultUserSrc: string = StaticMediaSrc.userFile;

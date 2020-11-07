@@ -40,6 +40,7 @@ export class GlobalConstants {
   public static copyRightRenewedYear = '2020';
   public static resetPassword = 'reset';
   public static forgotPassword = 'forgot-password';
+  public static search = 'search';
   public static login = 'login';
   public static signUp = 'sign-up';
   public static helpPath = 'help';

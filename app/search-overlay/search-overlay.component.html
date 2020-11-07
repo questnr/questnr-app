@@ -1,0 +1,125 @@
+<Page xmlns="http://www.nativescript.org/tns.xsd">
+    <Page.actionBar>
+        <ActionBar class="action-bar-wrapper" android:style="padding-top:5" flat="true" #actionBar>
+            <GridLayout rows="*" columns="10*, 90*">
+                <Label text="&#xf060;" class="fa fa-back-button" (tap)="onNavBtnTap($event)"></Label>
+                <StackLayout col="1" class="search-wrapper" orientation="horizontal"
+                    (loaded)="onSearchLayoutLoaded($event)">
+                    <SearchBar class="search-bar" hint="Search" (textChange)="onTextChanged($event)"
+                        (clear)="onClear($event)" (submit)="onSubmit($event)" (loaded)="onSearchBarLoaded($event)">
+                    </SearchBar>
+                </StackLayout>
+            </GridLayout>
+        </ActionBar>
+    </Page.actionBar>
+    <StackLayout class="search-wrapper">
+        <TabView [androidSelectedTabHighlightColor]="qColors.$heading" [tabTextColor]="qColors.$black"
+            [selectedTabTextColor]="qColors.$primary" [selectedIndex]="selectedSearchOption"
+            (loaded)="onTabViewLoaded($event)" (selectedIndexChanged)="selectedIndex.setValue($event)">
+            <ScrollView *tabItem="{title: label(userIndex)}" orientation="vertical">
+                <FlexboxLayout flexDirection="column" class="horizontal-profile-container">
+                    <StackLayout *ngFor="let user of users; let userIndex = index;" orientation="horizontal"
+                        horizontalAlignment="stretch" [nsRouterLink]="['/', currentPath, user?.slug]">
+                        <qn-horizontal-profile [avatar]="user?.avatarDTO" [head]="user?.username"
+                            [subhead]="user?.firstName && user?.lastName ? user?.firstName+' '+user?.lastName: ''">
+                        </qn-horizontal-profile>
+                    </StackLayout>
+
+                    <StackLayout *ngIf="isDataLoading(userIndex)" orientation="vertical">
+                        <qn-horizontal-profile-skeleton [items]="4" [height]="30"></qn-horizontal-profile-skeleton>
+                    </StackLayout>
+
+                    <StackLayout class="load-more" *ngIf="notInList(userIndex)" (tap)="fetchEntityList(userIndex)"
+                        orientation="horizontal" horizontalAlignment="center">
+                        <Label [text]="notInListTemplate"></Label>
+                    </StackLayout>
+
+                    <StackLayout *ngIf="endOfResults(userIndex)" orientation="horizontal" horizontalAlignment="center">
+                        <Label [text]="endOfResultsTemplate"></Label>
+                    </StackLayout>
+
+                    <StackLayout orientation="horizontal">
+                        <Label class="no-data" textWrap="true" *ngIf="noDataFound(userIndex)"
+                            horizontalAlignment="center">
+                            <FormattedString>
+                                <Span class="static-text" [text]="noDataFoundTemplate"></Span>
+                                <Span class="user-text" [text]="'&nbsp;'+searchInputValue"></Span>
+                            </FormattedString>
+                        </Label>
+                    </StackLayout>
+                </FlexboxLayout>
+            </ScrollView>
+            <ScrollView *tabItem="{title: label(communityIndex)}" orientation="vertical">
+                <FlexboxLayout flexDirection="column" class="horizontal-profile-container">
+                    <StackLayout *ngFor="let community of communities; let communityIndex = index;"
+                        orientation="horizontal" horizontalAlignment="stretch"
+                        [nsRouterLink]="['/', currentPath, community?.slug]">
+                        <qn-horizontal-profile [isCommunityAvatar]="true" [avatar]="community?.avatarDTO"
+                            [head]="community?.communityName" [subhead]="community?.ownerUserDTO?.username">
+                        </qn-horizontal-profile>
+                    </StackLayout>
+
+                    <StackLayout *ngIf="isDataLoading(communityIndex)" orientation="vertical">
+                        <qn-horizontal-profile-skeleton [items]="4" [height]="30"></qn-horizontal-profile-skeleton>
+                    </StackLayout>
+
+                    <StackLayout class="load-more" *ngIf="notInList(communityIndex)"
+                        (tap)="fetchEntityList(communityIndex)" orientation="horizontal" horizontalAlignment="center">
+                        <Label [text]="notInListTemplate"></Label>
+                    </StackLayout>
+
+                    <StackLayout *ngIf="endOfResults(communityIndex)" orientation="horizontal"
+                        horizontalAlignment="center">
+                        <Label [text]="endOfResultsTemplate"></Label>
+                    </StackLayout>
+
+                    <StackLayout orientation="horizontal">
+                        <Label class="no-data" textWrap="true" *ngIf="noDataFound(communityIndex)"
+                            horizontalAlignment="center">
+                            <FormattedString>
+                                <Span class="static-text" [text]="noDataFoundTemplate"></Span>
+                                <Span class="user-text" [text]="'&nbsp;'+searchInputValue"></Span>
+                            </FormattedString>
+                        </Label>
+                    </StackLayout>
+                </FlexboxLayout>
+            </ScrollView>
+            <ScrollView *tabItem="{title: label(hashTagIndex)}" orientation="vertical">
+                <FlexboxLayout flexDirection="column" class="horizontal-profile-container">
+                    <StackLayout *ngFor="let hashtag of hashtags; let hashTagIndex = index;" orientation="horizontal"
+                        horizontalAlignment="stretch">
+                        <StackLayout class="hash-tag" orientation="horizontal" verticalAlignment="center"
+                            [nsRouterLink]="['/', currentPath]">
+                            <Label class="hash-tag-symbol" text="#"></Label>
+                            <Label [text]="hashtag.hashTagValue"></Label>
+                        </StackLayout>
+                    </StackLayout>
+
+                    <StackLayout *ngIf="isDataLoading(hashTagIndex)" orientation="vertical">
+                        <qn-horizontal-profile-skeleton [items]="4" [height]="30"></qn-horizontal-profile-skeleton>
+                    </StackLayout>
+
+                    <StackLayout class="load-more" *ngIf="notInList(hashTagIndex)" (tap)="fetchEntityList(hashTagIndex)"
+                        orientation="horizontal" horizontalAlignment="center">
+                        <Label [text]="notInListTemplate"></Label>
+                    </StackLayout>
+
+                    <StackLayout *ngIf="endOfResults(hashTagIndex)" orientation="horizontal"
+                        horizontalAlignment="center">
+                        <Label [text]="endOfResultsTemplate"></Label>
+                    </StackLayout>
+
+                    <StackLayout orientation="horizontal">
+                        <Label class="no-data" textWrap="true" *ngIf="noDataFound(hashTagIndex)"
+                            horizontalAlignment="center">
+                            <FormattedString>
+                                <Span class="static-text" [text]="noDataFoundTemplate"></Span>
+                                <Span class="user-text" [text]="'&nbsp;'+searchInputValue"></Span>
+                            </FormattedString>
+                        </Label>
+                    </StackLayout>
+                </FlexboxLayout>
+            </ScrollView>
+        </TabView>
+    </StackLayout>
+</Page>

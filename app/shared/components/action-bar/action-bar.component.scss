@@ -1,0 +1,32 @@
+@import "../../../variables";
+
+.action-bar-wrapper {
+    background-color: $heading;
+    .action-logo {
+        height: 30;
+        .action-image {
+            height: 30;
+            width: auto;
+        }
+    }
+    .search-wrapper {
+        margin-left: 7;
+        margin-right: 7;
+        height: 35;
+        border-radius: 5;
+        background: #eee;
+        border-radius: 5;
+        border-width: 1;
+        border-color: $primary;
+        .search-bar {
+            background: transparent;
+            border: 0;
+            color: #000;
+        }
+    }
+
+    .fa-logout {
+        font-size: 20;
+        color: $white;
+    }
+}

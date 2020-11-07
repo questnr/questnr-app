@@ -6,10 +6,12 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { HomeComponent } from './home/home.component';
+import { SearchOverlayComponent } from './search-overlay/search-overlay.component';
 import { GlobalConstants } from './shared/constants';
 
 const routes: Routes = [
   { path: "", redirectTo: "/" + GlobalConstants.feedPath, pathMatch: "full" },
+  { path: GlobalConstants.search, component: SearchOverlayComponent },
   { path: GlobalConstants.login, component: LoginComponent },
   { path: GlobalConstants.signUp, component: SignupComponent },
   { path: GlobalConstants.forgotPassword, component: ForgotPasswordComponent },

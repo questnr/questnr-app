@@ -1,9 +1,9 @@
-import { Page } from './page.model';
+import { QPage } from './page.model';
 
 export class FaqItemPage {
     category: string;
     description: string;
-    faqItemPage: Page<FaqItem>;
+    faqItemPage: QPage<FaqItem>;
 }
 
 export class FaqItem {
