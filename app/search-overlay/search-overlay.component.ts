@@ -26,7 +26,7 @@ class FilterOption {
   selector: 'app-search-overlay',
   templateUrl: './search-overlay.component.html',
   styleUrls: ['./search-overlay.component.scss',
-    '../shared/components/action-bar/action-bar.component.scss']
+    '../shared/containers/action-bar/action-bar.component.scss']
 })
 export class SearchOverlayComponent implements OnInit {
   searchBar: SearchBar; z

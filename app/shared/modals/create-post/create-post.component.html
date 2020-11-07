@@ -1,3 +1,9 @@
-<p>
-  create-post works!
-</p>
+<StackLayout class="create-post-wrapper" orientation="vertical">
+  <GridLayout height="50" rows="*">
+    <StackLayout row="0" orientation="horizontal" horizontalAlignment="center">
+      <Label class="modal-title h2 text-center" text="Make a Questnr" horizontalAlignment="center"
+        textWrap="true"></Label>
+    </StackLayout>
+    <Label class="close-modal fa" row="0" horizontalAlignment="right" text="&#xf00d;" (tap)="close()"></Label>
+  </GridLayout>
+</StackLayout>

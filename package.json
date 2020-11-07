@@ -30,6 +30,7 @@
     "@nativescript/core": "~7.0.0",
     "@nativescript/theme": "~2.5.0",
     "@nstudio/nativescript-snackbar": "^2.1.0",
+    "nativescript-fontawesome": "^1.0.0",
     "nativescript-orientation": "^2.2.5",
     "nativescript-ripple": "^4.0.1",
     "reflect-metadata": "~0.1.12",

@@ -3,7 +3,7 @@ import { Component, Input, ChangeDetectionStrategy } from "@angular/core";
 @Component({
   selector: "circular-progress-bar",
   templateUrl: './circular-progress-bar.component.html',
-  styleUrls: ['./circular-progress-bar.component.css'],
+  styleUrls: ['./circular-progress-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CircularProgressBarComponent {

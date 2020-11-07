@@ -19,6 +19,10 @@ import { MaterialModule } from './shared/material.module';
 import { SharedModule } from './shared/shared.module';
 import * as imageModule from '@nativescript-community/ui-image';
 import * as app from "@nativescript/core/application";
+import { FeedsService } from './services/feeds.service';
+import { Fontawesome } from 'nativescript-fontawesome';
+
+Fontawesome.init();
 
 if (applicationModule.android) {
   applicationModule.on(applicationModule.launchEvent, () => {
@@ -56,7 +60,8 @@ if (applicationModule.android) {
     OTPVerificationService,
     SnackBarService,
     UtilityService,
-    ApiService
+    ApiService,
+    FeedsService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

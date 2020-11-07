@@ -3,10 +3,11 @@ import {
   NativeScriptCommonModule,
   NativeScriptRouterModule
 } from '@nativescript/angular';
-import { CircularProgressBarComponent } from './circular-progress-bar/circular-progress-bar.component';
-import { ActionBarComponent } from './components/action-bar/action-bar.component';
-import { HorizontalProfileComponent } from './components/horizontal-profile/horizontal-profile.component';
-import { ProfileIconComponent } from './components/profile-icon/profile-icon.component';
+import { AppModalModule } from './app-modal.module';
+import { CircularProgressBarComponent } from './components/circular-progress-bar/circular-progress-bar.component';
+import { ActionBarComponent } from './containers/action-bar/action-bar.component';
+import { HorizontalProfileComponent } from './containers/horizontal-profile/horizontal-profile.component';
+import { ProfileIconComponent } from './containers/profile-icon/profile-icon.component';
 import { MaterialModule } from './material.module';
 import { SkeletonModule } from './skeleton.module';
 
@@ -15,7 +16,8 @@ import { SkeletonModule } from './skeleton.module';
     NativeScriptCommonModule,
     NativeScriptRouterModule,
     MaterialModule,
-    SkeletonModule
+    SkeletonModule,
+    AppModalModule
   ],
   declarations: [
     CircularProgressBarComponent,
@@ -28,9 +30,10 @@ import { SkeletonModule } from './skeleton.module';
   exports: [
     // CircularProgressBarComponent
     SkeletonModule,
+    AppModalModule,
     ActionBarComponent,
     HorizontalProfileComponent,
-    ProfileIconComponent,
+    ProfileIconComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

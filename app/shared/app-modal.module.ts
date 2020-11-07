@@ -4,7 +4,7 @@ import {
   NativeScriptRouterModule
 } from '@nativescript/angular';
 import { MaterialModule } from './material.module';
-import { HorizontalProfileSkeletonComponent } from './skeletons/horizontal-profile-skeleton/horizontal-profile-skeleton.component';
+import { CreatePostComponent } from './modals/create-post/create-post.component';
 
 @NgModule({
   imports: [
@@ -13,15 +13,15 @@ import { HorizontalProfileSkeletonComponent } from './skeletons/horizontal-profi
     MaterialModule
   ],
   declarations: [
-    HorizontalProfileSkeletonComponent
+    CreatePostComponent
   ],
   providers: [
   ],
   exports: [
-    HorizontalProfileSkeletonComponent
+    CreatePostComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA
   ]
 })
-export class SkeletonModule { }
+export class AppModalModule { }

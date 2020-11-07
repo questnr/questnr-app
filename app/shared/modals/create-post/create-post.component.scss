@@ -1,0 +1,23 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.create-post-wrapper {
+    .modal-title {
+        @include make-font-size(6);
+        font-weight: 600;
+        color: $heading;
+        padding-top: 4;
+        padding-bottom: 4;
+    }
+    .close-modal {
+        @include make-font-size(2);
+        height: 30;
+        width: 30;
+        // margin-right: 7;
+        // padding: 5;
+        color: $primary;
+        // border-radius: 50;
+        // border-width: 1;
+        // border-color: $black;
+    }
+}

@@ -1,4 +1,6 @@
 import { Component, ViewContainerRef } from '@angular/core';
+import { ModalDialogOptions, ModalDialogService } from '@nativescript/angular';
+import { CreatePostComponent } from '~/shared/modals/create-post/create-post.component';
 import { AuthService } from '../services/auth.service';
 import { UtilityService } from '../services/utility.service';
 
@@ -12,7 +14,8 @@ export class HomeComponent {
 
   constructor(private authSerivce: AuthService,
     public viewContainerRef: ViewContainerRef,
-    private utilityService: UtilityService) { }
+    private utilityService: UtilityService,
+    private modalService: ModalDialogService) { }
 
   ngOnInit(): void {
   }
@@ -24,17 +27,13 @@ export class HomeComponent {
   isTablet() {
     return this.utilityService.isTablet();
   }
-}
 
-// export function openModal(args) {
-//   const mainView: Button = <Button>args.object;
-//   const option: ShowModalOptions = {
-//     context: { username: "test_username", password: "test" },
-//     closeCallback: (username, password) => {
-//       // Receive data from the modal view. e.g. username & password
-//       alert(`Username: ${username} : Password: ${password}`);
-//     },
-//     fullscreen: true
-//   };
-//   mainView.showModal(modalViewModulets, option);
-// }
+  createQuestnr() {
+    const options: ModalDialogOptions = {
+      viewContainerRef: this.viewContainerRef,
+      fullscreen: true,
+      context: {}
+    };
+    this.modalService.showModal(CreatePostComponent, options);
+  }
+}
