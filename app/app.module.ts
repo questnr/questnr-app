@@ -24,6 +24,8 @@ import { Fontawesome } from 'nativescript-fontawesome';
 import { SkeletonModule } from './shared/skeleton.module';
 import { AppModalModule } from './shared/app-modal.module';
 
+const tnsfx = require('nativescript-effects');
+
 Fontawesome.init();
 
 if (applicationModule.android) {

@@ -31,6 +31,7 @@
     "@nativescript/core": "~7.0.0",
     "@nativescript/theme": "~2.5.0",
     "@nstudio/nativescript-snackbar": "^2.1.0",
+    "nativescript-effects": "^1.0.0",
     "nativescript-fontawesome": "^1.0.0",
     "nativescript-mediafilepicker": "^4.0.1",
     "nativescript-orientation": "^2.2.5",

@@ -81,6 +81,19 @@
             }
         }
 
+        .media-category-container {
+            margin: 5;
+            .media-category {
+                margin-right: 10;
+                padding: 10;
+                font-size: 25;
+                border-width: 2;
+                border-color: $link-third;
+                border-radius: 10;
+                color: $black;
+            }
+        }
+
         .media-container {
             .media-wrap {
                 margin: 5;
