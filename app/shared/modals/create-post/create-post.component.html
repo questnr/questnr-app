@@ -1,9 +1,83 @@
-<StackLayout class="create-post-wrapper" orientation="vertical">
-  <GridLayout height="50" rows="*">
-    <StackLayout row="0" orientation="horizontal" horizontalAlignment="center">
-      <Label class="modal-title h2 text-center" text="Make a Questnr" horizontalAlignment="center"
-        textWrap="true"></Label>
+<ScrollView class="create-post-wrapper" orientation="vertical">
+  <StackLayout orientation="vertical">
+    <StackLayout class="progress-container" *ngIf="isLoading && uploading" orientation="horizontal"
+      horizontalAlignment="stretch">
+      <Progress [value]="uploadProgress" maxValue="100" class="progress"></Progress>
     </StackLayout>
-    <Label class="close-modal fa" row="0" horizontalAlignment="right" text="&#xf00d;" (tap)="close()"></Label>
-  </GridLayout>
-</StackLayout>
+    <GridLayout height="50" rows="*">
+      <StackLayout row="0" orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
+        <Label class="modal-title h2 text-center" text="Make a Questnr" horizontalAlignment="center"
+          textWrap="true"></Label>
+      </StackLayout>
+      <Label class="close-modal fa" row="0" verticalAlignment="center" horizontalAlignment="right" text="&#xf00d;"
+        (tap)="close()"></Label>
+    </GridLayout>
+
+    <StackLayout>
+      <qn-hr></qn-hr>
+    </StackLayout>
+
+    <StackLayout class="post-create-container">
+      <TextView class="textarea" hint="Describe Here..." (loaded)="onFeedTextViewLoaded($event)" [formControl]="text"
+        (textChange)="onTextChange($event)">
+      </TextView>
+
+      <StackLayout>
+        <Label *ngIf="isBlogEditor" text="switch to normal editor" (tap)="switchEditor(false)"
+          class="editor-mode"></Label>
+        <Label *ngIf="!isBlogEditor" text="switch to blog editor" (tap)="switchEditor(true)"
+          class="editor-mode"></Label>
+      </StackLayout>
+
+      <qn-space [space]="10"></qn-space>
+
+      <GridLayout class="media-container" rows="auto, *, auto">
+        <GridLayout *ngIf="addedMediaSrc?.length > 0" row="0" rows="*">
+          <Label row="0" text="{{addedMediaSrc?.length+' items added'}}"></Label>
+        </GridLayout>
+
+        <RadListView row="1" [items]="addedMediaSrc" [height]="addedMediaSrc?.length > 0 ? 130:  0"
+          orientation="horizontal" [itemTemplateSelector]="templateSelector" selectionBehavior="LongPress"
+          multipleSelection="true" (itemSelected)="onItemSelected($event)" (itemDeselected)="onItemDeselected($event)"
+          (loaded)="onAttachedMediaListViewLoaded($event)">
+          <ListViewLinearLayout tkListViewLayout scrollDirection="Horizontal" itemDeleteAnimation="Slide">
+          </ListViewLinearLayout>
+          <ng-template let-media="item" tkTemplateKey="image">
+            <StackLayout class="media-wrap" orientation="horizontal" verticalAlignment="center">
+              <!-- <button mat-icon-button (click)="removeMedia(i)">
+                <mat-icon>close</mat-icon>
+              </button> -->
+              <Image class="media-item" loadMode="async" [src]="media.src" stretch="aspectFill">
+              </Image>
+              <!-- <video *ngIf="addedMediaSrc[i]?.type.includes('video')">
+                <source [src]="addedMediaSrc[i]?.src" [type]="addedMediaSrc[i].type">
+              </video> -->
+            </StackLayout>
+            <!-- <app-attached-file *ngIf="addedMediaSrc[i]?.type.includes('application')" [attachedFile]="addedMediaSrc[i]"
+              [ind]="i" [useLink]="false" (removeAttachedFileListener)="removeMedia($event)">
+            </app-attached-file> -->
+          </ng-template>
+        </RadListView>
+
+        <GridLayout *ngIf="_selectedItemIndexList.length > 0" row="2" rows="*" (tap)="onRemoveMedia()">
+          <!-- <Label row="0" text="{{_selectedItems?.length+' selected'}}"></Label> -->
+          <Label row="0" class="fa remove-media" text="&#xf1f8;" horizontalAlignment="right"></Label>
+        </GridLayout>
+      </GridLayout>
+
+      <GridLayout class="attach-media-container" rows="*" (tap)="attachMedia()">
+        <Label row="0" [text]="'Add Media To&nbsp;'+postEditorName" verticalAlignment="center"></Label>
+        <Label row="0" class="fa media-icon" text="&#xf03e;" verticalAlignment="center"
+          horizontalAlignment="right"></Label>
+      </GridLayout>
+
+      <qn-space [space]="15"></qn-space>
+
+      <StackLayout class="btn-wrap">
+        <Button class="btn-post" text="Create" [ngClass]="isPostInvalid() || isLoading ? 'disabled': ''"
+          [isEnabled]="!(isPostInvalid() || isLoading)" (tap)="postFeed()">
+        </Button>
+      </StackLayout>
+    </StackLayout>
+  </StackLayout>
+</ScrollView>

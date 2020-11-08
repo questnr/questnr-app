@@ -5,12 +5,14 @@ import {
 } from '@nativescript/angular';
 import { MaterialModule } from './material.module';
 import { CreatePostComponent } from './modals/create-post/create-post.component';
+import { SharedModule } from './shared.module';
 
 @NgModule({
   imports: [
     NativeScriptCommonModule,
     NativeScriptRouterModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ],
   declarations: [
     CreatePostComponent

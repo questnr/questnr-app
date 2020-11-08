@@ -4,10 +4,10 @@
 .create-post-wrapper {
     .modal-title {
         @include make-font-size(6);
-        font-weight: 600;
+        font-weight: 400;
         color: $heading;
-        padding-top: 4;
-        padding-bottom: 4;
+        padding-top: 5;
+        // padding-bottom: 4;
     }
     .close-modal {
         @include make-font-size(2);
@@ -19,5 +19,93 @@
         // border-radius: 50;
         // border-width: 1;
         // border-color: $black;
+    }
+
+    .post-create-container {
+        margin-top: 10;
+        margin-right: 10;
+        margin-left: 10;
+        .textarea {
+            @include make-font-size(0);
+            padding: 2;
+            //background: rgba(0, 0, 0, 0.03);
+            border: 0;
+            width: 100%;
+            border-radius: 5;
+            color: $black;
+
+            &:focus {
+                background: rgba(0, 0, 0, 0.05);
+            }
+        }
+
+        .editor-mode {
+            color: $heading;
+            font-weight: bold;
+            @include make-font-size(0);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .editor-mode:hover {
+            color: $primary;
+        }
+
+        .attach-media-container {
+            height: 50;
+            @include make-font-size(1);
+            padding: 8;
+            border-width: 2;
+            border-color: $gray-border;
+            border-radius: $action-button-radius;
+            .media-icon {
+                color: $primary;
+                @include make-font-size(4);
+            }
+        }
+
+        .btn-wrap {
+            padding-left: 1;
+            padding-right: 1;
+            .btn-post {
+                color: $heading;
+                @include make-font-size(1);
+                border-radius: $action-button-radius;
+                font-weight: 500;
+                width: 100%;
+                &:disabled {
+                    opacity: 0.6;
+                    border-width: 1;
+                    border-color: $primary;
+                }
+            }
+        }
+
+        .media-container {
+            .media-wrap {
+                margin: 5;
+                .media-item {
+                    height: 100;
+                    width: 100;
+                    border-radius: 5;
+                    border-width: 2;
+                    border-color: $primary;
+                }
+            }
+            .remove-media {
+                color: $heading;
+                font-size: 20;
+                margin: 10;
+            }
+        }
+    }
+
+    .progress-container {
+        margin: 0;
+        .progress {
+            width: 100%;
+            height: 2;
+            color: $link-primary;
+        }
     }
 }

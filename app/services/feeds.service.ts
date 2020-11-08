@@ -1,8 +1,8 @@
-import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NormalPostData, PostActionForMedia } from '~/shared/models/post-action.model';
 import { Observable, of } from 'rxjs';
 import { environment } from '~/environments/environment';
+import { NormalPostData, PostActionForMedia } from '~/shared/models/post-action.model';
 
 @Injectable()
 export class FeedsService {
@@ -11,10 +11,9 @@ export class FeedsService {
 
   constructor(private http: HttpClient) { }
 
-  postFeed(data, apiUrl) {
+  postFeed(data, apiUrl: string) {
     if (!apiUrl) return of();
-    const req = new HttpRequest('POST', this.baseUrl + apiUrl, data, { reportProgress: true });
-    return this.http.request(req);
+    return this.http.post(this.baseUrl + apiUrl, data, { reportProgress: true, observe: "events" });
   }
   editPost(text: string, blogTitle: string, postId: number) {
     if (!postId) return of();

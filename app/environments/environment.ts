@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   //Special alias to your host loopback interface (i.e., 127.0.0.1 on your development machine)
   // baseUrl: 'http://10.0.2.2:3010/api/v1/',
-  baseUrl: 'https://dbf334b60a26.ngrok.io/api/v1/',
+  baseUrl: 'https://257507b0dbe4.ngrok.io/api/v1/',
   allowTracking: false,
   googleKey: '836632017511-na1k4gagi79qlvdp644q1shd0rjffoc9.apps.googleusercontent.com',
   fbKey: '1336590906533811',

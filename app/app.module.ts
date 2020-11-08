@@ -21,6 +21,8 @@ import * as imageModule from '@nativescript-community/ui-image';
 import * as app from "@nativescript/core/application";
 import { FeedsService } from './services/feeds.service';
 import { Fontawesome } from 'nativescript-fontawesome';
+import { SkeletonModule } from './shared/skeleton.module';
+import { AppModalModule } from './shared/app-modal.module';
 
 Fontawesome.init();
 
@@ -46,6 +48,8 @@ if (applicationModule.android) {
     AuthModule,
     MaterialModule,
     SharedModule,
+    SkeletonModule,
+    AppModalModule,
     HomeModule
   ],
   providers: [

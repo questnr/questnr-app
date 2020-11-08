@@ -8,6 +8,7 @@ import {
 } from '@nativescript/angular';
 import { NgRippleModule } from 'nativescript-ripple/angular';
 import { TNSImageModule } from '@nativescript-community/ui-image/angular';
+import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { TNSImageModule } from '@nativescript-community/ui-image/angular';
     ReactiveFormsModule,
     NativeScriptHttpClientModule,
     NgRippleModule,
-    TNSImageModule
+    TNSImageModule,
+    NativeScriptUIListViewModule
   ],
   declarations: [
   ],
@@ -28,7 +30,8 @@ import { TNSImageModule } from '@nativescript-community/ui-image/angular';
     ReactiveFormsModule,
     NativeScriptHttpClientModule,
     NgRippleModule,
-    TNSImageModule
+    TNSImageModule,
+    NativeScriptUIListViewModule
   ],
   schemas: [
     NO_ERRORS_SCHEMA
