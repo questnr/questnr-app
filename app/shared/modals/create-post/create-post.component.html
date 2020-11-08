@@ -19,9 +19,15 @@
       </StackLayout>
 
       <StackLayout class="post-create-container">
-        <TextView class="textarea" hint="Describe Here..." (loaded)="onFeedTextViewLoaded($event)" [formControl]="text"
-          (textChange)="onTextChange($event)">
-        </TextView>
+        <StackLayout *ngIf="!isBlogEditor">
+          <TextView class="textarea" hint="Describe Here..." (loaded)="onFeedTextViewLoaded($event)"
+            [formControl]="text" (textChange)="onTextChange($event)">
+          </TextView>
+        </StackLayout>
+
+        <StackLayout *ngIf="isBlogEditor">
+          <!-- <rt:RichTextField height="60" iconColor="red" fieldBackgroundColor="transparent"></rt:RichTextField> -->
+        </StackLayout>
 
         <StackLayout>
           <Label *ngIf="isBlogEditor" text="switch to normal editor" (tap)="switchEditor(false)"

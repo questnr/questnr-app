@@ -1,20 +1,18 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { FinalEventData, Img } from '@nativescript-community/ui-image';
+import { FinalEventData } from '@nativescript-community/ui-image';
 import { ModalDialogParams } from '@nativescript/angular';
 import * as bghttp from '@nativescript/background-http';
-import { FlexboxLayout, ObservableArray, Page, TextView, View } from '@nativescript/core';
+import { ObservableArray, Page, TextView } from '@nativescript/core';
 import * as app from '@nativescript/core/application';
 import { ImagePickerOptions, Mediafilepicker } from 'nativescript-mediafilepicker';
 import { FilePickerOptions, VideoPickerOptions } from 'nativescript-mediafilepicker/mediafilepicker.common';
 import { ListViewEventData, RadListView } from 'nativescript-ui-listview';
 import { environment } from '~/environments/environment';
 import { AuthService } from '~/services/auth.service';
-import { CommonService } from '~/services/common.service';
 import { FeedsService } from '~/services/feeds.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { ProfileIconComponent } from '~/shared/containers/profile-icon/profile-icon.component';
-import { PostMedia } from '~/shared/models/post-action.model';
 
 class MediaSrc {
   public type: string;
@@ -85,7 +83,7 @@ export class CreatePostComponent implements OnInit, AfterViewInit {
   constructor(private params: ModalDialogParams,
     public authService: AuthService,
     private feedsService: FeedsService,
-    private commonService: CommonService,
+    private viewContainerRef: ViewContainerRef,
     private snackBarService: SnackBarService) {
 
     // To test progress bar
@@ -121,6 +119,11 @@ export class CreatePostComponent implements OnInit, AfterViewInit {
   }
 
   switchEditor(isBlogEditor) {
+    if (isBlogEditor) {
+      this.close();
+      this.snackBarService.showComingSoon('Blog Editor', this.viewContainerRef);
+      return;
+    }
     this.isBlogEditor = isBlogEditor;
     if (this.isBlogEditor) {
       this.postEditorName = "Blog";
@@ -218,6 +221,7 @@ export class CreatePostComponent implements OnInit, AfterViewInit {
           this.isLoading = false;
           this.uploading = false;
           this.uploadProgress = 0;
+          this.close();
           this.snackBarService.showSomethingWentWrong();
         });
 
@@ -237,6 +241,7 @@ export class CreatePostComponent implements OnInit, AfterViewInit {
 
   uploadCompleted(createdPost) {
     this.reset();
+    this.snackBarService.show({ snackText: "Post created!" });
     this.params.closeCallback(createdPost);
   }
 

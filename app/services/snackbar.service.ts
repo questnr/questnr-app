@@ -10,14 +10,18 @@ export class SnackBarService {
     constructor() {
     }
 
-    show({ snackText }): void {
-        snackbar.simple(snackText, 'white', '#f15152', 3, false).then((args) => {
+    show({ snackText, view = undefined }): void {
+        snackbar.simple(snackText, 'white', '#f15152', 3, false, view).then((args) => {
             console.log('jsonResult', JSON.stringify(args));
         });
     }
 
-    showSomethingWentWrong(): void {
-        this.show({ snackText: 'something went wrong.' });
+    showSomethingWentWrong(view = undefined): void {
+        this.show({ snackText: 'something went wrong.', view });
+    }
+
+    showComingSoon(text, view = undefined): void {
+        this.show({ snackText: `${text} is coming soon!`, view });
     }
 
     close(): void {
