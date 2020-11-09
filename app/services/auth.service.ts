@@ -1,9 +1,9 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { RouterExtensions } from "@nativescript/angular";
 import { getString, setString } from "@nativescript/core/application-settings";
-import { Observable } from "rxjs";
-import { map } from 'rxjs/operators';
+import { Observable, of } from "rxjs";
+import { catchError, map } from 'rxjs/operators';
 import { environment } from "~/environments/environment";
 import { AvatarDTO } from "~/shared/models/common.model";
 import { LoginResponse } from "~/shared/models/login.model";
@@ -34,14 +34,21 @@ const staticLoginReponse2 = {
 
 @Injectable()
 export class AuthService {
-  baseUrl = environment.baseUrl;
+  private baseUrl = environment.baseUrl;
+  private remoteUser: User;
+  private avatar: AvatarDTO;
 
   constructor(private http: HttpClient,
     private jwtService: JWTService,
     private loaderService: LoaderService,
     private routerExtension: RouterExtensions) {
+    // @todo: only for testing purpose
     this.accessToken = staticLoginReponse.accessToken;
     this.user = JSON.stringify(staticLoginReponse.accessToken);
+
+    // this.getLoggedInUserDetails().subscribe((user) => {
+    //   console.log("getLoggedInUserDetails", user);
+    // });
   }
   checkUsernameExists(val: string) {
     return this.http.post(this.baseUrl + 'check-username', { username: val });
@@ -57,6 +64,9 @@ export class AuthService {
         if (loginResponse.accessToken && loginResponse.loginSuccess) {
           this.accessToken = loginResponse.accessToken;
           this.user = JSON.stringify(this.getLocalUserProfile(loginResponse.accessToken));
+          this.getLoggedInUserDetails().subscribe((user) => {
+            console.log("getLoggedInUserDetails", user);
+          });
         }
         return loginResponse;
       }));
@@ -92,6 +102,31 @@ export class AuthService {
   public isUserLoggedIn(): boolean {
     let loggedIn = !!this.user;
     return loggedIn;
+  }
+
+  getLoggedInUserDetails(): Observable<User | void> {
+    let localUser = this.getLocalUserProfile(this.accessToken);
+    return this.getUserDetails(localUser.id).pipe(map((user: User) => {
+      if (localUser.id == user.userId) {
+        this.remoteUser = user;
+        this.avatar = this.remoteUser.avatarDTO;
+        return user;
+      } else {
+        this.logout();
+        return of(null);
+      }
+    }), catchError((error: HttpErrorResponse) => {
+      this.logout();
+      return of(null);
+    }));
+  }
+
+  public getUser(): User {
+    return this.remoteUser;
+  }
+
+  public getAvatar(): AvatarDTO {
+    return this.avatar;
   }
 
   getLocalUserProfile(accessToken): LocalUser {

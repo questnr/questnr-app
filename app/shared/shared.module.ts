@@ -10,6 +10,7 @@ import { ActionBarComponent } from './containers/action-bar/action-bar.component
 import { HorizontalProfileComponent } from './containers/horizontal-profile/horizontal-profile.component';
 import { ProfileIconComponent } from './containers/profile-icon/profile-icon.component';
 import { MaterialModule } from './material.module';
+import { CreatePostComponent } from './containers/create-post/create-post.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { MaterialModule } from './material.module';
     HorizontalProfileComponent,
     ProfileIconComponent,
     HrComponent,
-    SpaceComponent
+    SpaceComponent,
+    CreatePostComponent
   ],
   providers: [
   ],
@@ -33,7 +35,8 @@ import { MaterialModule } from './material.module';
     HorizontalProfileComponent,
     ProfileIconComponent,
     HrComponent,
-    SpaceComponent
+    SpaceComponent,
+    CreatePostComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

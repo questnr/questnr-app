@@ -31,6 +31,8 @@ export const qColors = {
     $red: "rgb(236, 11, 11)",
     $danger: "rgba(253, 60, 67, 0.8)",
     $svgBackground: "#f1515221",
+
+    $green: 'green'
 }
 
 export const qSize = {

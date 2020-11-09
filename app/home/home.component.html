@@ -3,9 +3,7 @@
     <qn-action-bar [pageViewContainerRef]="viewContainerRef"></qn-action-bar>
   </Page.actionBar>
 
-  <GridLayout rows="auto, *">
-
-    <Button text="Make a Questnr" textWrap="true" (tap)="createQuestnr()"></Button>
-
+  <GridLayout>
+    <qn-create-post></qn-create-post>
   </GridLayout>
 </Page>

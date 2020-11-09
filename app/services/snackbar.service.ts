@@ -20,8 +20,8 @@ export class SnackBarService {
         this.show({ snackText: 'something went wrong.', view });
     }
 
-    showComingSoon(text, view = undefined): void {
-        this.show({ snackText: `${text} is coming soon!`, view });
+    showComingSoon(text = "", view = undefined): void {
+        this.show({ snackText: text.length ? `${text} is coming soon!` : 'Coming Soon!', view });
     }
 
     close(): void {

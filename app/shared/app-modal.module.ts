@@ -4,7 +4,7 @@ import {
   NativeScriptRouterModule
 } from '@nativescript/angular';
 import { MaterialModule } from './material.module';
-import { CreatePostComponent } from './modals/create-post/create-post.component';
+import { CreatePostModalComponent } from './modals/create-post-modal/create-post-modal.component';
 import { SharedModule } from './shared.module';
 
 @NgModule({
@@ -15,12 +15,12 @@ import { SharedModule } from './shared.module';
     SharedModule
   ],
   declarations: [
-    CreatePostComponent
+    CreatePostModalComponent
   ],
   providers: [
   ],
   exports: [
-    CreatePostComponent
+    CreatePostModalComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

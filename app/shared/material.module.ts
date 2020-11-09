@@ -1,13 +1,14 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TNSImageModule } from '@nativescript-community/ui-image/angular';
 import {
   NativeScriptCommonModule,
   NativeScriptFormsModule,
   NativeScriptHttpClientModule,
   NativeScriptRouterModule
 } from '@nativescript/angular';
+import { NgShadowModule } from "@dsvishchov/nativescript-ngx-shadow";
 import { NgRippleModule } from 'nativescript-ripple/angular';
-import { TNSImageModule } from '@nativescript-community/ui-image/angular';
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 
 @NgModule({
@@ -19,7 +20,8 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
     NativeScriptHttpClientModule,
     NgRippleModule,
     TNSImageModule,
-    NativeScriptUIListViewModule
+    NativeScriptUIListViewModule,
+    NgShadowModule
   ],
   declarations: [
   ],
@@ -31,7 +33,8 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
     NativeScriptHttpClientModule,
     NgRippleModule,
     TNSImageModule,
-    NativeScriptUIListViewModule
+    NativeScriptUIListViewModule,
+    NgShadowModule
   ],
   schemas: [
     NO_ERRORS_SCHEMA

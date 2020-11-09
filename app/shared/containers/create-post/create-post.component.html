@@ -1,0 +1,24 @@
+<StackLayout class="create-post-wrapper" orientation="vertical" verticalAlignment="top" shadow="3" elevation="1">
+  <GridLayout class="head" height="45" columns="auto, *">
+    <StackLayout class="profile-icon" row="0" col="0" verticalAlignment="center" horizontalAlignment="stretch">
+      <qn-profile-icon verticalAlignment="center" [height]="45" [avatar]="avatar"></qn-profile-icon>
+    </StackLayout>
+    <StackLayout row="0" col="1" verticalAlignment="center" horizontalAlignment="stretch">
+      <Button shadow="3" elevation="1" class="create-btn" verticalAlignment="center" height="35" text="Make a Questnr"
+        textWrap="true" (tap)="createQuestnr()"></Button>
+    </StackLayout>
+  </GridLayout>
+  <FlexboxLayout verticalAlignment="center" class="action-list" flexDirection="row" justifyContent="space-around">
+    <StackLayout orientation="horizontal" horizontalAlignment="stretch">
+      <Label verticalAlignment="center" class="fa icon question" text="&#xf059;"></Label>
+      <Label class="text" horizontalAlignment="center" text="Ask a Question" textWrap="true"
+        (tap)="createQuestion()"></Label>
+    </StackLayout>
+    <StackLayout orientation="horizontal" class="separator"></StackLayout>
+    <StackLayout orientation="horizontal" horizontalAlignment="stretch">
+      <Label verticalAlignment="center" class="fa icon picture" text="&#xf1c5;"></Label>
+      <Label class="text" horizontalAlignment="center" text="Add Media to Post" textWrap="true"
+        (tap)="createQuestnr()"></Label>
+    </StackLayout>
+  </FlexboxLayout>
+</StackLayout>

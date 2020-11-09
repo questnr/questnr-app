@@ -1,0 +1,50 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.create-post-wrapper {
+    margin: 5;
+    border-width: 1;
+    border-color: $gray;
+    border-radius: 10;
+    padding-left: 3;
+    padding-right: 3;
+    .head {
+        @include make-font-size(1);
+        margin: 5;
+        .profile-icon {
+            margin-right: 5;
+        }
+        .create-btn {
+            margin: 1;
+            width: 100%;
+            border-radius: 20;
+            background: #f0f2f5;
+            color: #787a7e;
+            font-weight: 200;
+            letter-spacing: 0.1;
+            border-width: 0;
+        }
+    }
+    .action-list {
+        @include make-font-size(0);
+        margin: 5;
+        padding: 3;
+        color: $gray-font;
+        Label {
+            padding: 5;
+        }
+        .icon {
+            @include make-font-size(1);
+        }
+        .icon.question {
+            color: $green;
+        }
+        .icon.picture {
+            color: $primary;
+        }
+        .separator {
+            width: 1;
+            background-color: $gray-font;
+        }
+    }
+}

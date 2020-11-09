@@ -24,11 +24,11 @@ class MediaSrc {
 }
 
 @Component({
-  selector: 'qn-create-post',
-  templateUrl: './create-post.component.html',
-  styleUrls: ['./create-post.component.scss']
+  selector: 'qn-create-post-modal',
+  templateUrl: './create-post-modal.component.html',
+  styleUrls: ['./create-post-modal.component.scss']
 })
-export class CreatePostComponent implements OnInit, AfterViewInit {
+export class CreatePostModalComponent implements OnInit, AfterViewInit {
   feedTextViewRef: TextView;
   @ViewChild('fileInput') fileInput: ElementRef;
 
