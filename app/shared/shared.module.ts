@@ -3,9 +3,9 @@ import {
   NativeScriptCommonModule,
   NativeScriptRouterModule
 } from '@nativescript/angular';
-import { CircularProgressBarComponent } from './components/circular-progress-bar/circular-progress-bar.component';
-import { HrComponent } from './components/hr/hr.component';
-import { SpaceComponent } from './components/space/space.component';
+import { CircularProgressBarComponent } from './util/circular-progress-bar/circular-progress-bar.component';
+import { HrComponent } from './util/hr/hr.component';
+import { SpaceComponent } from './util/space/space.component';
 import { ActionBarComponent } from './containers/action-bar/action-bar.component';
 import { HorizontalProfileComponent } from './containers/horizontal-profile/horizontal-profile.component';
 import { ProfileIconComponent } from './containers/profile-icon/profile-icon.component';
