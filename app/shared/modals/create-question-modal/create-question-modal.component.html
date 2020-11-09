@@ -1,0 +1,47 @@
+<Page xmlns="http://www.nativescript.org/tns.xsd" (loaded)="onPageLoaded($event)">
+  <ScrollView class="create-question-wrapper" orientation="vertical">
+    <StackLayout orientation="vertical">
+      <StackLayout class="progress-container" *ngIf="isLoading && uploading" orientation="horizontal"
+        horizontalAlignment="stretch">
+        <Progress [value]="uploadProgress" maxValue="100" class="progress"></Progress>
+      </StackLayout>
+      <GridLayout height="50" rows="*">
+        <StackLayout row="0" orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
+          <Label class="modal-title h2 text-center" text="Ask a Question" horizontalAlignment="center"
+            textWrap="true"></Label>
+        </StackLayout>
+        <Label class="close-modal fa" row="0" verticalAlignment="center" horizontalAlignment="right" text="&#xf00d;"
+          (tap)="close()"></Label>
+      </GridLayout>
+
+      <StackLayout>
+        <qn-hr></qn-hr>
+      </StackLayout>
+
+      <StackLayout class="post-create-container">
+        <TextView class="textarea" hint="Write your question here..." (loaded)="onQuestionTextViewLoaded($event)"
+          [formControl]="questionText">
+        </TextView>
+
+        <StackLayout class="question-option-list">
+          <TextField class="question-option" hint="Yes" [formControl]="agreeText" autocorrect="false"
+            verticalAlignment="middle">
+          </TextField>
+          <StackLayout>
+            <qn-space [space]="10"></qn-space>
+          </StackLayout>
+          <TextField class="question-option" hint="No" [formControl]="disagreeText" autocorrect="false"
+            verticalAlignment="middle">
+          </TextField>
+        </StackLayout>
+
+
+        <StackLayout class="btn-wrap">
+          <Button class="btn-post" text="Create" [ngClass]="isQuestionInvalid() || isLoading ? 'disabled': ''"
+            [isEnabled]="!(isQuestionInvalid() || isLoading)" (tap)="postQuestion()">
+          </Button>
+        </StackLayout>
+      </StackLayout>
+    </StackLayout>
+  </ScrollView>
+</Page>

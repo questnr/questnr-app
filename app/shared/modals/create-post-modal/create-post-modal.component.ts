@@ -200,29 +200,17 @@ export class CreatePostModalComponent implements OnInit, AfterViewInit {
         } else {
           this.apiUrl = `${environment.baseUrl}user/posts`;
         }
-        var request: bghttp.Request = {
-          url: this.apiUrl,
-          method: "POST",
-          headers: {
-            "Content-Type": "application/octet-stream",
-            "Authorization": 'Bearer ' + this.authService.getAccessToken()
-          },
-          description: "Uploading "
-        };
-        let session = bghttp.session("image-upload-1");
-        let task: bghttp.Task = session.multipartUpload(formData, request);
+        let task: bghttp.Task = this.feedsService.postFeed(formData, this.apiUrl);
+
         task.on("progress", (e) => {
           this.uploading = true;
           this.uploadProgress = Math.round(e.currentBytes / e.totalBytes * 100);
           // console.log("uploadProgress", this.uploadProgress, e.currentBytes, e.totalBytes);
         });
+
         task.on("error", (error) => {
           // @todo: show error message from server if any
-          this.isLoading = false;
-          this.uploading = false;
-          this.uploadProgress = 0;
-          this.close();
-          this.snackBarService.showSomethingWentWrong();
+          this.errorHandler(error);
         });
 
         task.on("complete", (e: any) => {
@@ -239,9 +227,22 @@ export class CreatePostModalComponent implements OnInit, AfterViewInit {
     }
   }
 
+  errorHandler(error): void {
+    this.isLoading = false;
+    this.uploading = false;
+    this.uploadProgress = 0;
+    console.log("errorHandler", error);
+    this.close();
+    if (error?.error?.errorMessage) {
+      this.snackBarService.show({ snackText: error?.error?.errorMessage });
+    } else {
+      this.snackBarService.showSomethingWentWrong();
+    }
+  }
+
   uploadCompleted(createdPost) {
     this.reset();
-    this.snackBarService.show({ snackText: "Post created!" });
+    this.snackBarService.show({ snackText: "Your post has been created!" });
     this.params.closeCallback(createdPost);
   }
 

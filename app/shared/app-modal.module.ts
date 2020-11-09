@@ -5,6 +5,7 @@ import {
 } from '@nativescript/angular';
 import { MaterialModule } from './material.module';
 import { CreatePostModalComponent } from './modals/create-post-modal/create-post-modal.component';
+import { CreateQuestionModalComponent } from './modals/create-question-modal/create-question-modal.component';
 import { SharedModule } from './shared.module';
 
 @NgModule({
@@ -15,12 +16,14 @@ import { SharedModule } from './shared.module';
     SharedModule
   ],
   declarations: [
-    CreatePostModalComponent
+    CreatePostModalComponent,
+    CreateQuestionModalComponent
   ],
   providers: [
   ],
   exports: [
-    CreatePostModalComponent
+    CreatePostModalComponent,
+    CreateQuestionModalComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

@@ -1,0 +1,75 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.create-question-wrapper {
+    .modal-title {
+        @include make-font-size(6);
+        font-weight: 400;
+        color: $heading;
+        padding-top: 5;
+        // padding-bottom: 4;
+    }
+    .close-modal {
+        @include make-font-size(2);
+        height: 30;
+        width: 30;
+        // margin-right: 7;
+        // padding: 5;
+        color: $primary;
+        // border-radius: 50;
+        // border-width: 1;
+        // border-color: $black;
+    }
+    .post-create-container {
+        margin-top: 10;
+        margin-right: 10;
+        margin-left: 10;
+        .textarea {
+            @include make-font-size(1);
+            padding: 2;
+            //background: rgba(0, 0, 0, 0.03);
+            border: 0;
+            width: 100%;
+            border-radius: 5;
+            color: $black;
+            placeholder-color: $default-font-color;
+
+            &:focus {
+                background: rgba(0, 0, 0, 0.05);
+            }
+        }
+
+        .question-option-list {
+            margin: 10;
+            .question-option {
+                @include make-font-size(1);
+                margin: 0;
+                padding: 10;
+                width: 100%;
+                border-top-right-radius: 15;
+                border-bottom-right-radius: 15;
+                background: #f0f2f5;
+                placeholder-color: $default-font-color;
+                font-weight: 400;
+                letter-spacing: 0.1;
+                border-width: 0;
+            }
+        }
+        .btn-wrap {
+            padding-left: 1;
+            padding-right: 1;
+            .btn-post {
+                color: $heading;
+                @include make-font-size(1);
+                border-radius: $action-button-radius;
+                font-weight: 500;
+                width: 100%;
+                &:disabled {
+                    opacity: 0.6;
+                    border-width: 1;
+                    border-color: $primary;
+                }
+            }
+        }
+    }
+}

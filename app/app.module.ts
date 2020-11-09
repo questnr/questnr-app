@@ -23,6 +23,7 @@ import { FeedsService } from './services/feeds.service';
 import { Fontawesome } from 'nativescript-fontawesome';
 import { SkeletonModule } from './shared/skeleton.module';
 import { AppModalModule } from './shared/app-modal.module';
+import { AskQuestionService } from './services/ask-question.service';
 
 const tnsfx = require('nativescript-effects');
 
@@ -67,7 +68,8 @@ if (applicationModule.android) {
     SnackBarService,
     UtilityService,
     ApiService,
-    FeedsService
+    FeedsService,
+    AskQuestionService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

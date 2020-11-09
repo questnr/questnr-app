@@ -3,17 +3,30 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { environment } from '~/environments/environment';
 import { NormalPostData, PostActionForMedia } from '~/shared/models/post-action.model';
+import * as bghttp from '@nativescript/background-http';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class FeedsService {
 
   baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
-  postFeed(data, apiUrl: string) {
-    if (!apiUrl) return of();
-    return this.http.post(this.baseUrl + apiUrl, data, { reportProgress: true, observe: "events" });
+  postFeed(formData, apiUrl: string): bghttp.Task {
+    if (!apiUrl) return;
+    let postRequestId = Math.floor(Math.random() * 100);
+    let request: bghttp.Request = {
+      url: apiUrl,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/octet-stream",
+        "Authorization": 'Bearer ' + this.authService.getAccessToken()
+      },
+      description: `Uploading ${postRequestId}`
+    };
+    let session = bghttp.session(`image-upload ${postRequestId}`);
+    return session.multipartUpload(formData, request);
   }
   editPost(text: string, blogTitle: string, postId: number) {
     if (!postId) return of();

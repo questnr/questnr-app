@@ -25,7 +25,6 @@ export class InterceptorService implements HttpInterceptor {
     const contentType = 'application/json';
 
     if (req.body instanceof FormData) {
-      console.log("FormData")
       headers = authService.isUserLoggedIn() ?
         headers
           .set('Authorization', 'Bearer ' + authService.getAccessToken())

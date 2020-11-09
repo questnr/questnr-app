@@ -4,6 +4,7 @@ import { AuthService } from '~/services/auth.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { UtilityService } from '~/services/utility.service';
 import { CreatePostModalComponent } from '~/shared/modals/create-post-modal/create-post-modal.component';
+import { CreateQuestionModalComponent } from '~/shared/modals/create-question-modal/create-question-modal.component';
 import { AvatarDTO } from '~/shared/models/common.model';
 
 @Component({
@@ -33,7 +34,12 @@ export class CreatePostComponent implements OnInit {
   }
 
   createQuestion() {
-    this.snackBarService.showComingSoon();
+    const options: ModalDialogOptions = {
+      viewContainerRef: this.viewContainerRef,
+      fullscreen: true,
+      context: {}
+    };
+    this.modalService.showModal(CreateQuestionModalComponent, options);
   }
 
   createQuestnr() {
