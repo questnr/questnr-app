@@ -1,0 +1,94 @@
+<StackLayout class="recommended-post-wrapper box" verticalAlignment="top">
+  <GridLayout class="head-wrap" verticalAlignment="top" columns="auto, *, auto" *ngIf="!showUserHeader">
+    <StackLayout class="profile-icon" orientation="horizontal" row="0" col="0" verticalAlignment="stretch">
+      <qn-profile-icon class="head" [avatar]="feed.userDTO.avatarDTO" [height]="30" [sizeRef]="'small'"
+        [slug]="feed?.userDTO?.slug">
+      </qn-profile-icon>
+    </StackLayout>
+    <GridLayout verticalAlignment="top" row="0" col="1" columns="*, auto" class="profile-detail">
+      <StackLayout row="0" col="0">
+        <qn-username class="head" [username]="feed?.userDTO?.username" [slug]="feed.userDTO.slug">
+        </qn-username>
+        <qn-time-string class="time-string" [metaData]="feed.metaData"></qn-time-string>
+      </StackLayout>
+      <StackLayout col="1">
+        <Label class="subhead" [text]="'Posted in '+feed?.communityDTO?.communityName"
+          [nsRouterLink]="['/', communityPath, feed?.communityDTO.slug]">
+        </Label>
+      </StackLayout>
+    </GridLayout>
+    <StackLayout class="post-menu" col="2">
+      <Label text="..."></Label>
+    </StackLayout>
+  </GridLayout>
+
+  <GridLayout class="head-wrap" verticalAlignment="top" columns="auto, *, auto" *ngIf="showUserHeader">
+    <StackLayout class="profile-icon" orientation="horizontal" row="0" col="0" verticalAlignment="stretch">
+      <qn-profile-icon [avatar]="feed.userDTO.avatarDTO" [height]="30" [sizeRef]="'small'" [slug]="feed?.userDTO?.slug">
+      </qn-profile-icon>
+    </StackLayout>
+    <StackLayout verticalAlignment="top" row="0" col="1" class="profile-detail">
+      <qn-username class="head" [username]="feed?.userDTO?.username" [slug]="feed.userDTO.slug">
+      </qn-username>
+      <qn-time-string class="time-string" [metaData]="feed.metaData"></qn-time-string>
+    </StackLayout>
+    <StackLayout class="post-menu" col="2">
+      <Label text="..."></Label>
+    </StackLayout>
+    <!-- <div class="spacer"></div>
+    <app-post-menu-options [isCommunityPost]="!showUserHeader" (postData)="updatePostEvent($event)"
+      [feed]="editableFeed" (removePostEvent)="removePost($event)"></app-post-menu-options> -->
+  </GridLayout>
+
+  <StackLayout>
+    <qn-media-container [postActionId]="feed?.postActionId" [viewMediaList]="viewMediaList"
+      *ngIf="viewMediaList?.length">
+    </qn-media-container>
+  </StackLayout>
+
+  <StackLayout class="feed-text">
+    <qn-feed-text [text]="displayText" [hashTagsData]="hashTagsData" #feedTextComponent></qn-feed-text>
+  </StackLayout>
+
+  <!-- <div #feedViewContainer></div> -->
+  <!-- <div [ngClass]="viewPortPassed ? 'txt-underline' : ''"></div> -->
+  <!-- <div class="mb-2" *ngIf="feed.postData.postEditorType!='blog'">
+    <media-container [postActionId]="feed?.postActionId" [viewMediaList]="viewMediaList" *ngIf="viewMediaList?.length">
+    </media-container>
+    <app-attached-file-list [attachedFileLinkList]="applicationMediaList"></app-attached-file-list>
+    <app-feed-text [text]="displayText" [hashTagsData]="hashTagsData" #feedTextComponent></app-feed-text>
+    <app-meta-card *ngIf="!isYouTubeVideoLink && iFramelyData?.url" [iFramelyData]="iFramelyData"></app-meta-card>
+    <div *ngIf="isYouTubeVideoLink" class="y-video-container">
+      <iframe [src]="safeYoutubeLink" width="100%" height="100%" frameborder="0" webkitallowfullscreen
+        mozallowfullscreen allowfullscreen></iframe>
+    </div>
+  </div> -->
+  <!-- <app-blog-title class="mb-2 link-hide-border" *ngIf="feed.postData.postEditorType=='blog'"
+    [blogTitle]="feed.postData.blogTitle" (click)="openBlog()">
+  </app-blog-title> -->
+  <!-- <div class="count-box">
+    <div (click)="openUserGroupDialog(userListTypeClass.like)">
+      <span>{{feed.postActionMeta.totalLikes? feed.postActionMeta.totalLikes: 0}}
+      </span>
+      {{feed.postActionMeta.totalLikes>1? 'Likes': 'Like'}}</div>
+    <div class="dot"></div>
+    <div> <span> {{feed.postActionMeta.totalComments ? feed.postActionMeta.totalComments : 0}} </span>
+      {{feed.postActionMeta.totalComments> 1? 'Comments': 'Comment'}} </div>
+  </div> -->
+  <!-- <div class="footer-wrap">
+    <button mat-button [disabled]="isLoading" (click)="likePost(feed.postActionId)"
+      [ngClass]="feed?.postActionMeta?.liked? 'liked':''">
+      <mat-icon [innerHtml]="feed?.postActionMeta?.liked?'favorite' :'favorite_border'"></mat-icon> &nbsp;
+      <span [innerHtml]="feed?.postActionMeta?.liked?'Liked' :'Like'"> Like </span>
+    </button>
+    <button mat-button (click)="toggleComments()">
+      <mat-icon>insert_comment</mat-icon> &nbsp;
+      <span> Comment </span>
+    </button>
+    <button mat-button (click)="openShareDialog()">
+      <mat-icon>share</mat-icon> &nbsp;
+      <span> Share </span>
+    </button>
+  </div> -->
+  <!-- <app-create-comment [feed]="feed" #commentComponent></app-create-comment> -->
+</StackLayout>

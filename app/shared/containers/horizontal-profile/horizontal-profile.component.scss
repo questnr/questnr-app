@@ -18,7 +18,7 @@
     // align-items: baseline;
     .head {
       font-weight: 400;
-      @include make-font-size(1);
+      @include make-font-size(0);
     }
     .subhead {
       @include make-font-size(-1);

@@ -10,9 +10,9 @@
 $tablet-offset: 5;
 @mixin make-font-size($level, $device: 0) {
     @if $device == 0 {
-        font-size: calc-font-size(14, $level);
+        font-size: calc-font-size(12, $level);
     }
     @if $device == 1 {
-        font-size: calc-font-size(calc-font-size(13, $tablet-offset), $level);
+        font-size: calc-font-size(calc-font-size(12, $tablet-offset), $level);
     }
 }

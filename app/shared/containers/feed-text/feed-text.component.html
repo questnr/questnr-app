@@ -1,0 +1,8 @@
+<StackLayout class="feed-text" *ngIf="text && text !== 'null'">
+    <StackLayout>
+        <HtmlView class="pre" [html]="textToShow"></HtmlView>
+    </StackLayout>
+    <StackLayout *ngIf="hasMoreText" class="read-more-container">{{endPart}}
+        <Label class="read-more" (tap)="readMoreText()">read more</Label>
+    </StackLayout>
+</StackLayout>

@@ -1,0 +1,28 @@
+<GridLayout class="video-container" height="100%" rows="*, auto" (loaded)="onVideoContainerLoaded($event)"
+  (touch)="handleUserInteractingWithVideo($event)">
+  <GridLayout class="controller-action" *ngIf="videoPaused()" row="0" height="100%" width="100%">
+    <Label horizontalAlignment="center" verticalAlignment="center" class="fa" text="&#xf04c;"></Label>
+  </GridLayout>
+  <GridLayout class="controller-action" *ngIf="videoPlayed()" row="0" height="100%" width="100%">
+    <Label horizontalAlignment="center" verticalAlignment="center" class="fa" text="&#xf04b;"></Label>
+  </GridLayout>
+  <GridLayout class="controller-action" *ngIf="videoMuted()" row="0" height="100%" width="100%">
+    <Label horizontalAlignment="center" verticalAlignment="center" class="fa" text="&#xf026;"></Label>
+  </GridLayout>
+  <GridLayout class="controller-action" *ngIf="videoUnmuted()" row="0" height="100%" width="100%">
+    <Label horizontalAlignment="center" verticalAlignment="center" class="fa" text="&#xf028;"></Label>
+  </GridLayout>
+  <VideoPlayer row="0" [muted]="true" (loaded)="onVideoLoaded($event)" [src]="src" autoplay="true" loop="true"
+    (tap)="toggleVideoVoiceState()" (doubleTap)="toggleVideoPlayingState()">
+  </VideoPlayer>
+  <GridLayout class="video-controller" [ngClass]="[videoContainer.userInteraction.isLive ? 
+'onfocus': '',
+videoContainer.videoInteraction.isLive ? 'onshow' : 'onhide']" row="0" columns="auto, *, auto"
+    verticalAlignment="bottom" *ngIf="isVideoLoaded()" [id]="id">
+    <Label class="left-indicator" col="0" verticalAlignment="center" [text]="getStartTime()"></Label>
+    <Slider col="1" [formControl]="videoContainer.currentTime" minValue="0" [maxValue]="getVideoDuration()"
+      (loaded)="onSliderLoaded($event)" [backgroundColor]="qColors.$primary" [color]="qColors.$heading"
+      (touch)="handleUserInteractingWithController($event)"></Slider>
+    <Label class="right-indicator" col="2" verticalAlignment="center" [text]="getEndTime()"></Label>
+  </GridLayout>
+</GridLayout>

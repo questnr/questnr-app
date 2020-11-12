@@ -14,6 +14,7 @@ export const qColors = {
     $primaryButtonBorder: "#1e555c",
     $secondaryButtonBorder: "#344966",
     $mobileNavColor: "#eeeeee",
+    $xlightPrimary: '#f8cfcf',
 
     $primaryTransparent: "#f8919183",
     $dataPrimary: "hsla(344, 100%, 44%, 1)",  // #e0003c

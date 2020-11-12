@@ -7,7 +7,7 @@ import * as bghttp from '@nativescript/background-http';
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class FeedsService {
+export class FeedService {
 
   baseUrl = environment.baseUrl;
 

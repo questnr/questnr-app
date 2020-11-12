@@ -1,0 +1,6 @@
+<StackLayout orientation="horizontal">
+    <Label *ngIf="slug" textWrap="true" [text]="username" [nsRouterLink]="['/', defaultPath, slug]" #usernameComponent>
+    </Label>
+    <Label *ngIf="!slug" textWrap="true" [text]="username" #usernameComponent>
+    </Label>
+</StackLayout>

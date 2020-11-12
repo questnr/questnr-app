@@ -26,7 +26,7 @@
         }
     }
     .action-list {
-        @include make-font-size(0);
+        @include make-font-size(1);
         margin: 5;
         padding: 3;
         color: $gray-font;
@@ -34,7 +34,7 @@
             padding: 5;
         }
         .icon {
-            @include make-font-size(1);
+            @include make-font-size(2);
         }
         .icon.question {
             color: $green;

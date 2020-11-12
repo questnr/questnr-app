@@ -1,0 +1,36 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.video-container {
+    .video-controller {
+        z-index: 100;
+        opacity: 0.5;
+        background-color: $xlight-primary;
+        border-top-right-radius: 5;
+        border-top-left-radius: 5;
+        &.onfocus {
+            opacity: 1;
+        }
+        // &.onshow {
+        //     // visibility: visible;
+        // }
+        // &.onhide {
+        //     // visibility: hidden;
+        // }
+        Label {
+            color: $primary;
+            @include make-font-size(-1);
+        }
+        .left-indicator {
+            margin-left: 3;
+        }
+        .right-indicator {
+            margin-right: 3;
+        }
+    }
+    .controller-action {
+        @include make-font-size(21);
+        color: $primary;
+        z-index: 100;
+    }
+}

@@ -1,0 +1,18 @@
+@import "~/variables";
+
+.feed-text {
+    .pre {
+        margin: 0;
+    }
+
+    .read-more-container {
+        .read-more {
+            border-width: 0;
+            background-color: transparent;
+            color: $link-primary;
+        }
+        .read-more:hover {
+            text-decoration: underline;
+        }
+    }
+}

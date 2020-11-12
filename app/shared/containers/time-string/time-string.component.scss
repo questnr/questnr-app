@@ -1,0 +1,7 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.time-string {
+    color: $primary;
+    @include make-font-size(-2);
+}

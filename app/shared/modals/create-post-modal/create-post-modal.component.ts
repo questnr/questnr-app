@@ -10,7 +10,7 @@ import { FilePickerOptions, VideoPickerOptions } from 'nativescript-mediafilepic
 import { ListViewEventData, RadListView } from 'nativescript-ui-listview';
 import { environment } from '~/environments/environment';
 import { AuthService } from '~/services/auth.service';
-import { FeedsService } from '~/services/feeds.service';
+import { FeedService } from '~/services/feeds.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { ProfileIconComponent } from '~/shared/containers/profile-icon/profile-icon.component';
 
@@ -82,7 +82,7 @@ export class CreatePostModalComponent implements OnInit, AfterViewInit {
 
   constructor(private params: ModalDialogParams,
     public authService: AuthService,
-    private feedsService: FeedsService,
+    private feedService: FeedService,
     private viewContainerRef: ViewContainerRef,
     private snackBarService: SnackBarService) {
 
@@ -200,7 +200,7 @@ export class CreatePostModalComponent implements OnInit, AfterViewInit {
         } else {
           this.apiUrl = `${environment.baseUrl}user/posts`;
         }
-        let task: bghttp.Task = this.feedsService.postFeed(formData, this.apiUrl);
+        let task: bghttp.Task = this.feedService.postFeed(formData, this.apiUrl);
 
         task.on("progress", (e) => {
           this.uploading = true;

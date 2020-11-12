@@ -129,7 +129,7 @@ export class AuthService {
     return this.avatar;
   }
 
-  getLocalUserProfile(accessToken): LocalUser {
+  private getLocalUserProfile(accessToken): LocalUser {
     const decodedData = this.jwtService.parseJwt(accessToken);
     var current_time = Date.now() / 1000;
     if (decodedData.exp < current_time) {
@@ -137,6 +137,10 @@ export class AuthService {
     }
     // console.log("decodedData", decodedData);
     return decodedData;
+  }
+
+  public getStoredUserProfile(): LocalUser {
+    return this.getLocalUserProfile(this.accessToken);
   }
 
   logout() {

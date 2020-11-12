@@ -1,7 +1,10 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import * as applicationModule from '@nativescript/core/application';
+import * as imageModule from '@nativescript-community/ui-image';
 import { NativeScriptModule } from '@nativescript/angular';
+import * as app from "@nativescript/core/application";
+import * as applicationModule from '@nativescript/core/application';
+import { Fontawesome } from 'nativescript-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
@@ -9,23 +12,18 @@ import { HomeModule } from './home/home.module';
 import { InterceptorService } from './interceptor.service';
 import { SearchOverlayComponent } from './search-overlay/search-overlay.component';
 import { ApiService } from './services/api.service';
+import { AskQuestionService } from './services/ask-question.service';
 import { CommonService } from './services/common.service';
+import { FeedService } from './services/feeds.service';
 import { JWTService } from './services/jwt.service';
 import { LoaderService } from './services/loader.service';
 import { OTPVerificationService } from './services/otp-verification.service';
 import { SnackBarService } from './services/snackbar.service';
 import { UtilityService } from './services/utility.service';
+import { AppModalModule } from './shared/app-modal.module';
 import { MaterialModule } from './shared/material.module';
 import { SharedModule } from './shared/shared.module';
-import * as imageModule from '@nativescript-community/ui-image';
-import * as app from "@nativescript/core/application";
-import { FeedsService } from './services/feeds.service';
-import { Fontawesome } from 'nativescript-fontawesome';
 import { SkeletonModule } from './shared/skeleton.module';
-import { AppModalModule } from './shared/app-modal.module';
-import { AskQuestionService } from './services/ask-question.service';
-
-const tnsfx = require('nativescript-effects');
 
 Fontawesome.init();
 
@@ -68,7 +66,7 @@ if (applicationModule.android) {
     SnackBarService,
     UtilityService,
     ApiService,
-    FeedsService,
+    FeedService,
     AskQuestionService
   ],
   bootstrap: [AppComponent],
