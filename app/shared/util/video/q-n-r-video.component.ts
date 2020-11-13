@@ -1,9 +1,11 @@
-import { Component, Input, NgZone, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, NgZone, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { getViewById, GridLayout, Slider, TouchGestureEventData } from '@nativescript/core';
-import { Video } from 'nativescript-videoplayer';
+import { getViewById, GridLayout, isAndroid, Slider, TouchGestureEventData } from '@nativescript/core';
+import { Video } from '@nstudio/nativescript-exoplayer';
 import { CommonService } from '~/services/common.service';
+import { VideoService } from '~/services/video.service';
 import { qColors } from '~/_variables';
+
 enum VideoVoiceState {
   muted,
   unmuted
@@ -19,7 +21,8 @@ enum VideoStatusDisplay {
   muted,
   unmuted,
   playing,
-  paused
+  paused,
+  error
 }
 
 class VideoRef {
@@ -60,6 +63,14 @@ class VideoRef {
   }
   setStreamState(streamState: VideoStreamState) {
     this.streamState = streamState;
+  }
+  play() {
+    this.video.play();
+    this.setStreamState(VideoStreamState.playing);
+  }
+  pause() {
+    this.video.pause();
+    this.setStreamState(VideoStreamState.paused);
   }
   showingStatusChanged(videoStatusDisplay: VideoStatusDisplay) {
     this.videoStatusDisplay = videoStatusDisplay;
@@ -109,19 +120,30 @@ class UserInteraction {
 })
 export class QNRVideoComponent implements OnInit {
   @Input() src: string;
-  @Input() id: string;
+  @Input() videoId: string;
+  @Input() autoplay: boolean = false;
+  @Output() loadedEvent = new EventEmitter();
+
   videoContainer: VideoRef = new VideoRef();
   qColors = qColors;
 
   constructor(private ngZone: NgZone,
-    private commonService: CommonService) { }
+    private commonService: CommonService,
+    private videoService: VideoService) { }
 
   ngOnInit() {
   }
 
+  ngAfterViewInit(): void {
+    this.loadedEvent.emit(this);
+  }
 
   ngOnDestroy(): void {
-    this.stop();
+    if (isAndroid) {
+      this.stop();
+    }
+    console.log("destroy Video");
+    this.videoContainer.video.destroy();
   }
 
   onVideoContainerLoaded(args) {
@@ -131,41 +153,90 @@ export class QNRVideoComponent implements OnInit {
   onVideoLoaded(args) {
     console.log("onVideoLoaded");
     const video = args.object as Video;
-    video.controls = false;
+    this.videoContainer.setLoaded(false);
+    this.videoContainer.setVideo(video);
+    this.videoContainer.setVoiceState(VideoVoiceState.unmuted);
 
     // @todo store in user settings
-    video.on(Video.playbackReadyEvent, () => {
-      console.log("playbackReadyEvent");
-      this.ngZone.run(() => {
-        this.videoContainer.setLoaded(true);
-        this.videoContainer.setCurrentTime(new FormControl(
-          0, [
-          Validators.max(video.getDuration())
-        ]));
-        // this.videoContainer[index].container.height = video.height
-      });
-    });
-    video.on(Video.playbackStartEvent, () => {
-      console.log("playbackStartEvent");
-      this.startSlider();
-    });
-    video.on(Video.pausedEvent, () => {
-      console.log("pausedEvent");
-      this.stopSlider();
-    });
-    video.on(Video.errorEvent, (error) => {
-      console.log("errorEvent");
-    });
+    // video.on(Video.playbackReadyEvent, () => {
+    //   console.log("playbackReadyEvent");
+    //   this.ngZone.run(() => {
+    //     this.videoContainer.setLoaded(true);
+    //     this.videoContainer.setCurrentTime(new FormControl(
+    //       0, [
+    //       Validators.max(video.getDuration())
+    //     ]));
+    //     if (this.autoplay) {
+    //       this.play();
+    //     } else {
+    //       this.videoContainer.setStreamState(VideoStreamState.paused);
+    //     }
+    //   });
+    // });
+    // video.on(Video.playbackStartEvent, () => {
+    //   console.log("playbackStartEvent");
+    //   this.startSlider();
+    //   this.videoContainer.setStreamState(VideoStreamState.playing);
+    // });
+    // video.on(Video.pausedEvent, () => {
+    //   console.log("pausedEvent");
+    //   this.stopSlider();
+    //   this.videoContainer.setStreamState(VideoStreamState.paused);
+    // });
+    // video.on(Video.mutedEvent, () => {
+    //   console.log("mutedEvent");
+    //   this.videoContainer.setVoiceState(VideoVoiceState.muted);
+    // });
+    // video.on(Video.unmutedEvent, () => {
+    //   console.log("unmutedEvent");
+    //   this.videoContainer.setVoiceState(VideoVoiceState.unmuted);
+    // });
+    // video.on(Video.errorEvent, (error: EventData) => {
+    //   console.log("errorEvent", error.object);
+    //   this.videoContainer.setStreamState(VideoStreamState.paused);
+    //   this.videoContainer.showingStatusChanged(VideoStatusDisplay.error);
+    // });
+    // video.on(Video.finishedEvent, () => {
+    //   console.log("finishedEvent");
+    //   this.stopSlider();
+    //   this.videoContainer.setStreamState(VideoStreamState.stopped);
+    // });
     // video.on(Video.currentTimeUpdatedEvent, (args) => {
     //   this.ngZone.run(() => {
     //     this.videoContainer.slider.value = video.currentTime();
     //   });
     // })
-    this.videoContainer.setLoaded(false);
-    this.videoContainer.setVideo(video);
-    this.videoContainer.setVoiceState(VideoVoiceState.muted);
-    // @todo
-    this.videoContainer.setStreamState(VideoStreamState.playing);
+  }
+
+  onVideoFinished(): void {
+    console.log("finishedEvent");
+    this.stopSlider();
+  }
+
+  onPlaybackReady(): void {
+    console.log("playbackReadyEvent");
+    this.ngZone.run(() => {
+      this.videoContainer.setLoaded(true);
+      this.videoContainer.setCurrentTime(new FormControl(
+        0, [
+        Validators.max(this.videoContainer.video.getDuration())
+      ]));
+      if (this.autoplay) {
+        this.play();
+      } else {
+        this.videoContainer.setStreamState(VideoStreamState.paused);
+      }
+    });
+  }
+
+  setPlayWhenReady(autoplay: boolean): void {
+    this.autoplay = autoplay;
+    if (this.videoContainer.loaded) {
+      if (autoplay)
+        this.play();
+      else
+        this.pause();
+    }
   }
 
   isVideoLoaded(): boolean {
@@ -190,12 +261,10 @@ export class QNRVideoComponent implements OnInit {
   toggleVideoPlayingState() {
     const videoRef = this.videoContainer;
     if (videoRef.streamState === VideoStreamState.playing) {
-      videoRef.video.pause();
-      videoRef.setStreamState(VideoStreamState.paused);
+      this.pause();
       videoRef.showingStatusChanged(VideoStatusDisplay.paused);
     } else if (videoRef.streamState === VideoStreamState.paused) {
-      videoRef.video.play();
-      videoRef.setStreamState(VideoStreamState.playing);
+      this.play();
       videoRef.showingStatusChanged(VideoStatusDisplay.playing);
     }
   }
@@ -210,6 +279,7 @@ export class QNRVideoComponent implements OnInit {
   }
 
   stopSlider(): void {
+    if (!this.videoContainer.interval) return;
     clearInterval(this.videoContainer.interval);
     this.videoContainer.interval = null;
   }
@@ -257,18 +327,44 @@ export class QNRVideoComponent implements OnInit {
   handleUserInteractingWithVideo(args: TouchGestureEventData) {
     if (args.getActivePointers().length > 0) {
       const parent = args.view;
-      const controllerContainer: any = getViewById(parent, this.id)
+      const controllerContainer: any = getViewById(parent, this.videoId)
       this.videoContainer.videoInteraction.setLive(controllerContainer);
     }
   }
 
-  pause(): void {
-    this.videoContainer.video.pause();
+  play(force: boolean = false): void {
+    this.ngZone.run(() => {
+      if (!this.videoContainer.loaded) return;
+      if (this.videoContainer.streamState === VideoStreamState.playing && !force)
+        return;
+      // this.videoContainer.video.play();
+      this.videoService.setVideoAndPlay(this);
+      this.videoContainer.setStreamState(VideoStreamState.playing);
+      this.startSlider();
+    });
+  }
+
+  pause(force: boolean = false): void {
+    this.ngZone.run(() => {
+      if (!this.videoContainer.loaded) return;
+      if (this.videoContainer.streamState === VideoStreamState.paused && !force)
+        return;
+      // this.videoContainer.video.pause();
+      this.videoService.resetVideo(this);
+      this.videoContainer.setStreamState(VideoStreamState.paused);
+      this.stopSlider();
+    });
   }
 
   stop(): void {
-    this.stopSlider();
+    if (!this.videoContainer.loaded) return;
     this.videoContainer.video.stop();
+    this.stopSlider();
+    this.videoService.removeVideo(this);
+  }
+
+  isBeingPlayed(): boolean {
+    return this.videoContainer.streamState === VideoStreamState.playing;
   }
 
   getStartTime() {
@@ -295,6 +391,10 @@ export class QNRVideoComponent implements OnInit {
     return this.videoContainer.videoStatusDisplay === VideoStatusDisplay.unmuted;
   }
 
+  videoErrorOccurred() {
+    return this.videoContainer.videoStatusDisplay === VideoStatusDisplay.error;
+  }
+
   secondsToTimeFrame(ms: number): string {
     var h = Math.floor(ms / 3600);
     var m = Math.floor(ms % 3600 / 60);
@@ -313,5 +413,9 @@ export class QNRVideoComponent implements OnInit {
       ].join(':');
     }
     return timeToEnableResend;
+  }
+
+  public isEqual(anotherVideo: QNRVideoComponent): boolean {
+    return this.videoId === anotherVideo.videoId;
   }
 }

@@ -1,22 +1,26 @@
 <GridLayout class="media-container" height="350">
     <Carousel #myCarousel [items]="viewMediaList" height="100%" width="100%" [color]="qColors.$black"
         (pageChanged)="myChangePageEvent($event)" android:indicatorAnimation="drop" [indicatorColor]="qColors.$accent"
-        indicatorOffset="0, 10" showIndicator="true">
+        indicatorOffset="0, 10" [showIndicator]="showIndicator">
         <CarouselItem class="media" *ngFor="let media of viewMediaList;let index=index" verticalAlignment="middle"
             [id]="index" (tap)="myTapPageEvent($event)">
-            <GridLayout *ngIf="media.resourceType === resourceTypeClass.image" verticalAlignment="top">
+            <GridLayout *ngIf="media.resourceType === resourceTypeClass.image">
                 <!-- <div *ngIf="viewMediaList.length > 1" class="media-count">
                     {{'('+(i+1)+'/'+(viewMediaList.length)+')'}}
                 </div> -->
-                <NSImg class="post-media" loadMode="async" [src]="media.postMediaLink" stretch="fitCenter"
-                    (failure)="onFailure($event, index)" autoPlayAnimations="true" fadeDuration="100">
+                <NSImg verticalAlignment="center" class="post-media" loadMode="async" [src]="media.postMediaLink"
+                    stretch="aspectFit" (failure)="onFailure($event, index)">
                 </NSImg>
+                <!-- autoPlayAnimations="true" -->
+                <!-- fadeDuration="100" -->
             </GridLayout>
             <GridLayout *ngIf="media.resourceType === resourceTypeClass.video" verticalAlignment="top">
                 <!-- <div *ngIf="viewMediaList.length > 1" class="media-count">
                     {{'('+(i+1)+'/'+(viewMediaList.length)+')'}}
                 </div> -->
-                <qn-video [src]="media.postMediaLink" [id]="getVideoControllerId(index)"></qn-video>
+                <qn-video (loaded)="onQNRVideoLoaded($event, index)" (loadedEvent)="onQNRVideoRendered($event, index)"
+                    [src]="media.postMediaLink" [videoId]="getVideoControllerId(index)">
+                </qn-video>
                 <!-- <Placeholder (creatingView)="createVideoView($event, media)"></Placeholder> -->
             </GridLayout>
         </CarouselItem>

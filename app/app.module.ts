@@ -20,6 +20,7 @@ import { LoaderService } from './services/loader.service';
 import { OTPVerificationService } from './services/otp-verification.service';
 import { SnackBarService } from './services/snackbar.service';
 import { UtilityService } from './services/utility.service';
+import { VideoService } from './services/video.service';
 import { AppModalModule } from './shared/app-modal.module';
 import { MaterialModule } from './shared/material.module';
 import { SharedModule } from './shared/shared.module';
@@ -67,7 +68,8 @@ if (applicationModule.android) {
     UtilityService,
     ApiService,
     FeedService,
-    AskQuestionService
+    AskQuestionService,
+    VideoService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

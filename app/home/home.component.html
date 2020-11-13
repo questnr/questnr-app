@@ -3,12 +3,12 @@
     <qn-action-bar [pageViewContainerRef]="viewContainerRef"></qn-action-bar>
   </Page.actionBar>
 
-  <ScrollView>
+  <ScrollView (scroll)="onScroll($event)">
     <StackLayout>
       <qn-create-post (onPostCreated)="handlePostCreation($event)" (loaded)="onPostCreationBoxLoaded($event)">
       </qn-create-post>
-      <StackLayout *ngFor="let feed of userFeeds;">
-        <qn-simple-post [feed]="feed">
+      <StackLayout #container>
+        <qn-simple-post *ngFor="let feed of userFeeds;" [feed]="feed">
         </qn-simple-post>
       </StackLayout>
       <!-- <ListView [items]="userFeeds" [itemTemplateSelector]="templateSelector">

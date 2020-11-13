@@ -1,7 +1,9 @@
-import { Component, ViewContainerRef } from '@angular/core';
-import { ListView } from '@nativescript/core';
+import { Component, ElementRef, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { EventData } from '@nativescript-community/ui-image';
+import { ListView, ScrollView, StackLayout } from '@nativescript/core';
 import { FeedService } from '~/services/feeds.service';
 import { GlobalConstants } from '~/shared/constants';
+import { SimplePostComponent } from '~/shared/containers/simple-post/simple-post.component';
 import { QPage } from '~/shared/models/page.model';
 import { Post } from '~/shared/models/post-action.model';
 import { UtilityService } from '../services/utility.service';
@@ -18,6 +20,10 @@ export class HomeComponent {
   page: number = 0;
   endOfPosts: boolean = false;
   userFeedListView: ListView;
+  @ViewChildren(SimplePostComponent) simplePostComponentList!: QueryList<SimplePostComponent>;
+  @ViewChild("container") container: ElementRef;
+  scrollCached: any;
+  feedComponentHelperTimeout: any;
 
   constructor(public viewContainerRef: ViewContainerRef,
     private utilityService: UtilityService,
@@ -25,6 +31,37 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.getUserFeeds();
+  }
+
+  onScroll(event: EventData): void {
+    if (!this.scrollCached) {
+      setTimeout(() => {
+        const scrollView = <ScrollView>event.object,
+          verticalOffset = scrollView.verticalOffset,
+          scrollableHeight = scrollView.scrollableHeight,
+          height = scrollView.getActualSize().height,
+          visibleRange = verticalOffset + height;
+        setTimeout(() => {
+          this.feedComponentHelper(visibleRange, verticalOffset);
+        }, 1000);
+        if (visibleRange >= scrollableHeight - 300) {
+          if (this.userFeeds.length > 0 && !this.endOfPosts) {
+            if (!this.isLoading) {
+              this.getUserFeeds();
+            }
+          }
+        }
+        this.scrollCached = null;
+      }, 100);
+    }
+    this.scrollCached = event;
+
+    // let index = 0;
+    // container.eachLayoutChild((childView) => {
+    //   const locationY = childView.getLocationRelativeTo(container).y;
+    //   this.cards[index].isShown = locationY >= verticalOffset && locationY <= visibleRange
+    //   index += 1;
+    // });
   }
 
   onUserFeedListViewLoaded(args): void {
@@ -38,11 +75,6 @@ export class HomeComponent {
         // console.log("feedPage", feedPage);
         if (!feedPage.empty && feedPage.content.length) {
           this.page++;
-
-          if (feedPage.last) {
-            this.endOfPosts = true;
-          }
-
           feedPage.content.forEach(post => {
             this.userFeeds.push(post);
           });
@@ -54,6 +86,8 @@ export class HomeComponent {
           //   }, 1000);
           //   this.feedNotificationRef.setLastPostId(this.userFeeds[0].postActionId);
           // }
+        } else {
+          this.endOfPosts = true;
         }
         this.isLoading = false;
       }, err => {
@@ -81,6 +115,21 @@ export class HomeComponent {
 
   templateSelector(feed, index, items) {
     return feed.postType;
+  }
+
+  feedComponentHelper = (visibleRange, verticalOffset) => {
+    if (!this.feedComponentHelperTimeout) {
+      this.simplePostComponentList.forEach((simplePostComponent: SimplePostComponent, index: number) => {
+        const locationY = simplePostComponent.container.nativeElement.getLocationOnScreen().y;
+        // console.log("locationY", index,
+        //   locationY, verticalOffset, visibleRange);
+        simplePostComponent.onViewPort(locationY > 0 && locationY >= verticalOffset && locationY <= visibleRange);
+      });
+      setTimeout(() => {
+        this.feedComponentHelperTimeout = false;
+      }, 100);
+    }
+    this.feedComponentHelperTimeout = true;
   }
 
   isTablet() {

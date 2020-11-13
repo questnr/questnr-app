@@ -1,12 +1,15 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { StackLayout } from '@nativescript/core';
 import { AuthService } from '~/services/auth.service';
 import { CommonService } from '~/services/common.service';
+import { FeedService } from '~/services/feeds.service';
 import { GlobalConstants } from '~/shared/constants';
 import { HashTag } from '~/shared/models/hashtag.model';
 import { Post, PostEditorType, PostMedia, ResourceType } from '~/shared/models/post-action.model';
 import { UserListType } from '~/shared/models/user-list.model';
 import { FeedTextComponent } from '../feed-text/feed-text.component';
+import { MediaContainerComponent } from '../media-container/media-container.component';
 import { ProfileIconComponent } from '../profile-icon/profile-icon.component';
 
 @Component({
@@ -32,7 +35,8 @@ export class SimplePostComponent implements OnInit {
   youtubeLinkTemplate: string = "https://youtube.com/embed/";
   viewMediaList: PostMedia[] = [];
   applicationMediaList: PostMedia[] = [];
-  @ViewChild("feedViewContainer") feedViewContainer: ElementRef;
+  containerRef;
+  @ViewChild("container") container: ElementRef;
   viewPortPassed: boolean = false;
   userListTypeClass = UserListType;
   profileIconRef: ProfileIconComponent;
@@ -40,6 +44,7 @@ export class SimplePostComponent implements OnInit {
   set profileIcon(profileIconRef: ProfileIconComponent) {
     this.profileIconRef = profileIconRef;
   }
+  @ViewChild("mediaContainer") mediaContainer: MediaContainerComponent;
   // commentComponentRef: CreateCommentComponent;
   // @ViewChild("commentComponent")
   // set commentComponent(commentComponentRef: CreateCommentComponent) {
@@ -48,7 +53,9 @@ export class SimplePostComponent implements OnInit {
 
   constructor(private authService: AuthService,
     private commonService: CommonService,
-    private _sanitizer: DomSanitizer) { }
+    private _sanitizer: DomSanitizer,
+    private feedService: FeedService) {
+  }
 
   ngOnInit(): void {
     if (!this.showUserHeader) {
@@ -98,5 +105,22 @@ export class SimplePostComponent implements OnInit {
         }
       }
     }
+  }
+
+  feedCameInView() {
+    this.viewPortPassed = true;
+    if (!this.feed.postActionMeta.visited) {
+      this.feedService.visitPost(this.feed.postActionId).subscribe();
+    }
+  }
+
+
+  onViewPort(flag: boolean) {
+    // console.log("onViewPort", flag, this.feed.postActionId);
+    // if (flag) {
+    //   this.mediaContainer?.playVideoIfAny();
+    // } else {
+    //   this.mediaContainer?.pauseVideoIfAny();
+    // }
   }
 }

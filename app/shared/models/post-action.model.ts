@@ -49,6 +49,7 @@ export class PostMedia {
 
 export class PostActionMeta {
   liked: boolean;
+  visited: boolean;
   totalLikes: number;
   totalComments: number;
   totalPostVisits: number;

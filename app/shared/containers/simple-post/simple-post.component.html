@@ -40,11 +40,13 @@
       [feed]="editableFeed" (removePostEvent)="removePost($event)"></app-post-menu-options> -->
   </GridLayout>
 
-  <StackLayout>
+  <StackLayout #feedViewContainer>
     <qn-media-container [postActionId]="feed?.postActionId" [viewMediaList]="viewMediaList"
-      *ngIf="viewMediaList?.length">
+      *ngIf="viewMediaList?.length" #mediaContainer>
     </qn-media-container>
   </StackLayout>
+
+  <StackLayout orientation="horizontal" height="0" #container></StackLayout>
 
   <StackLayout class="feed-text">
     <qn-feed-text [text]="displayText" [hashTagsData]="hashTagsData" #feedTextComponent></qn-feed-text>

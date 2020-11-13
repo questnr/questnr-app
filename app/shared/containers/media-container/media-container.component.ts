@@ -2,9 +2,15 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { isAndroid } from '@nativescript/core';
 import { Carousel } from 'nativescript-carousel';
 import { FeedService } from '~/services/feeds.service';
+import { VideoService } from '~/services/video.service';
 import { PostActionForMedia, PostMedia, ResourceType } from '~/shared/models/post-action.model';
 import { QNRVideoComponent } from '~/shared/util/video/q-n-r-video.component';
 import { qColors } from '~/_variables';
+
+class VideoContainer {
+  video: QNRVideoComponent;
+  index: number;
+}
 
 @Component({
   selector: 'qn-media-container',
@@ -19,9 +25,12 @@ export class MediaContainerComponent implements OnInit {
   qColors = qColors;
   resourceTypeClass = ResourceType;
   currentPageIndex: number = 0;
-  videoContainer: QNRVideoComponent[] = [];
+  videoContainer: VideoContainer[] = [];
+  waitingForVideoRendered: boolean = false;
+  showIndicator: boolean = true;
 
-  constructor(private feedService: FeedService) { }
+  constructor(private feedService: FeedService,
+    private videoService: VideoService) { }
 
   ngOnInit(): void {
   }
@@ -32,46 +41,39 @@ export class MediaContainerComponent implements OnInit {
     }
   }
 
-  // createVideoView(args, media: PostMedia) {
-
-  //   //create videoview    
-  //   var mVideoView = new android.widget.VideoView(args.context);
-  //   var mMediaController = new android.widget.MediaController(args.context);
-  //   mMediaController.setAnchorView(mVideoView);
-
-  //   // parse the uri
-  //   var videoLink = media.postMediaLink;
-  //   var mVideoURL = android.net.Uri.parse(videoLink);
-  //   mVideoView.setVideoURI(mVideoURL);
-  //   mVideoView.setMediaController(mMediaController);
-  //   mVideoView.requestFocus();
-  //   mVideoView.start();
-
-  //   args.view = mVideoView;
-
-  //   // Create our Complete Listener - this is triggered once a video reaches the end
-  //   var completionListener = new android.media.MediaPlayer.OnCompletionListener({
-  //     onCompletion: function (args) {
-  //       console.log('Video Done');
-  //     }
-  //   });
-  //   // Set the listener using the correct method
-  //   mVideoView.setOnCompletionListener(completionListener);
-  // }
-
   refreshCarousel() {
     const adapter = this.carouselView.nativeElement.android.getAdapter();
     adapter.notifyDataSetChanged();
   }
 
   ngOnDestroy(): void {
-    this.stopVideo();
+    this.stopVideoIfAny();
   }
 
-  stopVideo(): void {
-    this.videoContainer.forEach((qnrVideo: QNRVideoComponent) => {
-      qnrVideo.stop();
-    });
+  playVideoIfAny(): void {
+    try {
+      this.videoContainer.forEach((videoContainerRef: VideoContainer) => {
+        if (this.currentPageIndex === videoContainerRef.index) {
+          videoContainerRef.video.setPlayWhenReady(true);
+        }
+      });
+    } catch (e) { }
+  }
+
+  pauseVideoIfAny(): void {
+    try {
+      this.videoContainer.forEach((videoContainerRef: VideoContainer) => {
+        videoContainerRef.video?.pause();
+      });
+    } catch (e) { }
+  }
+
+  stopVideoIfAny(): void {
+    try {
+      this.videoContainer.forEach((videoContainerRef: VideoContainer) => {
+        videoContainerRef.video?.stop();
+      });
+    } catch (e) { }
   }
 
   myTapPageEvent(args) {
@@ -85,13 +87,48 @@ export class MediaContainerComponent implements OnInit {
 
   myChangePageEvent(args): void {
     this.currentPageIndex = args.index;
-    this.videoContainer.forEach((qnrVideo: QNRVideoComponent, videoPageIndex: number) => {
-      if (videoPageIndex !== this.currentPageIndex) {
-        qnrVideo.pause();
+    const prev = { showIndicator: this.showIndicator };
+    if (this.isNormalCarousel()) {
+      this.showIndicator = true;
+    } else {
+      this.showIndicator = false;
+    }
+    if (prev.showIndicator != this.showIndicator) {
+      console.log("refreshCarousel", this.showIndicator)
+      this.refreshCarousel();
+    }
+    console.log('Page changed to index: ' + args.index);
+    this.videoContainer.forEach((videoContainerRef: VideoContainer) => {
+      if (!videoContainerRef.video) {
+      } else {
+        if (videoContainerRef.index === this.currentPageIndex) {
+          videoContainerRef.video.setPlayWhenReady(true);
+        } else {
+          videoContainerRef.video.setPlayWhenReady(false);
+        }
       }
     });
-    // console.log('Page changed to index: ' + args.index);
-  };
+  }
+
+  isNormalCarousel(): boolean {
+    return !this.videoContainer.map((videoContainer: VideoContainer) => {
+      return videoContainer.index;
+    }).includes(this.currentPageIndex);
+  }
+
+  onQNRVideoLoaded(args, index: number) {
+    // console.log("onQNRVideoLoaded", index, args);
+    // const qnrVideoComponent = args.object as QNRVideoComponent;
+    // console.log("qnrVideoComponent", qnrVideoComponent);
+  }
+
+  onQNRVideoRendered(qnrVideoComponent: QNRVideoComponent, index: number) {
+    // console.log("onQNRVideoRendered", index, qnrVideoComponent.videoId);
+    this.videoContainer.push({ video: qnrVideoComponent, index: index });
+    // if (this.currentPageIndex === index) {
+    //   qnrVideoComponent.setPlayWhenReady(true);
+    // }
+  }
 
   onFailure(args, index: number) {
     this.errorOnImageIndexList.push(index);
