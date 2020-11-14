@@ -118,7 +118,7 @@ export class SimplePostComponent implements OnInit {
   onViewPort(flag: boolean) {
     // console.log("onViewPort", flag, this.feed.postActionId);
     // if (flag) {
-    //   this.mediaContainer?.playVideoIfAny();
+    //   // this.mediaContainer?.playVideoIfAny();
     // } else {
     //   this.mediaContainer?.pauseVideoIfAny();
     // }

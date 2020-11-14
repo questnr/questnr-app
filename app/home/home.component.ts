@@ -41,9 +41,7 @@ export class HomeComponent {
           scrollableHeight = scrollView.scrollableHeight,
           height = scrollView.getActualSize().height,
           visibleRange = verticalOffset + height;
-        setTimeout(() => {
-          this.feedComponentHelper(visibleRange, verticalOffset);
-        }, 1000);
+        this.feedComponentHelper(visibleRange, verticalOffset);
         if (visibleRange >= scrollableHeight - 300) {
           if (this.userFeeds.length > 0 && !this.endOfPosts) {
             if (!this.isLoading) {
@@ -118,18 +116,18 @@ export class HomeComponent {
   }
 
   feedComponentHelper = (visibleRange, verticalOffset) => {
-    if (!this.feedComponentHelperTimeout) {
-      this.simplePostComponentList.forEach((simplePostComponent: SimplePostComponent, index: number) => {
-        const locationY = simplePostComponent.container.nativeElement.getLocationOnScreen().y;
-        // console.log("locationY", index,
-        //   locationY, verticalOffset, visibleRange);
-        simplePostComponent.onViewPort(locationY > 0 && locationY >= verticalOffset && locationY <= visibleRange);
-      });
-      setTimeout(() => {
-        this.feedComponentHelperTimeout = false;
-      }, 100);
-    }
-    this.feedComponentHelperTimeout = true;
+    // if (!this.feedComponentHelperTimeout) {
+    this.simplePostComponentList.forEach((simplePostComponent: SimplePostComponent, index: number) => {
+      const locationY = simplePostComponent.container.nativeElement.getLocationOnScreen().y;
+      // console.log("locationY", index,
+      //   locationY, verticalOffset, visibleRange);
+      simplePostComponent.onViewPort(locationY > 0 && locationY >= verticalOffset && locationY <= visibleRange);
+    });
+    // setTimeout(() => {
+    //   this.feedComponentHelperTimeout = false;
+    // }, 100);
+    // }
+    // this.feedComponentHelperTimeout = true;
   }
 
   isTablet() {

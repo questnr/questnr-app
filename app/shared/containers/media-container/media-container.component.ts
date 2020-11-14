@@ -63,7 +63,7 @@ export class MediaContainerComponent implements OnInit {
   pauseVideoIfAny(): void {
     try {
       this.videoContainer.forEach((videoContainerRef: VideoContainer) => {
-        videoContainerRef.video?.pause();
+        videoContainerRef.video?.setPlayWhenReady(false);
       });
     } catch (e) { }
   }
