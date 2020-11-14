@@ -87,16 +87,18 @@ export class MediaContainerComponent implements OnInit {
 
   myChangePageEvent(args): void {
     this.currentPageIndex = args.index;
-    const prev = { showIndicator: this.showIndicator };
-    if (this.isNormalCarousel()) {
-      this.showIndicator = true;
-    } else {
-      this.showIndicator = false;
-    }
-    if (prev.showIndicator != this.showIndicator) {
-      console.log("refreshCarousel", this.showIndicator)
-      this.refreshCarousel();
-    }
+    // const prev = { showIndicator: this.showIndicator };
+    // if (this.isNormalCarousel()) {
+    //   this.carouselView.nativeElement.showIndicator = true;
+    //   this.showIndicator = true;
+    // } else {
+    //   this.carouselView.nativeElement.showIndicator = false;
+    //   this.showIndicator = false;
+    // }
+    // if (prev.showIndicator != this.showIndicator) {
+    //   console.log("refreshCarousel", this.showIndicator)
+    //   this.refreshCarousel();
+    // }
     console.log('Page changed to index: ' + args.index);
     this.videoContainer.forEach((videoContainerRef: VideoContainer) => {
       if (!videoContainerRef.video) {

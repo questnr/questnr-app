@@ -15,19 +15,19 @@
   <GridLayout class="controller-action" *ngIf="videoErrorOccurred()" row="0" height="100%" width="100%">
     <Label horizontalAlignment="center" verticalAlignment="center" class="fa" text="&#xf188;"></Label>
   </GridLayout>
-  <StackLayout row="0" (tap)="toggleVideoVoiceState()" (doubleTap)="toggleVideoPlayingState()" verticalAlignment="center">
-    <VideoPlayer verticalAlignment="center" (loaded)="onVideoLoaded($event)" [src]="src" loop="true" controls="false"
-      (finished)="onVideoFinished()" (playbackReady)="onPlaybackReady()">
+  <GridLayout row="0" rows="*" (tap)="toggleVideoVoiceState()" (doubleTap)="toggleVideoPlayingState()"
+    verticalAlignment="center">
+    <VideoPlayer row="0" verticalAlignment="center" (loaded)="onVideoLoaded($event)" [src]="src" loop="true"
+      controls="false" (finished)="onVideoFinished()" (playbackReady)="onPlaybackReady()">
     </VideoPlayer>
-  </StackLayout>
-  <GridLayout class="video-controller" [ngClass]="[videoContainer.userInteraction.isLive ? 
-'onfocus': '',
-videoContainer.videoInteraction.isLive ? 'onshow' : 'onhide']" row="0" columns="auto, *, auto"
-    verticalAlignment="bottom" *ngIf="isVideoLoaded()" [id]="videoId">
-    <Label class="left-indicator" col="0" verticalAlignment="center" [text]="getStartTime()"></Label>
-    <Slider col="1" [formControl]="videoContainer.currentTime" minValue="0" [maxValue]="getVideoDuration()"
-      (loaded)="onSliderLoaded($event)" [backgroundColor]="qColors.$primary" [color]="qColors.$heading"
-      (touch)="handleUserInteractingWithController($event)"></Slider>
-    <Label class="right-indicator" col="2" verticalAlignment="center" [text]="getEndTime()"></Label>
+    <GridLayout row="0" verticalAlignment="bottom" class="video-controller" [ngClass]="[videoContainer.userInteraction.isLive ? 
+'onfocus': 'onblur']" row="0" columns="auto, *, auto" verticalAlignment="bottom" *ngIf="isVideoLoaded()"
+      [id]="videoId">
+      <Label class="left-indicator" col="0" verticalAlignment="center" [text]="getStartTime()"></Label>
+      <Slider col="1" [formControl]="videoContainer.currentTime" minValue="0" [maxValue]="getVideoDuration()"
+        (loaded)="onSliderLoaded($event)" [backgroundColor]="qColors.$primary" [color]="qColors.$heading"
+        (touch)="handleUserInteractingWithController($event)"></Slider>
+      <Label class="right-indicator" col="2" verticalAlignment="center" [text]="getEndTime()"></Label>
+    </GridLayout>
   </GridLayout>
 </GridLayout>
