@@ -18,6 +18,9 @@
             </qn-simple-question>
           </StackLayout>
         </StackLayout>
+        <StackLayout *ngIf="isLoading">
+          <qn-post-skeleton></qn-post-skeleton>
+        </StackLayout>
       </StackLayout>
       <!-- <ListView [items]="userFeeds" [itemTemplateSelector]="templateSelector">
         <ng-template nsTemplateKey="simple" let-feed="item" let-i="index">

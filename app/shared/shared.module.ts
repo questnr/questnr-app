@@ -14,6 +14,7 @@ import { SimpleQuestionComponent } from './containers/simple-question/simple-que
 import { TimeStringComponent } from './containers/time-string/time-string.component';
 import { UsernameComponent } from './containers/username/username.component';
 import { MaterialModule } from './material.module';
+import { PostSkeletonComponent } from './skeletons/post-skeleton/post-skeleton.component';
 import { CircularProgressBarComponent } from './util/circular-progress-bar/circular-progress-bar.component';
 import { HrComponent } from './util/hr/hr.component';
 import { SpaceComponent } from './util/space/space.component';
@@ -39,7 +40,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     TimeStringComponent,
     MediaContainerComponent,
     QNRVideoComponent,
-    SimpleQuestionComponent
+    SimpleQuestionComponent,
+    PostSkeletonComponent
   ],
   providers: [
   ],
@@ -57,7 +59,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     TimeStringComponent,
     MediaContainerComponent,
     QNRVideoComponent,
-    SimpleQuestionComponent
+    SimpleQuestionComponent,
+    PostSkeletonComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

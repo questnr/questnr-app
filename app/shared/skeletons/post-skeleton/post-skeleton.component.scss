@@ -1,0 +1,67 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.post-skeleton-wrapper.box {
+    margin: 2;
+}
+
+.post-skeleton-wrapper {
+    .profile-skeleton {
+        width: 30;
+        height: 30;
+        border-radius: 50;
+        background-color: $gray;
+    }
+    .head-wrap {
+        padding: 3;
+        // border-bottom: 1px solid $primary;
+        .profile-icon {
+            margin-right: 5;
+            padding: 0;
+        }
+        .time-string {
+            margin-top: -3;
+        }
+        .profile-detail {
+            .head {
+                height: 10;
+                border-radius: 10;
+                background-color: $gray;
+                margin-bottom: 8;
+            }
+            .subhead {
+                height: 8;
+                border-radius: 10;
+                background-color: $gray;
+            }
+        }
+        .post-menu {
+            margin-left: 8;
+            margin-right: 5;
+        }
+    }
+    .feed-text {
+        margin: 5;
+        padding-top: 5;
+        padding-left: 3;
+        padding-right: 3;
+        .feed-text-part {
+            height: 15;
+            border-radius: 10;
+            background-color: $gray;
+            margin-bottom: 4;
+        }
+    }
+    .post-interactions {
+        margin: 5;
+        .button-skeleton {
+            height: 30;
+            width: 30%;
+            border-radius: 3;
+            background-color: $gray;
+        }
+        .button-space {
+            margin-right: 10;
+        }
+    }
+}
