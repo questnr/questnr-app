@@ -1,7 +1,7 @@
 <GridLayout class="media-container" height="350">
     <Carousel #myCarousel [items]="viewMediaList" height="100%" width="100%" [color]="qColors.$black"
         (pageChanged)="myChangePageEvent($event)" android:indicatorAnimation="drop" [indicatorColor]="qColors.$accent"
-        indicatorOffset="0, 10" showIndicator="true">
+        indicatorOffset="0, 10" showIndicator="true" [indicatorColorUnselected]="qColors.$background">
         <CarouselItem class="media" *ngFor="let media of viewMediaList;let index=index" verticalAlignment="middle"
             [id]="index" (tap)="myTapPageEvent($event)">
             <GridLayout *ngIf="media.resourceType === resourceTypeClass.image">
