@@ -1,0 +1,80 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.question-card-wrapper.box {
+  margin: 2;
+}
+
+.question-card-wrapper {
+  padding: 10;
+  .head-wrap {
+    padding: 3;
+    // border-bottom: 1px solid $primary;
+    .profile-icon {
+      margin-right: 5;
+      padding: 0;
+    }
+    .time-string {
+      margin-top: -3;
+    }
+    .profile-detail {
+      .head {
+        @include make-font-size(-1);
+        font-weight: 500;
+      }
+      .subhead {
+        color: $primary;
+        @include make-font-size(-2);
+      }
+    }
+    .post-menu {
+      margin-left: 8;
+      margin-right: 5;
+    }
+  }
+  .header-user-text {
+    vertical-alignment: center;
+    // font-family: cursive;
+  }
+
+  .question-text {
+    @include make-font-size(2);
+  }
+
+  .question-option-list {
+    margin: 10;
+    transition: all 500ms;
+    .question-option,
+    .progress {
+      border-top-right-radius: 15;
+      border-bottom-right-radius: 15;
+    }
+    .question-option {
+      @include make-font-size(1);
+      margin: 0;
+      width: 100%;
+      font-weight: 400;
+      letter-spacing: 0.1;
+      border-width: 0;
+      text-align: left;
+      padding: 10;
+      background: #f0f2f5;
+    }
+    .progress {
+      width: 0%;
+      height: 100%;
+      opacity: 0.6;
+      color: $black;
+      z-index: 1000;
+      transition: all 500ms;
+    }
+    .percentage {
+      @include make-font-size(0);
+      color: $gray-font-2;
+    }
+  }
+
+  .total-answered {
+    // @include make-font-size(1);
+  }
+}

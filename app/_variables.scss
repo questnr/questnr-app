@@ -87,3 +87,14 @@ $community-description-font-family: "Verdana";
 
 /** Border Radius */
 $action-button-radius: 10;
+
+/* 
+------------------------------------------------------------------
+  Write class name and its variable to catogerise variables 
+  Remove q before class and convert to small case letters separated by hyphens
+------------------------------------------------------------------
+*/
+
+$answer-fillers-green: green;
+$answer-fillers-red: red;
+$answer-fillers-yellow: rgb(245, 245, 128);

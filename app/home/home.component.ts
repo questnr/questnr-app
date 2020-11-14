@@ -5,7 +5,7 @@ import { FeedService } from '~/services/feeds.service';
 import { GlobalConstants } from '~/shared/constants';
 import { SimplePostComponent } from '~/shared/containers/simple-post/simple-post.component';
 import { QPage } from '~/shared/models/page.model';
-import { Post } from '~/shared/models/post-action.model';
+import { Post, PostType, QuestionParentType } from '~/shared/models/post-action.model';
 import { UtilityService } from '../services/utility.service';
 
 @Component({
@@ -24,6 +24,8 @@ export class HomeComponent {
   @ViewChild("container") container: ElementRef;
   scrollCached: any;
   feedComponentHelperTimeout: any;
+  questionParentTypeClass = QuestionParentType;
+  postTypeClass = PostType;
 
   constructor(public viewContainerRef: ViewContainerRef,
     private utilityService: UtilityService,

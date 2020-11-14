@@ -10,6 +10,7 @@ import { HorizontalProfileComponent } from './containers/horizontal-profile/hori
 import { MediaContainerComponent } from './containers/media-container/media-container.component';
 import { ProfileIconComponent } from './containers/profile-icon/profile-icon.component';
 import { SimplePostComponent } from './containers/simple-post/simple-post.component';
+import { SimpleQuestionComponent } from './containers/simple-question/simple-question.component';
 import { TimeStringComponent } from './containers/time-string/time-string.component';
 import { UsernameComponent } from './containers/username/username.component';
 import { MaterialModule } from './material.module';
@@ -37,7 +38,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     UsernameComponent,
     TimeStringComponent,
     MediaContainerComponent,
-    QNRVideoComponent
+    QNRVideoComponent,
+    SimpleQuestionComponent
   ],
   providers: [
   ],
@@ -54,7 +56,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     UsernameComponent,
     TimeStringComponent,
     MediaContainerComponent,
-    QNRVideoComponent
+    QNRVideoComponent,
+    SimpleQuestionComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

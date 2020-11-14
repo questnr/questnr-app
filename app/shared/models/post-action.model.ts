@@ -85,3 +85,8 @@ export enum QuestionParentType {
   feedPage,
   explorePage
 }
+
+export enum QuestionAnswerType {
+  agree = 'agree',
+  disagree = 'disagree'
+}

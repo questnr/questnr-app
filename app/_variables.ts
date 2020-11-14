@@ -26,6 +26,7 @@ export const qColors = {
     $grayFont3: "#797979",
     $grayBorder: "#eeeeee",
     $fixedSections: "#d6d6d6bb",
+    $hrBackground: "#797979",
 
     $blogText: "#212121",
     $secondaryFontColor: "rgba(0, 0, 0, 0.7)",
@@ -93,4 +94,10 @@ export const qFonts = {
 
 export const qRipple = {
     $horizontalProfile: qColors.$lightPrimary
+}
+
+export const qAnswerFillers = {
+    $green: 'green',
+    $red: 'red',
+    $yellow: 'rgb(245, 245, 128)'
 }

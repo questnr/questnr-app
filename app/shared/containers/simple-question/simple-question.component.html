@@ -1,0 +1,72 @@
+<StackLayout class="question-card-wrapper box">
+  <GridLayout class="head-wrap" verticalAlignment="top" columns="auto, *, auto">
+    <StackLayout class="profile-icon" orientation="horizontal" row="0" col="0" verticalAlignment="stretch">
+      <qn-profile-icon class="head" [avatar]="feed.userDTO.avatarDTO" [height]="35" [sizeRef]="'small'"
+        [slug]="feed?.userDTO?.slug">
+      </qn-profile-icon>
+    </StackLayout>
+    <GridLayout verticalAlignment="top" row="0" col="1" columns="*, auto" class="profile-detail">
+      <StackLayout row="0" col="0">
+        <StackLayout class="header-user-text" orientation="horizontal">
+          <qn-username class="head" [username]="feed?.userDTO?.username" [slug]="feed.userDTO.slug">
+          </qn-username>
+          <Label class="h5" text="&nbsp;wants to know..."></Label>
+        </StackLayout>
+        <qn-time-string class="time-string" [metaData]="feed.metaData"></qn-time-string>
+      </StackLayout>
+      <StackLayout col="1">
+        <!-- <Label class="subhead" [text]="'Posted in '+feed?.communityDTO?.communityName"
+            [nsRouterLink]="['/', communityPath, feed?.communityDTO.slug]">
+          </Label> -->
+      </StackLayout>
+    </GridLayout>
+    <StackLayout class="post-menu" col="2">
+      <Label text="..."></Label>
+    </StackLayout>
+  </GridLayout>
+
+  <StackLayout>
+    <qn-hr [height]="2" [color]="qColors.$primary"></qn-hr>
+  </StackLayout>
+  <StackLayout>
+    <qn-space [space]="2"></qn-space>
+  </StackLayout>
+
+  <StackLayout>
+    <Label class="question-text" [text]="feed.questionText"></Label>
+  </StackLayout>
+
+  <StackLayout class="question-option-list">
+    <AbsoluteLayout width="100%" height="50">
+      <GridLayout left="0" top="0" height="100%" rows="*" class="question-option" shadow="3" elevation="1"
+        (tap)="respondToQuestion(questionAnswerTypeClass.agree)">
+        <Label row="0" [text]="feed?.pollQuestion?.agreeText" verticalAlignment="middle">
+        </Label>
+        <Label row="0" class="percentage" [text]="agreePercentage" horizontalAlignment="right"
+          verticalAlignment="middle">
+        </Label>
+      </GridLayout>
+      <StackLayout left="0" top="0" class="progress" height="100%" orientation="horizontal" #agree>
+      </StackLayout>
+    </AbsoluteLayout>
+    <StackLayout>
+      <qn-space [space]="10"></qn-space>
+    </StackLayout>
+    <AbsoluteLayout width="100%" height="50">
+      <GridLayout left="0" top="0" height="100%" rows="*" class="question-option" shadow="3" elevation="1"
+        (tap)="respondToQuestion(questionAnswerTypeClass.disagree)">
+        <Label row="0" [text]="feed?.pollQuestion?.disagreeText" verticalAlignment="middle">
+        </Label>
+        <Label row="0" class="percentage" [text]="disagreePercentage" horizontalAlignment="right"
+          verticalAlignment="middle">
+        </Label>
+      </GridLayout>
+      <StackLayout left="0" top="0" class="progress" height="100%" orientation="horizontal" #disagree>
+      </StackLayout>
+    </AbsoluteLayout>
+  </StackLayout>
+
+  <StackLayout>
+    <Label class="total-answered" [text]="totalAnswered + ' answered'"></Label>
+  </StackLayout>
+</StackLayout>

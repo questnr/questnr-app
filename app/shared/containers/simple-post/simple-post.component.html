@@ -1,7 +1,7 @@
 <StackLayout class="recommended-post-wrapper box" verticalAlignment="top">
   <GridLayout class="head-wrap" verticalAlignment="top" columns="auto, *, auto" *ngIf="!showUserHeader">
     <StackLayout class="profile-icon" orientation="horizontal" row="0" col="0" verticalAlignment="stretch">
-      <qn-profile-icon class="head" [avatar]="feed.userDTO.avatarDTO" [height]="30" [sizeRef]="'small'"
+      <qn-profile-icon class="head" [avatar]="feed.userDTO.avatarDTO" [height]="35" [sizeRef]="'small'"
         [slug]="feed?.userDTO?.slug">
       </qn-profile-icon>
     </StackLayout>
@@ -24,7 +24,7 @@
 
   <GridLayout class="head-wrap" verticalAlignment="top" columns="auto, *, auto" *ngIf="showUserHeader">
     <StackLayout class="profile-icon" orientation="horizontal" row="0" col="0" verticalAlignment="stretch">
-      <qn-profile-icon [avatar]="feed.userDTO.avatarDTO" [height]="30" [sizeRef]="'small'" [slug]="feed?.userDTO?.slug">
+      <qn-profile-icon [avatar]="feed.userDTO.avatarDTO" [height]="35" [sizeRef]="'small'" [slug]="feed?.userDTO?.slug">
       </qn-profile-icon>
     </StackLayout>
     <StackLayout verticalAlignment="top" row="0" col="1" class="profile-detail">

@@ -140,6 +140,17 @@ export class AuthService {
     });
   }
 
+  isThisLoggedInUser(userId: number): boolean {
+    if (this.remoteUser?.userId) {
+      return this.remoteUser.userId === userId;
+    }
+    try {
+      return this.getStoredUserProfile().id === userId;
+    } catch (e) {
+      return false;
+    }
+  }
+
   private get user(): string {
     return getString(_CURRENT_USER);
   }
