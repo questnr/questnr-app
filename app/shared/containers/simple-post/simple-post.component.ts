@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { StackLayout } from '@nativescript/core';
 import { AuthService } from '~/services/auth.service';
@@ -10,6 +10,7 @@ import { Post, PostEditorType, PostMedia, ResourceType } from '~/shared/models/p
 import { UserListType } from '~/shared/models/user-list.model';
 import { FeedTextComponent } from '../feed-text/feed-text.component';
 import { MediaContainerComponent } from '../media-container/media-container.component';
+import { PostInteractionPanelComponent } from '../post-interaction-panel/post-interaction-panel.component';
 import { ProfileIconComponent } from '../profile-icon/profile-icon.component';
 
 @Component({
@@ -45,6 +46,7 @@ export class SimplePostComponent implements OnInit {
     this.profileIconRef = profileIconRef;
   }
   @ViewChild("mediaContainer") mediaContainer: MediaContainerComponent;
+  @ViewChild("postInteractionPanel") postInteractionPanel: PostInteractionPanelComponent;
   // commentComponentRef: CreateCommentComponent;
   // @ViewChild("commentComponent")
   // set commentComponent(commentComponentRef: CreateCommentComponent) {
@@ -54,7 +56,8 @@ export class SimplePostComponent implements OnInit {
   constructor(private authService: AuthService,
     private commonService: CommonService,
     private _sanitizer: DomSanitizer,
-    private feedService: FeedService) {
+    private feedService: FeedService,
+    private cd: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -75,6 +78,8 @@ export class SimplePostComponent implements OnInit {
     this.editableFeed = Object.assign({}, this.feed);
     this.loggedInUserId = this.authService.getStoredUserProfile().id;
     this.parseFeedText();
+
+    // this.postInteractionPanel.setPost(this.feed);
   }
   async parseFeedText() {
     if (this.feed.postData.text)

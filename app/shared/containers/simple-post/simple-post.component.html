@@ -52,6 +52,11 @@
     <qn-feed-text [text]="displayText" [hashTagsData]="hashTagsData" #feedTextComponent></qn-feed-text>
   </StackLayout>
 
+  <StackLayout>
+    <qn-hr></qn-hr>
+    <qn-post-interaction-panel [feed]="feed" #postInteractionPanel></qn-post-interaction-panel>
+  </StackLayout>
+
   <!-- <div #feedViewContainer></div> -->
   <!-- <div [ngClass]="viewPortPassed ? 'txt-underline' : ''"></div> -->
   <!-- <div class="mb-2" *ngIf="feed.postData.postEditorType!='blog'">

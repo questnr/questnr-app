@@ -13,6 +13,7 @@ import { AuthService } from '~/services/auth.service';
 import { FeedService } from '~/services/feeds.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { ProfileIconComponent } from '~/shared/containers/profile-icon/profile-icon.component';
+import { Post } from '~/shared/models/post-action.model';
 
 class MediaSrc {
   public type: string;
@@ -218,8 +219,12 @@ export class CreatePostModalComponent implements OnInit, AfterViewInit {
         });
 
         task.on("responded", (e) => {
-          // console.log("responded", e);
-          this.uploadCompleted(e.data);
+          // console.log("responded", JSON.parse(e.data));
+          try {
+            this.uploadCompleted(JSON.parse(e.data));
+          } catch (e) {
+            this.snackBarService.showSomethingWentWrong();
+          }
         });
         // task.on("cancelled", cancelledHandler);
       }
@@ -240,7 +245,7 @@ export class CreatePostModalComponent implements OnInit, AfterViewInit {
     }
   }
 
-  uploadCompleted(createdPost) {
+  uploadCompleted(createdPost: Post) {
     this.reset();
     this.snackBarService.show({ snackText: "Your post has been created!" });
     this.params.closeCallback(createdPost);

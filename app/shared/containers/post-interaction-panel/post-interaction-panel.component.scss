@@ -1,0 +1,24 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.post-interaction-panel-wrapper {
+    margin-right: 5;
+    margin-left: 5;
+    margin-top: 1;
+    margin-bottom: 1;
+    @include make-font-size(-2);
+    Button {
+        margin: 0;
+        border-width: 0;
+        border-color: black;
+        border-radius: 8;
+        z-index: 0;
+        color: $black;
+    }
+    Button.fill {
+        color: $heading;
+    }
+    Button.button-space {
+        margin-right: 5;
+    }
+}

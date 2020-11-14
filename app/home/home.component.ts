@@ -1,4 +1,4 @@
-import { Component, ElementRef, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { EventData } from '@nativescript-community/ui-image';
 import { ListView, ScrollView, StackLayout } from '@nativescript/core';
 import { FeedService } from '~/services/feeds.service';
@@ -29,7 +29,9 @@ export class HomeComponent {
 
   constructor(public viewContainerRef: ViewContainerRef,
     private utilityService: UtilityService,
-    private userFeedService: FeedService) { }
+    private userFeedService: FeedService,
+    private ngZone: NgZone,
+    private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.getUserFeeds();
@@ -102,15 +104,17 @@ export class HomeComponent {
   }
 
   handlePostCreation(newPost: Post) {
-    console.log("handlePostCreation", !!newPost)
-    if (typeof newPost === 'undefined') return;
-    if (this.userFeeds?.length) {
-      this.userFeeds = [newPost, ...this.userFeeds];
-      console.log("Added 1");
-    } else {
-      this.userFeeds = [newPost];
-      console.log("Added 2");
-    }
+    this.ngZone.run(() => {
+      console.log("handlePostCreation", !!newPost)
+      if (typeof newPost === 'undefined') return;
+      if (this.userFeeds?.length) {
+        this.userFeeds.splice(0, 0, newPost);
+        console.log("Added 1");
+      } else {
+        this.userFeeds = [newPost];
+        console.log("Added 2");
+      }
+    });
   }
 
   templateSelector(feed, index, items) {

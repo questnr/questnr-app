@@ -8,6 +8,7 @@ import { CreatePostComponent } from './containers/create-post/create-post.compon
 import { FeedTextComponent } from './containers/feed-text/feed-text.component';
 import { HorizontalProfileComponent } from './containers/horizontal-profile/horizontal-profile.component';
 import { MediaContainerComponent } from './containers/media-container/media-container.component';
+import { PostInteractionPanelComponent } from './containers/post-interaction-panel/post-interaction-panel.component';
 import { ProfileIconComponent } from './containers/profile-icon/profile-icon.component';
 import { SimplePostComponent } from './containers/simple-post/simple-post.component';
 import { SimpleQuestionComponent } from './containers/simple-question/simple-question.component';
@@ -41,13 +42,14 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     MediaContainerComponent,
     QNRVideoComponent,
     SimpleQuestionComponent,
-    PostSkeletonComponent
+    PostSkeletonComponent,
+    PostInteractionPanelComponent
   ],
   providers: [
   ],
   exports: [
-    // CircularProgressBarComponent
     ActionBarComponent,
+    CircularProgressBarComponent,
     HorizontalProfileComponent,
     ProfileIconComponent,
     HrComponent,
@@ -60,7 +62,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     MediaContainerComponent,
     QNRVideoComponent,
     SimpleQuestionComponent,
-    PostSkeletonComponent
+    PostSkeletonComponent,
+    PostInteractionPanelComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA
