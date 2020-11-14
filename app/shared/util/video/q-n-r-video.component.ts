@@ -38,6 +38,7 @@ class VideoRef {
   videoInteraction: UserInteraction = new UserInteraction(3000);
   startTime: string;
   endTime: string;
+  qColors = qColors;
 
   private stutusDisplayInterval: any;
   videoStatusDisplay: VideoStatusDisplay

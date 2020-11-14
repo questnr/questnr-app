@@ -1,5 +1,11 @@
 <GridLayout class="video-container" height="100%" rows="*, auto" (loaded)="onVideoContainerLoaded($event)"
   (touch)="handleUserInteractingWithVideo($event)">
+  <GridLayout class="mute-button" row="0" height="100%" width="100%">
+    <StackLayout orientation="horizontal" horizontalAlignment="right" verticalAlignment="top">
+      <Button horizontalAlignment="center" verticalAlignment="center" class="fa" ripple [rippleColor]="qColors.$primary"
+        [text]="videoContainer.voiceState === 0 ? '&#xf026;': '&#xf028;'" (tap)="toggleVideoVoiceState()"></Button>
+    </StackLayout>
+  </GridLayout>
   <GridLayout class="controller-action" *ngIf="videoPaused()" row="0" height="100%" width="100%">
     <Label horizontalAlignment="center" verticalAlignment="center" class="fa" text="&#xf04c;"></Label>
   </GridLayout>
@@ -15,8 +21,7 @@
   <GridLayout class="controller-action" *ngIf="videoErrorOccurred()" row="0" height="100%" width="100%">
     <Label horizontalAlignment="center" verticalAlignment="center" class="fa" text="&#xf188;"></Label>
   </GridLayout>
-  <GridLayout row="0" rows="*" (tap)="toggleVideoVoiceState()" (doubleTap)="toggleVideoPlayingState()"
-    verticalAlignment="center">
+  <GridLayout row="0" rows="*" (doubleTap)="toggleVideoPlayingState()" verticalAlignment="center">
     <VideoPlayer row="0" verticalAlignment="center" (loaded)="onVideoLoaded($event)" [src]="src" loop="true"
       controls="false" (finished)="onVideoFinished()" (playbackReady)="onPlaybackReady()">
     </VideoPlayer>

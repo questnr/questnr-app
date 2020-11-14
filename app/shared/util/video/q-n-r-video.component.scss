@@ -1,9 +1,26 @@
 @import "~/variables";
 @import "scss/mixins/index";
 
+$controller-index: 100;
 .video-container {
+    .mute-button {
+        @include make-font-size(4);
+        StackLayout {
+            z-index: $controller-index;
+            Button {
+                color: $gray-font-2;
+                border-width: 1.5;
+                border-color: $heading;
+                border-radius: 50;
+                width: 35;
+                height: 35;
+                opacity: 0.95;
+                background-color: $white;
+            }
+        }
+    }
     .video-controller {
-        z-index: 100;
+        z-index: $controller-index;
         background-color: $xlight-primary;
         border-top-right-radius: 5;
         border-top-left-radius: 5;
@@ -33,6 +50,6 @@
     .controller-action {
         @include make-font-size(21);
         color: $primary;
-        z-index: 100;
+        z-index: $controller-index;
     }
 }
