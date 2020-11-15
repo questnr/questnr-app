@@ -18,6 +18,8 @@ import { FeedService } from './services/feeds.service';
 import { JWTService } from './services/jwt.service';
 import { LoaderService } from './services/loader.service';
 import { OTPVerificationService } from './services/otp-verification.service';
+import { PostMenuService } from './services/post-menu.service';
+import { UserInteractionService } from './services/user-interaction.service';
 import { SnackBarService } from './services/snackbar.service';
 import { UtilityService } from './services/utility.service';
 import { VideoService } from './services/video.service';
@@ -25,6 +27,7 @@ import { AppModalModule } from './shared/app-modal.module';
 import { MaterialModule } from './shared/material.module';
 import { SharedModule } from './shared/shared.module';
 import { SkeletonModule } from './shared/skeleton.module';
+import { OverlayService } from './services/overlay.service';
 
 Fontawesome.init();
 
@@ -69,7 +72,10 @@ if (applicationModule.android) {
     ApiService,
     FeedService,
     AskQuestionService,
-    VideoService
+    VideoService,
+    PostMenuService,
+    UserInteractionService,
+    OverlayService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

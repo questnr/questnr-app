@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, ElementRef, NgZone, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, NgZone, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { EventData } from '@nativescript-community/ui-image';
-import { ListView, ScrollView, StackLayout } from '@nativescript/core';
+import { ListView, ScrollView } from '@nativescript/core';
 import { FeedService } from '~/services/feeds.service';
+import { UserInteractionService } from '~/services/user-interaction.service';
 import { GlobalConstants } from '~/shared/constants';
 import { SimplePostComponent } from '~/shared/containers/simple-post/simple-post.component';
 import { QPage } from '~/shared/models/page.model';
@@ -31,7 +32,7 @@ export class HomeComponent {
     private utilityService: UtilityService,
     private userFeedService: FeedService,
     private ngZone: NgZone,
-    private cd: ChangeDetectorRef) { }
+    public userInteractionService: UserInteractionService) { }
 
   ngOnInit(): void {
     this.getUserFeeds();

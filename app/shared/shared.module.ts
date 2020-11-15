@@ -3,6 +3,7 @@ import {
   NativeScriptCommonModule,
   NativeScriptRouterModule
 } from '@nativescript/angular';
+import { PostMenuOptionComponent } from './components/post-menu-option/post-menu-option.component';
 import { ActionBarComponent } from './containers/action-bar/action-bar.component';
 import { CreatePostComponent } from './containers/create-post/create-post.component';
 import { FeedTextComponent } from './containers/feed-text/feed-text.component';
@@ -43,7 +44,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     QNRVideoComponent,
     SimpleQuestionComponent,
     PostSkeletonComponent,
-    PostInteractionPanelComponent
+    PostInteractionPanelComponent,
+    PostMenuOptionComponent
   ],
   providers: [
   ],
@@ -63,7 +65,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     QNRVideoComponent,
     SimpleQuestionComponent,
     PostSkeletonComponent,
-    PostInteractionPanelComponent
+    PostInteractionPanelComponent,
+    PostMenuOptionComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

@@ -17,7 +17,7 @@
         </Label>
       </StackLayout>
     </GridLayout>
-    <StackLayout class="post-menu" col="2">
+    <StackLayout class="post-menu" col="2" (tap)="openPostMenu()">
       <Label text="..."></Label>
     </StackLayout>
   </GridLayout>
@@ -32,8 +32,8 @@
       </qn-username>
       <qn-time-string class="time-string" [metaData]="feed.metaData"></qn-time-string>
     </StackLayout>
-    <StackLayout class="post-menu" col="2">
-      <Label text="..."></Label>
+    <StackLayout class="post-menu" col="2" (tap)="openPostMenu()">
+      <Label class="fa" text="&#xf0c9;"></Label>
     </StackLayout>
     <!-- <div class="spacer"></div>
     <app-post-menu-options [isCommunityPost]="!showUserHeader" (postData)="updatePostEvent($event)"

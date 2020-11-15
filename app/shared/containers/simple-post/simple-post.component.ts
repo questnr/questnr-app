@@ -4,6 +4,7 @@ import { StackLayout } from '@nativescript/core';
 import { AuthService } from '~/services/auth.service';
 import { CommonService } from '~/services/common.service';
 import { FeedService } from '~/services/feeds.service';
+import { PostMenuService } from '~/services/post-menu.service';
 import { GlobalConstants } from '~/shared/constants';
 import { HashTag } from '~/shared/models/hashtag.model';
 import { Post, PostEditorType, PostMedia, ResourceType } from '~/shared/models/post-action.model';
@@ -57,7 +58,7 @@ export class SimplePostComponent implements OnInit {
     private commonService: CommonService,
     private _sanitizer: DomSanitizer,
     private feedService: FeedService,
-    private cd: ChangeDetectorRef) {
+    private postMenuService: PostMenuService) {
   }
 
   ngOnInit(): void {
@@ -112,13 +113,16 @@ export class SimplePostComponent implements OnInit {
     }
   }
 
+  openPostMenu(): void {
+    this.postMenuService.onRequestStart(this.feed);
+  }
+
   feedCameInView() {
     this.viewPortPassed = true;
     if (!this.feed.postActionMeta.visited) {
       this.feedService.visitPost(this.feed.postActionId).subscribe();
     }
   }
-
 
   onViewPort(flag: boolean) {
     // console.log("onViewPort", flag, this.feed.postActionId);

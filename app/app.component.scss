@@ -7,3 +7,9 @@
 .activity-indicator {
     color: $heading;
 }
+
+.overlay {
+    background-color: $colors-overlay;
+    opacity: 0.6;
+    z-index: $z-index-overlay;
+}

@@ -1,0 +1,15 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.option {
+    margin-left: 10;
+    margin-right: 10;
+    padding-top: 5;
+    padding-bottom: 5;
+    @include make-font-size(4);
+    color: $gray-font-3;
+}
+.option.border {
+    border-bottom-width: 1px;
+    border-bottom-color: $gray-font-3;
+}

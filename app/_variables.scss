@@ -95,6 +95,11 @@ $action-button-radius: 10;
 ------------------------------------------------------------------
 */
 
+$colors-overlay: rgba(0, 0, 0, 0.342);
+
 $answer-fillers-green: green;
 $answer-fillers-red: red;
 $answer-fillers-yellow: rgb(245, 245, 128);
+
+$z-index-overlay: 999;
+$z-index-modal: 1000;

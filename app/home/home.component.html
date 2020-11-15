@@ -3,7 +3,8 @@
     <qn-action-bar [pageViewContainerRef]="viewContainerRef"></qn-action-bar>
   </Page.actionBar>
 
-  <ScrollView (scroll)="onScroll($event)">
+  <ScrollView (scroll)="onScroll($event)"
+    [isUserInteractionEnabled]="userInteractionService.isUserInteractionEnabled$ | async">
     <StackLayout>
       <qn-create-post (onPostCreated)="handlePostCreation($event)" (loaded)="onPostCreationBoxLoaded($event)">
       </qn-create-post>

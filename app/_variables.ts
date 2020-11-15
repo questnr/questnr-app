@@ -34,7 +34,9 @@ export const qColors = {
     $danger: "rgba(253, 60, 67, 0.8)",
     $svgBackground: "#f1515221",
 
-    $green: 'green'
+    $green: 'green',
+
+    $overlay: 'rgba(0, 0, 0, 0.342)'
 }
 
 export const qSize = {
@@ -100,4 +102,9 @@ export const qAnswerFillers = {
     $green: 'green',
     $red: 'red',
     $yellow: 'rgb(245, 245, 128)'
+}
+
+export const qZIndex = {
+    $overlay: "999",
+    $modal: "1000"
 }
