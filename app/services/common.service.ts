@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Post, PostEditorType, PostType } from '../shared/models/post-action.model';
 import { GlobalConstants } from '../shared/constants';
+import * as clipboard from "nativescript-clipboard";
+import { SnackBarService } from './snackbar.service';
 
 @Injectable()
 export class CommonService {
     url: RegExp = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-    constructor() {
+
+    constructor(private snackBarService: SnackBarService) {
     }
 
     parseTextToFindURL(text): string {
@@ -71,5 +74,14 @@ export class CommonService {
             path = GlobalConstants.postBlogPath;
         }
         return [GlobalConstants.siteLink, path, post.slug].join("/");
+    }
+
+    copyToClipboard(text: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            clipboard.setText(text).then(() => {
+                this.snackBarService.show({ snackText: 'Copied to clipboard!' })
+                resolve();
+            });
+        });
     }
 }

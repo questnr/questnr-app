@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { qColors } from '~/_variables';
 
 @Component({
   selector: 'qn-post-menu-option',
@@ -9,6 +10,7 @@ export class PostMenuOptionComponent implements OnInit {
   @Input() border: boolean = false;
   @Input() icon: string;
   @Input() text: string;
+  qColors = qColors;
 
   constructor() { }
 

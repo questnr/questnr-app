@@ -2,6 +2,7 @@ import { Component, ElementRef, NgZone, QueryList, ViewChild, ViewChildren, View
 import { EventData } from '@nativescript-community/ui-image';
 import { ListView, ScrollView } from '@nativescript/core';
 import { FeedService } from '~/services/feeds.service';
+import { PostMenuService } from '~/services/post-menu.service';
 import { UserInteractionService } from '~/services/user-interaction.service';
 import { GlobalConstants } from '~/shared/constants';
 import { SimplePostComponent } from '~/shared/containers/simple-post/simple-post.component';
@@ -32,10 +33,16 @@ export class HomeComponent {
     private utilityService: UtilityService,
     private userFeedService: FeedService,
     private ngZone: NgZone,
-    public userInteractionService: UserInteractionService) { }
+    public userInteractionService: UserInteractionService,
+    public postMenuService: PostMenuService) { }
 
   ngOnInit(): void {
     this.getUserFeeds();
+    this.postMenuService.postDeleteRequest$.subscribe((postActionId: number) => {
+      this.userFeeds = this.userFeeds.filter((feed: Post) => {
+        return feed.postActionId !== postActionId;
+      });
+    });
   }
 
   onScroll(event: EventData): void {
@@ -106,14 +113,27 @@ export class HomeComponent {
 
   handlePostCreation(newPost: Post) {
     this.ngZone.run(() => {
-      console.log("handlePostCreation", !!newPost)
+      // console.log("handlePostCreation", !!newPost)
       if (typeof newPost === 'undefined') return;
       if (this.userFeeds?.length) {
         this.userFeeds.splice(0, 0, newPost);
-        console.log("Added 1");
+        // console.log("Added 1");
       } else {
         this.userFeeds = [newPost];
-        console.log("Added 2");
+        // console.log("Added 2");
+      }
+    });
+  }
+
+  handlePostEditing(editedPost: Post) {
+    this.ngZone.run(() => {
+      if (typeof editedPost === 'undefined') return;
+      if (this.userFeeds?.length) {
+        this.userFeeds.forEach((feed: Post, index: number) => {
+          if (feed.postActionId === editedPost.postActionId) {
+            this.userFeeds[index] = editedPost;
+          }
+        });
       }
     });
   }

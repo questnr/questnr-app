@@ -67,6 +67,5 @@ export class AppComponent implements OnInit {
     if (this.overlayService.reasonType === OverlayReasonType.postMenu) {
       this.postMenuService.onRequestEnd();
     }
-    this.overlayService.onOverlayEnd();
   }
 }

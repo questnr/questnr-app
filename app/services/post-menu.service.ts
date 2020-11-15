@@ -16,6 +16,8 @@ export enum MenuState {
 })
 export class PostMenuService {
     postRequests$: BehaviorSubject<Post>;
+    postEditRequest$: BehaviorSubject<Post>;
+    postDeleteRequest$: BehaviorSubject<number>;
     prevShowingMenu: MenuState = MenuState.unset;
     currentlyShowingMenu: MenuState = MenuState.unset;
     isShowing$: Observable<boolean>;
@@ -23,6 +25,8 @@ export class PostMenuService {
     constructor(private userInteractionService: UserInteractionService,
         private overlayService: OverlayService) {
         this.postRequests$ = new BehaviorSubject(null);
+        this.postEditRequest$ = new BehaviorSubject(null);
+        this.postDeleteRequest$ = new BehaviorSubject(null);
         this.isShowing$ = this.postRequests$.pipe(
             map(requests => {
                 this.prevShowingMenu = this.currentlyShowingMenu;
@@ -31,12 +35,21 @@ export class PostMenuService {
                     this.userInteractionService.onUserInteractionDisabled();
                     this.currentlyShowingMenu = MenuState.showing;
                 } else {
+                    this.overlayService.onOverlayEnd();
                     this.userInteractionService.onUserInteractionEnabled();
                     this.currentlyShowingMenu = MenuState.hidden;
                 }
                 return requests != null;
             })
         );
+    }
+
+    public onRequestPostEdit(post: Post) {
+        this.postEditRequest$.next(post);
+    }
+
+    public onRequestPostDeletion(postActionId: number) {
+        this.postDeleteRequest$.next(postActionId);
     }
 
     public onRequestStart(post: Post) {

@@ -1,4 +1,6 @@
-<GridLayout class="option" columns="12*, 88*" rows="*" [ngClass]="border ? 'border': ''" verticalAlignment="top">
-  <Label row="0" col="0" class="fa" [text]="icon"></Label>
-  <Label row="0" col="1" [text]="text"></Label>
-</GridLayout>
+<StackLayout class="post-menu-option-wrapper" ripple [rippleColor]="qColors.$primary">
+  <GridLayout class="option" columns="12*, 88*" rows="*" [ngClass]="border ? 'border': ''" verticalAlignment="top">
+    <Label row="0" col="0" class="fa" [text]="icon"></Label>
+    <Label row="0" col="1" [text]="text"></Label>
+  </GridLayout>
+</StackLayout>

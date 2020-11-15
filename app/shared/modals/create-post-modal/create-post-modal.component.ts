@@ -32,6 +32,8 @@ class MediaSrc {
 export class CreatePostModalComponent implements OnInit, AfterViewInit {
   feedTextViewRef: TextView;
   @ViewChild('fileInput') fileInput: ElementRef;
+  isEditing: boolean = false;
+  postToBeEdited: Post;
 
   // @ViewChild('floatingSuggestionBoxRef')
   // set floatingSuggestionBoxRef(element: FloatingSuggestionBoxComponent) {
@@ -66,7 +68,6 @@ export class CreatePostModalComponent implements OnInit, AfterViewInit {
   isFetchingPostData: boolean = false;
   // quill: Quill;
   quillLength: number;
-  @Input() editing: any;
   postEditorName: string = "Post";
   mobileView: boolean = false;
   profileIconRef: ProfileIconComponent;
@@ -86,7 +87,11 @@ export class CreatePostModalComponent implements OnInit, AfterViewInit {
     private feedService: FeedService,
     private viewContainerRef: ViewContainerRef,
     private snackBarService: SnackBarService) {
-
+    if (this.params.context.isEditing && this.params.context.post) {
+      this.isEditing = true;
+      this.postToBeEdited = this.params.context.post;
+      this.text.setValue(this.postToBeEdited.postData.text);
+    }
     // To test progress bar
     // setTimeout(() => {
     //   this.isLoading = true;
@@ -113,7 +118,9 @@ export class CreatePostModalComponent implements OnInit, AfterViewInit {
     let page = args.object as Page;
 
     this.mediaCategoryContainer = page.getViewById("media-category-container");
-    // this.mediaCategoryContainer.hide();
+    if (this.isEditing) {
+      this.mediaCategoryContainer.hide();
+    }
 
     this.selectedMediaContainer = page.getViewById("selected-media-container");
     this.selectedMediaContainer.hide();
@@ -165,70 +172,71 @@ export class CreatePostModalComponent implements OnInit, AfterViewInit {
   postFeed() {
     if ((this.text.value && !this.isBlogEditor) ||
       (this.richText && this.isBlogEditor) || this.addedMediaSrc.length) {
-      // if (this.data.editing) {
-      // Since blogs can not be edited
-      // if (!this.isPostInvalid() && !this.isBlogEditor) {
-      //   // if ((this.isPostInvalid()) || (this.validateBlogTitle())) {
-      //   this.isLoading = true;
-      //   this.service.editPost(this.isBlogEditor ? this.richText : this.text.value, this.blogTitle.value, this.data.feed.postActionId).subscribe((res: any) => {
-      //     this.uploading = true;
-      //     this.closeDialog(res);
-      //     // console.log('close', res);
-      //     this.snackBar.open('Post Edited Successfully', 'close', { duration: 5000 });
-      //   });
-      // }
-      // } else {
-      const formData = [];
-      formData.push({ name: "postEditorType", value: this.isBlogEditor ? "blog" : "normal" });
-      if (this.isBlogEditor) {
-        formData.push({ name: 'text', value: this.richText });
-        formData.push({ name: 'blogTitle', value: this.blogTitle.value });
-      } else {
-        formData.push({ name: 'text', value: this.text.value?.length ? this.text.value : '' });
-      }
-      if (this.addedMediaSrc.length) {
-        this.addedMediaSrc.forEach((mediaSrc: MediaSrc) => {
-          let file = mediaSrc.src;
-          var name = file.substr(file.lastIndexOf("/") + 1);
-          formData.push({ name: 'files', filename: file });
-        });
-      }
-      // Check if the blog title is valid
-      if ((!this.isPostInvalid()) && (this.validateBlogTitle())) {
-        this.isLoading = true;
-        if (this.params.context?.isCommunityPost && this.params.context?.community?.communityId != null) {
-          this.apiUrl = `${environment.baseUrl}user/community/${this.params.context.community.communityId}/posts`;
-        } else {
-          this.apiUrl = `${environment.baseUrl}user/posts`;
+      if (this.isEditing) {
+        // Since blogs can not be edited
+        if (!this.isPostInvalid() && !this.isBlogEditor) {
+          // if ((this.isPostInvalid()) || (this.validateBlogTitle())) {
+          this.isLoading = true;
+          this.feedService.editPost(this.text.value, this.blogTitle.value,
+            this.postToBeEdited.postActionId).subscribe((editedPost: Post) => {
+              this.uploading = true;
+              // console.log('close', res);
+              this.snackBarService.show({ snackText: "Post Edited Successfully" });
+              this.params.closeCallback(editedPost);
+            });
         }
-        let task: bghttp.Task = this.feedService.postFeed(formData, this.apiUrl);
-
-        task.on("progress", (e) => {
-          this.uploading = true;
-          this.uploadProgress = Math.round(e.currentBytes / e.totalBytes * 100);
-          // console.log("uploadProgress", this.uploadProgress, e.currentBytes, e.totalBytes);
-        });
-
-        task.on("error", (error) => {
-          // @todo: show error message from server if any
-          this.errorHandler(error);
-        });
-
-        task.on("complete", (e: any) => {
-          // console.log("completed", e);
-        });
-
-        task.on("responded", (e) => {
-          // console.log("responded", JSON.parse(e.data));
-          try {
-            this.uploadCompleted(JSON.parse(e.data));
-          } catch (e) {
-            this.snackBarService.showSomethingWentWrong();
+      } else {
+        const formData = [];
+        formData.push({ name: "postEditorType", value: this.isBlogEditor ? "blog" : "normal" });
+        if (this.isBlogEditor) {
+          formData.push({ name: 'text', value: this.richText });
+          formData.push({ name: 'blogTitle', value: this.blogTitle.value });
+        } else {
+          formData.push({ name: 'text', value: this.text.value?.length ? this.text.value : '' });
+        }
+        if (this.addedMediaSrc.length) {
+          this.addedMediaSrc.forEach((mediaSrc: MediaSrc) => {
+            let file = mediaSrc.src;
+            var name = file.substr(file.lastIndexOf("/") + 1);
+            formData.push({ name: 'files', filename: file });
+          });
+        }
+        // Check if the blog title is valid
+        if ((!this.isPostInvalid()) && (this.validateBlogTitle())) {
+          this.isLoading = true;
+          if (this.params.context?.isCommunityPost && this.params.context?.community?.communityId != null) {
+            this.apiUrl = `${environment.baseUrl}user/community/${this.params.context.community.communityId}/posts`;
+          } else {
+            this.apiUrl = `${environment.baseUrl}user/posts`;
           }
-        });
-        // task.on("cancelled", cancelledHandler);
+          let task: bghttp.Task = this.feedService.postFeed(formData, this.apiUrl);
+
+          task.on("progress", (e) => {
+            this.uploading = true;
+            this.uploadProgress = Math.round(e.currentBytes / e.totalBytes * 100);
+            // console.log("uploadProgress", this.uploadProgress, e.currentBytes, e.totalBytes);
+          });
+
+          task.on("error", (error) => {
+            // @todo: show error message from server if any
+            this.errorHandler(error);
+          });
+
+          task.on("complete", (e: any) => {
+            // console.log("completed", e);
+          });
+
+          task.on("responded", (e) => {
+            // console.log("responded", JSON.parse(e.data));
+            try {
+              this.uploadCompleted(JSON.parse(e.data));
+            } catch (e) {
+              this.snackBarService.showSomethingWentWrong();
+            }
+          });
+          // task.on("cancelled", cancelledHandler);
+        }
       }
-      // }
     }
   }
 

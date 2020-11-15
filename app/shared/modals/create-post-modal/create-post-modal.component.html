@@ -7,8 +7,8 @@
       </StackLayout>
       <GridLayout height="50" rows="*">
         <StackLayout row="0" orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
-          <Label class="modal-title h2 text-center" text="Make a Questnr" horizontalAlignment="center"
-            textWrap="true"></Label>
+          <Label class="modal-title h2 text-center" [text]="isEditing ? 'Make a Questnr' : 'Edit Your Questnr'"
+            horizontalAlignment="center" textWrap="true"></Label>
         </StackLayout>
         <Label class="close-modal fa" row="0" verticalAlignment="center" horizontalAlignment="right" text="&#xf00d;"
           (tap)="close()"></Label>
@@ -29,7 +29,7 @@
           <!-- <rt:RichTextField height="60" iconColor="red" fieldBackgroundColor="transparent"></rt:RichTextField> -->
         </StackLayout>
 
-        <StackLayout>
+        <StackLayout *ngIf="!isEditing">
           <Label *ngIf="isBlogEditor" text="switch to normal editor" (tap)="switchEditor(false)"
             class="editor-mode"></Label>
           <Label *ngIf="!isBlogEditor" text="switch to blog editor" (tap)="switchEditor(true)"
@@ -97,8 +97,9 @@
         <qn-space [space]="15"></qn-space>
 
         <StackLayout class="btn-wrap">
-          <Button class="btn-post" text="Create" [ngClass]="isPostInvalid() || isLoading ? 'disabled': ''"
-            [isEnabled]="!(isPostInvalid() || isLoading)" (tap)="postFeed()">
+          <Button class="btn-post" [text]="isEditing ? 'Edit': 'Create'"
+            [ngClass]="isPostInvalid() || isLoading ? 'disabled': ''" [isEnabled]="!(isPostInvalid() || isLoading)"
+            (tap)="postFeed()">
           </Button>
         </StackLayout>
       </StackLayout>

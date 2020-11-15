@@ -15,16 +15,27 @@
         </StackLayout>
         <StackLayout>
             <StackLayout *ngIf="isOwner">
-                <qn-post-menu-option [border]="true" [icon]="'&#xf044;'" [text]="'Edit Post'"></qn-post-menu-option>
-                <qn-post-menu-option [border]="true" [icon]="'&#xf014;'" [text]="'Delete Post'"></qn-post-menu-option>
-                <qn-post-menu-option [border]="false" [icon]="'&#xf0c1;'" [text]="'Copy Link'"></qn-post-menu-option>
+                <StackLayout (tap)="onPostEdit()">
+                    <qn-post-menu-option [border]="true" [icon]="'&#xf044;'" [text]="'Edit Post'"></qn-post-menu-option>
+                </StackLayout>
+                <StackLayout (tap)="removePost()">
+                    <qn-post-menu-option [border]="true" [icon]="'&#xf014;'" [text]="'Delete Post'">
+                    </qn-post-menu-option>
+                </StackLayout>
+                <StackLayout (tap)="onCopyPostLink()">
+                    <qn-post-menu-option [border]="false" [icon]="'&#xf0c1;'" [text]="'Copy Link'">
+                    </qn-post-menu-option>
+                </StackLayout>
             </StackLayout>
             <StackLayout *ngIf="!isOwner" horizontalAlignment="stretch">
                 <qn-post-menu-option [border]="true" [icon]="'&#xf127;'" [text]="'Unfollow'" *ngIf="showUnfollowBtn()"
                     (tap)="unfollow()">
                 </qn-post-menu-option>
                 <qn-post-menu-option [border]="true" [icon]="'&#xf24a;'" [text]="'Report Post'"></qn-post-menu-option>
-                <qn-post-menu-option [border]="false" [icon]="'&#xf0c1;'" [text]="'Copy Link'"></qn-post-menu-option>
+                <StackLayout (tap)="onCopyPostLink()">
+                    <qn-post-menu-option [border]="false" [icon]="'&#xf0c1;'" [text]="'Copy Link'">
+                    </qn-post-menu-option>
+                </StackLayout>
             </StackLayout>
         </StackLayout>
     </StackLayout>

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewContainerRef } from '@angular/core';
 import { ModalDialogOptions, ModalDialogService } from '@nativescript/angular';
 import { AuthService } from '~/services/auth.service';
+import { PostMenuService } from '~/services/post-menu.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { UtilityService } from '~/services/utility.service';
 import { CreatePostModalComponent } from '~/shared/modals/create-post-modal/create-post-modal.component';
@@ -15,16 +16,24 @@ import { Post } from '~/shared/models/post-action.model';
 })
 export class CreatePostComponent implements OnInit {
   @Output() onPostCreated = new EventEmitter();
+  @Output() onPostEdited = new EventEmitter();
   avatar: AvatarDTO;
 
   constructor(private authSerivce: AuthService,
     public viewContainerRef: ViewContainerRef,
     private utilityService: UtilityService,
     private modalService: ModalDialogService,
-    private snackBarService: SnackBarService) { }
+    private postMenuService: PostMenuService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.avatar = this.authSerivce.getAvatar();
+    this.postMenuService.postEditRequest$.subscribe((postToBeEdited: Post) => {
+      if (postToBeEdited && postToBeEdited.postActionId
+        && this.authService.isThisLoggedInUser(postToBeEdited.userDTO.userId)) {
+        this.editPost(postToBeEdited);
+      }
+    });
   }
 
   logout() {
@@ -47,7 +56,7 @@ export class CreatePostComponent implements OnInit {
     });
   }
 
-  createQuestnr() {
+  createPost() {
     const options: ModalDialogOptions = {
       viewContainerRef: this.viewContainerRef,
       fullscreen: true,
@@ -56,6 +65,21 @@ export class CreatePostComponent implements OnInit {
     this.modalService.showModal(CreatePostModalComponent, options).then((newPost: Post) => {
       // console.log("createQuestnr", newPost);
       this.onPostCreated.emit(newPost);
+    });
+  }
+
+  private editPost(postToBeEdited: Post): void {
+    const options: ModalDialogOptions = {
+      viewContainerRef: this.viewContainerRef,
+      fullscreen: true,
+      context: {
+        isEditing: true,
+        post: postToBeEdited
+      }
+    };
+    this.modalService.showModal(CreatePostModalComponent, options).then((editedPost: Post) => {
+      // console.log("Edited Post", editedPost);
+      this.onPostEdited.emit(editedPost);
     });
   }
 }

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Page } from '@nativescript/core';
+import { Dialogs, Page } from '@nativescript/core';
 import * as platformModule from '@nativescript/core/platform';
 import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { AuthService } from '~/services/auth.service';
+import { CommonService } from '~/services/common.service';
 import { FeedService } from '~/services/feeds.service';
 import { PostMenuService } from '~/services/post-menu.service';
+import { SnackBarService } from '~/services/snackbar.service';
 import { UserInteractionService } from '~/services/user-interaction.service';
 import { Post } from '~/shared/models/post-action.model';
 import { qColors } from '~/_variables';
@@ -23,7 +25,9 @@ export class PostMenuModalComponent implements OnInit {
   constructor(public postMenuService: PostMenuService,
     private authService: AuthService,
     public userInteractionService: UserInteractionService,
-    private feedService: FeedService) { }
+    private feedService: FeedService,
+    private commonService: CommonService,
+    private snackBarService: SnackBarService) { }
 
   ngOnInit() {
     this.postMenuService.postRequests$.subscribe((post: Post) => {
@@ -63,6 +67,12 @@ export class PostMenuModalComponent implements OnInit {
       }
     })
   }
+
+  onPostEdit(): void {
+    this.postMenuService.onRequestPostEdit(this.currentPost);
+    this.close();
+  }
+
   showUnfollowBtn(): boolean {
     if (this.currentPost.communityDTO?.communityId) {
       return !this.authService.isThisLoggedInUser(this.currentPost.communityDTO?.ownerUserDTO?.userId);
@@ -72,6 +82,37 @@ export class PostMenuModalComponent implements OnInit {
 
   unfollow(): void {
   }
+
+  removePost(): void {
+    Dialogs.confirm({
+      title: "Are You Sure?",
+      okButtonText: "Delete Post",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      // result argument is boolean
+      if (result && this.currentPost) {
+        this.snackBarService.show({ snackText: 'Post is being deleted' });
+        this.feedService.removePost(this.currentPost.postActionId).subscribe((res: any) => {
+          this.close();
+          this.snackBarService.show({ snackText: 'Post has been deleted' });
+          this.postMenuService.onRequestPostDeletion(this.currentPost.postActionId);
+        }, error => {
+          if (error.error.errorMessage) {
+            this.snackBarService.show({ snackText: error.error.errorMessage });
+          } else {
+            this.snackBarService.showSomethingWentWrong();
+          }
+        });
+      }
+    });
+  }
+
+  onCopyPostLink(): void {
+    this.commonService.copyToClipboard(this.commonService.getPostSharableLink(this.currentPost)).then(() => {
+      this.close();
+    });
+  }
+
   close(): void {
     this.postMenuService.onRequestEnd();
   }

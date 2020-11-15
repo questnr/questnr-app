@@ -6,7 +6,8 @@
   <ScrollView (scroll)="onScroll($event)"
     [isUserInteractionEnabled]="userInteractionService.isUserInteractionEnabled$ | async">
     <StackLayout>
-      <qn-create-post (onPostCreated)="handlePostCreation($event)" (loaded)="onPostCreationBoxLoaded($event)">
+      <qn-create-post (onPostCreated)="handlePostCreation($event)" (onPostEdited)="handlePostEditing($event)"
+        (loaded)="onPostCreationBoxLoaded($event)">
       </qn-create-post>
       <StackLayout #container>
         <StackLayout *ngFor="let feed of userFeeds;">
