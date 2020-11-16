@@ -10,6 +10,7 @@ import {
 import { NgShadowModule } from "@dsvishchov/nativescript-ngx-shadow";
 import { NgRippleModule } from 'nativescript-ripple/angular';
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
+import { TNSCheckBoxModule } from '@nstudio/nativescript-checkbox/angular';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
     NgRippleModule,
     TNSImageModule,
     NativeScriptUIListViewModule,
-    NgShadowModule
+    NgShadowModule,
+    TNSCheckBoxModule
   ],
   declarations: [
   ],
@@ -34,7 +36,8 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
     NgRippleModule,
     TNSImageModule,
     NativeScriptUIListViewModule,
-    NgShadowModule
+    NgShadowModule,
+    TNSCheckBoxModule
   ],
   schemas: [
     NO_ERRORS_SCHEMA

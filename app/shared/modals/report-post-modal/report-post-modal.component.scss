@@ -1,0 +1,44 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.report-post-wrapper {
+    margin: 5;
+    .header {
+        @include make-font-size(6);
+        padding-bottom: 7;
+        font-weight: 500;
+    }
+    .form-title {
+        @include make-font-size(2);
+        padding-bottom: 3;
+    }
+    .textarea {
+        placeholder-color: $colors-placeholder;
+        border-width: 0;
+        padding: 2;
+        width: 100%;
+        border-radius: 5;
+        color: $black;
+        &:focus {
+            background: $colors-focus-textarea;
+        }
+    }
+
+    .footer {
+        .subheader {
+            color: $black;
+            @include make-font-size(-2);
+        }
+        Button {
+            border-width: 1;
+            border-color: $heading;
+            border-radius: 10;
+            padding-left: 3;
+            padding-right: 3;
+            color: $primary;
+        }
+        .error {
+            color: $red;
+        }
+    }
+}

@@ -36,7 +36,9 @@ export const qColors = {
 
     $green: 'green',
 
-    $overlay: 'rgba(0, 0, 0, 0.342)'
+    $overlay: 'rgba(0, 0, 0, 0.342)',
+    placeholder: 'rgba(0, 0, 0, 0.5)',
+    focusTextarea: 'rgb(236, 236, 236)'
 }
 
 export const qSize = {

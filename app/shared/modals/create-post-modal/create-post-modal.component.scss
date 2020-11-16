@@ -33,9 +33,8 @@
             width: 100%;
             border-radius: 5;
             color: $black;
-
             &:focus {
-                background: rgba(0, 0, 0, 0.05);
+                background: $colors-focus-textarea;
             }
         }
 

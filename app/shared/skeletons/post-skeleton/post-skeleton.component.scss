@@ -38,6 +38,8 @@
         .post-menu {
             margin-left: 8;
             margin-right: 5;
+            padding: 5;
+            @include make-font-size(-1);
         }
     }
     .feed-text {

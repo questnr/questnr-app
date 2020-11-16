@@ -90,3 +90,9 @@ export enum QuestionAnswerType {
   agree = 'agree',
   disagree = 'disagree'
 }
+
+export enum SimplifiedPostType {
+  post = "post",
+  question = "question",
+  blog = "blog"
+}

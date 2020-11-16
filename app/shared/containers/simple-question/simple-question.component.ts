@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Even
 import { Router } from '@angular/router';
 import { AskQuestionService } from '~/services/ask-question.service';
 import { AuthService } from '~/services/auth.service';
+import { PostMenuService } from '~/services/post-menu.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { GlobalConstants } from '~/shared/constants';
 import { Message } from '~/shared/constants/messages';
@@ -43,7 +44,7 @@ export class SimpleQuestionComponent implements OnInit {
     private authService: AuthService,
     private snackBarService: SnackBarService,
     private router: Router,
-    private ngZone: NgZone,
+    private postMenuService: PostMenuService,
     private cd: ChangeDetectorRef) {
   }
 
@@ -72,6 +73,10 @@ export class SimpleQuestionComponent implements OnInit {
       this.isOwner = true;
     }
     // console.log("question", this.question)
+  }
+
+  openPostMenu(): void {
+    this.postMenuService.onRequestStart(this.feed);
   }
 
   respondToQuestion(pollAnswer: QuestionAnswerType) {

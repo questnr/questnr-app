@@ -1,0 +1,27 @@
+<StackLayout class="report-post-wrapper" width="100%" height="100%">
+  <Label class="header" text="Report This Post"></Label>
+  <qn-hr></qn-hr>
+  <StackLayout class="post-report-form">
+    <Label class="form-title" text="Please tell us about the post"></Label>
+    <StackLayout>
+      <StackLayout *ngFor="let option of reportOptions;let optionIndex = index;">
+        <CheckBox [text]="option" (checkedChange)="onSelectOption($event, optionIndex)"
+          (loaded)="onCheckboxLoaded($event, optionIndex)" [fillColor]="qColors.$heading"></CheckBox>
+      </StackLayout>
+
+      <TextView class="textarea" hint="Type here the reason..." [formControl]="reportText">
+      </TextView>
+
+      <qn-hr></qn-hr>
+      <StackLayout class="footer">
+        <Label text="(We won't let any user know that you have reported this post)" horizontalAlignment="left"
+          textWrap="true">
+        </Label>
+        <Label *ngIf="errorMessage" class="error" [text]="errorMessage" horizontalAlignment="left" textWrap="true">
+        </Label>
+        <Button (tap)="reportThisPost()" ripple [rippleColor]="qColors.$primary" text="Report"
+          horizontalAlignment="right"></Button>
+      </StackLayout>
+    </StackLayout>
+  </StackLayout>
+</StackLayout>
