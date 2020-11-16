@@ -1,0 +1,19 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.comment-box-wrapper {
+    @include make-font-size(-1);
+    .comment-box-body {
+        .profile-detail {
+            .head {
+            }
+            .comment-object {
+                .comment-left-part {
+                }
+            }
+        }
+        .comment-actions {
+            @include make-font-size(-2);
+        }
+    }
+}

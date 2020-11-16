@@ -1,0 +1,70 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.comment-container-wrapper {
+    .comment-item-wrapper {
+        .comment-item-container {
+            .comment-box {
+                margin: 5;
+                width: 80%;
+                .comment-item {
+                    display: flex;
+                }
+                .child-comment-list {
+                    margin-left: 10;
+                }
+            }
+        }
+        .loader {
+        }
+        .load-more-button {
+        }
+    }
+    .comment-user-interaction-container {
+        .profile-icon {
+            padding-left: 5;
+            padding-right: 5;
+        }
+        .comment-user-interaction {
+            .input-field-wrapper {
+                border-width: 1;
+                border-color: $gray-font;
+                border-radius: 50;
+                margin: 3;
+                padding-left: 3;
+                .input-field {
+                    margin-bottom: 0;
+                    placeholder-color: $colors-placeholder;
+                    border-width: 0;
+                    width: 100%;
+                    color: $black;
+                }
+                .vertical-border {
+                    // margin: 1;
+                    width: 1;
+                    background-color: $gray;
+                }
+                .submit {
+                    @include make-font-size(2);
+                    padding: 5;
+                    height: 100%;
+                    // margin-left: 8;
+                    // margin-right: 3;
+                    border-top-right-radius: 50;
+                    border-bottom-right-radius: 50;
+                }
+            }
+        }
+        .comment-feature {
+            @include make-font-size(0);
+            Button {
+                margin: 1;
+                // border-width: 0;
+                // z-index: 0;
+                border-radius: 50;
+                height: 30;
+                width: 30;
+            }
+        }
+    }
+}

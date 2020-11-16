@@ -1,0 +1,31 @@
+<StackLayout class="comment-box-wrapper" orientation="horizontal">
+  <StackLayout>
+    <qn-profile-icon [slug]="comment?.userActorDTO?.slug" [isCommunityAvatar]="false"
+      [avatar]="comment.userActorDTO.avatarDTO" [height]="35" [sizeRef]="'small'">
+    </qn-profile-icon>
+  </StackLayout>
+  <StackLayout class="comment-box-body">
+    <StackLayout class="profile-detail">
+      <StackLayout class="head">
+        <qn-username [username]="comment.userActorDTO?.username" [slug]="comment.userActorDTO?.slug"></qn-username>
+      </StackLayout>
+      <StackLayout class="comment-object" orientation="horizontal">
+        <StackLayout class="comment-left-part">
+          <Label [text]="comment.commentObject" verticalAlignment="center"></Label>
+        </StackLayout>
+        <StackLayout *ngIf="allowDelete()" (tap)="deleteComment()">
+          <Label text="Trash" verticalAlignment="center"></Label>
+        </StackLayout>
+      </StackLayout>
+      <!-- <app-attached-file-list [attachedFileLinkList]="comment.commentMediaList"></app-attached-file-list> -->
+    </StackLayout>
+    <!-- </div> -->
+    <StackLayout class="comment-actions" orientation="horizontal">
+      <Label (tap)="likeComment(comment.commentActionId)"
+        [innerHTML]="comment?.commentActionMeta?.liked? 'liked':'like'"></Label>
+      <Label (tap)="replyTo(comment.userActorDTO?.username, comment.commentActionId, parentComment?.commentActionId)"
+        text="Reply"></Label>
+      <qn-time-string [metaData]="comment.metaData"></qn-time-string>
+    </StackLayout>
+  </StackLayout>
+</StackLayout>
