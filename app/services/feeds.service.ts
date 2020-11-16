@@ -36,8 +36,8 @@ export class FeedService {
     if (!postId) return of();
     return this.http.get<NormalPostData>(this.baseUrl + `post/data/${postId}`);
   }
-  getFeeds(page) {
-    return this.http.get(this.baseUrl + 'user/feed', { params: { page } });
+  getFeeds(page, size = "4") {
+    return this.http.get(this.baseUrl + 'user/feed', { params: { page: page, size: size } });
   }
   getPostMediaList(postId: number): Observable<PostActionForMedia> {
     return this.http.get<PostActionForMedia>(this.baseUrl + `user/posts/${postId}/media`);

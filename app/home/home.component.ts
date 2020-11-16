@@ -8,6 +8,7 @@ import { GlobalConstants } from '~/shared/constants';
 import { SimplePostComponent } from '~/shared/containers/simple-post/simple-post.component';
 import { QPage } from '~/shared/models/page.model';
 import { Post, PostType, QuestionParentType } from '~/shared/models/post-action.model';
+import { qColors } from '~/_variables';
 import { UtilityService } from '../services/utility.service';
 
 @Component({
@@ -28,6 +29,8 @@ export class HomeComponent {
   feedComponentHelperTimeout: any;
   questionParentTypeClass = QuestionParentType;
   postTypeClass = PostType;
+  pageSize = "4";
+  qColors = qColors;
 
   constructor(public viewContainerRef: ViewContainerRef,
     private utilityService: UtilityService,
@@ -43,6 +46,14 @@ export class HomeComponent {
         return feed.postActionId !== postActionId;
       });
     });
+  }
+
+  refreshList(args) {
+    const pullRefresh = args.object;
+    setTimeout(() => {
+      this.refreshUserFeeds();
+      pullRefresh.refreshing = false;
+    }, 1000);
   }
 
   onScroll(event: EventData): void {
@@ -80,7 +91,7 @@ export class HomeComponent {
 
   getUserFeeds() {
     this.isLoading = true;
-    this.userFeedService.getFeeds(this.page).subscribe(
+    this.userFeedService.getFeeds(this.page, this.pageSize).subscribe(
       (feedPage: QPage<Post>) => {
         // console.log("feedPage", feedPage);
         if (!feedPage.empty && feedPage.content.length) {
@@ -101,8 +112,49 @@ export class HomeComponent {
         }
         this.isLoading = false;
       }, err => {
-        console.log("err", err);
+        // console.log("err", err);
         this.isLoading = false;
+      }
+    );
+  }
+
+  refreshUserFeeds() {
+    this.userFeedService.getFeeds(0, this.pageSize).subscribe(
+      (feedPage: QPage<Post>) => {
+        // console.log("feedPage", feedPage);
+        if (!feedPage.empty && feedPage.content.length) {
+          // this.page++;
+
+          let postExists = [];
+          feedPage.content.forEach((newPost: Post) => {
+            this.userFeeds.forEach((feed: Post) => {
+              if (newPost.postActionId === feed.postActionId) {
+                postExists.push(newPost.postActionId);
+              }
+            });
+          });
+          // let newPost = Number(this.pageSize) - postExists.length;
+          // console.log("postExists.length", postExists.length, newPost);
+          if (postExists.length == 0) {
+            this.userFeeds = [];
+            feedPage.content.forEach(post => {
+              this.userFeeds.push(post);
+            });
+          } else {
+            let index = 0;
+            let spliceIndex = 0;
+            feedPage.content.forEach((post: Post) => {
+              if (postExists[index] == post.postActionId) {
+                index++;
+              } else {
+                this.userFeeds.splice(spliceIndex, 0, post);
+                spliceIndex++;
+              }
+            });
+          }
+        }
+      }, err => {
+        // console.log("err", err);
       }
     );
   }

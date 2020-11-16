@@ -2,35 +2,36 @@
   <Page.actionBar>
     <qn-action-bar [pageViewContainerRef]="viewContainerRef"></qn-action-bar>
   </Page.actionBar>
-
-  <ScrollView (scroll)="onScroll($event)"
-    [isUserInteractionEnabled]="userInteractionService.isUserInteractionEnabled$ | async">
-    <StackLayout>
-      <qn-create-post (onPostCreated)="handlePostCreation($event)" (onPostEdited)="handlePostEditing($event)"
-        (loaded)="onPostCreationBoxLoaded($event)">
-      </qn-create-post>
-      <StackLayout #container>
-        <StackLayout *ngFor="let feed of userFeeds;">
-          <StackLayout *ngIf="feed.postType == postTypeClass.simple">
-            <qn-simple-post [feed]="feed">
-            </qn-simple-post>
+  <PullToRefresh (refresh)="refreshList($event)" [indicatorFillColor]="qColors.$primary"
+    [indicatorColor]="qColors.$white">
+    <ScrollView (scroll)="onScroll($event)"
+      [isUserInteractionEnabled]="userInteractionService.isUserInteractionEnabled$ | async">
+      <StackLayout>
+        <qn-create-post (onPostCreated)="handlePostCreation($event)" (onPostEdited)="handlePostEditing($event)"
+          (loaded)="onPostCreationBoxLoaded($event)">
+        </qn-create-post>
+        <StackLayout #container>
+          <StackLayout *ngFor="let feed of userFeeds;">
+            <StackLayout *ngIf="feed.postType == postTypeClass.simple">
+              <qn-simple-post [feed]="feed">
+              </qn-simple-post>
+            </StackLayout>
+            <StackLayout *ngIf="feed.postType == postTypeClass.question">
+              <qn-simple-question [feed]="feed" [questionParentType]="questionParentTypeClass.feedPage">
+              </qn-simple-question>
+            </StackLayout>
           </StackLayout>
-          <StackLayout *ngIf="feed.postType == postTypeClass.question">
-            <qn-simple-question [feed]="feed" [questionParentType]="questionParentTypeClass.feedPage">
-            </qn-simple-question>
+          <StackLayout *ngIf="isLoading">
+            <qn-post-skeleton></qn-post-skeleton>
           </StackLayout>
         </StackLayout>
-        <StackLayout *ngIf="isLoading">
-          <qn-post-skeleton></qn-post-skeleton>
-        </StackLayout>
-      </StackLayout>
-      <!-- <ListView [items]="userFeeds" [itemTemplateSelector]="templateSelector">
+        <!-- <ListView [items]="userFeeds" [itemTemplateSelector]="templateSelector">
         <ng-template nsTemplateKey="simple" let-feed="item" let-i="index">
           <qn-simple-post [feed]="feed">
           </qn-simple-post>
         </ng-template>
       </ListView> -->
-      <!-- <RadListView [items]="userFeeds" orientation="vertical" [itemTemplateSelector]="templateSelector"
+        <!-- <RadListView [items]="userFeeds" orientation="vertical" [itemTemplateSelector]="templateSelector"
         (loaded)="onUserFeedListViewLoaded($event)">
         <ListViewLinearLayout tkListViewLayout scrollDirection="vertical" dynamicItemSize="true">
         </ListViewLinearLayout>
@@ -39,6 +40,7 @@
           </qn-simple-post>
         </ng-template>
       </RadListView> -->
-    </StackLayout>
-  </ScrollView>
+      </StackLayout>
+    </ScrollView>
+  </PullToRefresh>
 </Page>

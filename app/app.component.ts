@@ -3,6 +3,7 @@ import { EventData } from '@nativescript-community/ui-image';
 import { registerElement } from '@nativescript/angular';
 import { GridLayout } from '@nativescript/core';
 import { Video } from '@nstudio/nativescript-exoplayer';
+import { PullToRefresh } from '@nstudio/nativescript-pulltorefresh';
 import { Carousel, CarouselItem } from 'nativescript-carousel';
 import * as orientation from 'nativescript-orientation';
 import { LoaderService } from './services/loader.service';
@@ -14,6 +15,7 @@ const tnsfx = require('nativescript-effects');
 registerElement('Carousel', () => Carousel);
 registerElement('CarouselItem', () => CarouselItem);
 registerElement("VideoPlayer", () => Video);
+registerElement("PullToRefresh", () => PullToRefresh);
 
 @Component({
   selector: 'qn-root',
