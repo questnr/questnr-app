@@ -1,0 +1,61 @@
+<GridLayout *ngIf="!useLink && attachedFileList.length" rows="auto, *, auto"
+    class="attached-file-container user-interaction" verticalAlignment="top" (loaded)="onContainerLoaded($event)">
+    <GridLayout class="items-count" *ngIf="attachedFileList?.length > 0" row="0" rows="*">
+        <Label row="0" [text]="getTotalItemText()"></Label>
+    </GridLayout>
+    <!-- <span>{{'('+(ind+1)+'/'+attachedFileList.length+')'}}</span> -->
+    <RadListView row="1" [items]="attachedFileList" [height]="attachedFileList?.length > 0 ? elementHeight:  0"
+        orientation="horizontal" [itemTemplateSelector]="templateSelector" selectionBehavior="LongPress"
+        multipleSelection="true" (itemSelected)="onItemSelected($event)" (itemDeselected)="onItemDeselected($event)"
+        (loaded)="onAttachedMediaListViewLoaded($event)">
+        <ListViewLinearLayout tkListViewLayout scrollDirection="Horizontal" itemDeleteAnimation="Slide">
+        </ListViewLinearLayout>
+        <!-- <ng-template let-attachedFile="item" let-index="index" [tkTemplateKey]="resourceTypeClass.image">
+            <StackLayout class="caption" orientation="horizontal" verticalAlignment="middle">
+                <NSImg class="image" loadMode="async" [src]="attachedFile.src" stretch="aspectFill">
+                    </NSImg>
+                <qn-attached-file class="application" (downloadError)="downloadErrorListener($event)" [index]="index"
+                    [attachedFile]="attachedFile" [useLink]="useLink">
+                </qn-attached-file>
+            </StackLayout>
+        </ng-template> -->
+        <ng-template let-attachedFile="item" let-index="index" [tkTemplateKey]="resourceTypeClass.application">
+            <StackLayout class="caption" orientation="horizontal" verticalAlignment="middle">
+                <qn-attached-file class="application" [attachedFile]="attachedFile" [index]="index" [useLink]="useLink">
+                </qn-attached-file>
+            </StackLayout>
+        </ng-template>
+    </RadListView>
+
+    <GridLayout *ngIf="selectionInProgress()" row="2" rows="*" (tap)="removeAttachedFile()">
+        <!-- <Label row="0" text="{{_selectedItems?.length+' selected'}}"></Label> -->
+        <Label row="0" class="fa remove-media" text="&#xf1f8;" horizontalAlignment="right"
+            id="remove-attached-media"></Label>
+    </GridLayout>
+</GridLayout>
+<GridLayout *ngIf="useLink" class="attached-file-container" verticalAlignment="top">
+    <!-- <span>{{'('+(ind+1)+'/'+attachedFileList.length+')'}}</span> -->
+    <RadListView row="1" [items]="attachedFileLinkList" [height]="attachedFileLinkList?.length > 0 ? elementHeight:  0"
+        orientation="horizontal" [itemTemplateSelector]="templateSelector"
+        (loaded)="onAttachedMediaListViewLoaded($event)">
+        <ListViewLinearLayout tkListViewLayout scrollDirection="Horizontal" itemDeleteAnimation="Slide">
+        </ListViewLinearLayout>
+        <!-- <ng-template let-attachedFileLink="item" let-index="index" [tkTemplateKey]="resourceTypeClass.image">
+            <StackLayout class="caption" orientation="horizontal" verticalAlignment="middle">
+                <NSImg class="image" loadMode="async" [src]="attachedFileLink.postMediaLink" stretch="aspectFill"
+                        (failure)="onFailure($event, index)">
+                    </NSImg>
+                <qn-attached-file class="application" (downloadError)="downloadErrorListener($event)" [index]="index"
+                    [attachedFileLink]="attachedFileLink" [useLink]="useLink">
+                </qn-attached-file>
+            </StackLayout>
+        </ng-template> -->
+        <ng-template let-attachedFileLink="item" let-index="index" [tkTemplateKey]="resourceTypeClass.application">
+            <StackLayout class="caption" orientation="horizontal" verticalAlignment="middle">
+                <qn-attached-file class="application" [index]="index" [attachedFileLink]="attachedFileLink"
+                    [useLink]="useLink">
+                </qn-attached-file>
+            </StackLayout>
+        </ng-template>
+    </RadListView>
+</GridLayout>

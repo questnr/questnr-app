@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { isAndroid } from '@nativescript/core';
 import { Carousel } from 'nativescript-carousel';
-import { FeedService } from '~/services/feeds.service';
+import { FeedService } from '~/services/feed.service';
 import { VideoService } from '~/services/video.service';
 import { PostActionForMedia, PostMedia, ResourceType } from '~/shared/models/post-action.model';
 import { QNRVideoComponent } from '~/shared/util/video/q-n-r-video.component';

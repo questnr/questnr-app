@@ -15,7 +15,7 @@ import { ApiService } from './services/api.service';
 import { AskQuestionService } from './services/ask-question.service';
 import { CommonService } from './services/common.service';
 import { CommunityService } from './services/community.service';
-import { FeedService } from './services/feeds.service';
+import { FeedService } from './services/feed.service';
 import { JWTService } from './services/jwt.service';
 import { LoaderService } from './services/loader.service';
 import { OTPVerificationService } from './services/otp-verification.service';
@@ -30,7 +30,6 @@ import { VideoService } from './services/video.service';
 import { AppModalModule } from './shared/app-modal.module';
 import { MaterialModule } from './shared/material.module';
 import { SharedModule } from './shared/shared.module';
-import { SkeletonModule } from './shared/skeleton.module';
 
 Fontawesome.init();
 
@@ -56,7 +55,6 @@ if (applicationModule.android) {
     AuthModule,
     MaterialModule,
     SharedModule,
-    SkeletonModule,
     AppModalModule,
     HomeModule
   ],

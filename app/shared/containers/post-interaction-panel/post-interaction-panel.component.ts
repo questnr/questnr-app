@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FeedService } from '~/services/feeds.service';
-import { CommentParentClassType } from '~/shared/models/comment-action.model';
+import { FeedService } from '~/services/feed.service';
+import { PostSourceType } from '~/shared/models/comment-action.model';
 import { Post } from '~/shared/models/post-action.model';
 import { qColors } from '~/_variables';
 import { CommentContainerComponent } from '../comment-container/comment-container.component';
@@ -17,7 +17,7 @@ export class PostInteractionPanelComponent implements OnInit {
   isCommenting: boolean = false;
   qColors = qColors;
   @ViewChild("commentContainer") commentContainer: CommentContainerComponent;
-  commentParentClassTypeClass = CommentParentClassType;
+  postSourceTypeClass = PostSourceType;
 
   constructor(private feedService: FeedService,
     private cd: ChangeDetectorRef) { }
@@ -26,6 +26,7 @@ export class PostInteractionPanelComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+    // this.commentContainer.toggleComments(this.isCommenting);
   }
 
   setPost(feed: Post): void {

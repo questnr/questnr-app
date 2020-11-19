@@ -27,7 +27,7 @@ export class CommentActionMeta {
     liked: boolean;
 }
 
-export enum CommentParentClassType {
+export enum PostSourceType {
     feed = 'feed',
     singlePost = 'singlePost'
 }

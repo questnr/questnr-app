@@ -6,7 +6,7 @@ import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { AuthService } from '~/services/auth.service';
 import { CommonService } from '~/services/common.service';
 import { CommunityService } from '~/services/community.service';
-import { FeedService } from '~/services/feeds.service';
+import { FeedService } from '~/services/feed.service';
 import { PostMenuService } from '~/services/post-menu.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { UserInteractionService } from '~/services/user-interaction.service';

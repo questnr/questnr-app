@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { StackLayout } from '@nativescript/core';
 import { AuthService } from '~/services/auth.service';
 import { CommonService } from '~/services/common.service';
-import { FeedService } from '~/services/feeds.service';
+import { FeedService } from '~/services/feed.service';
 import { PostMenuService } from '~/services/post-menu.service';
 import { GlobalConstants } from '~/shared/constants';
 import { HashTag } from '~/shared/models/hashtag.model';

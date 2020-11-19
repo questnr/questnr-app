@@ -1,7 +1,7 @@
 import { Component, ElementRef, NgZone, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { EventData } from '@nativescript-community/ui-image';
 import { ListView, ScrollView } from '@nativescript/core';
-import { FeedService } from '~/services/feeds.service';
+import { FeedService } from '~/services/feed.service';
 import { PostMenuService } from '~/services/post-menu.service';
 import { UserInteractionService } from '~/services/user-interaction.service';
 import { GlobalConstants } from '~/shared/constants';

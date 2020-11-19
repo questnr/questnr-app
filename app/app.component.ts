@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventData } from '@nativescript-community/ui-image';
 import { registerElement } from '@nativescript/angular';
 import { GridLayout } from '@nativescript/core';
+import { CardView } from '@nstudio/nativescript-cardview';
 import { Video } from '@nstudio/nativescript-exoplayer';
 import { PullToRefresh } from '@nstudio/nativescript-pulltorefresh';
 import { Carousel, CarouselItem } from 'nativescript-carousel';
@@ -16,6 +17,7 @@ registerElement('Carousel', () => Carousel);
 registerElement('CarouselItem', () => CarouselItem);
 registerElement("VideoPlayer", () => Video);
 registerElement("PullToRefresh", () => PullToRefresh);
+registerElement('CardView', () => CardView);
 
 @Component({
   selector: 'qn-root',

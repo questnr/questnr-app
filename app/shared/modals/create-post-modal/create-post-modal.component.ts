@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { FinalEventData } from '@nativescript-community/ui-image';
 import { ModalDialogParams } from '@nativescript/angular';
@@ -10,19 +10,11 @@ import { FilePickerOptions, VideoPickerOptions } from 'nativescript-mediafilepic
 import { ListViewEventData, RadListView } from 'nativescript-ui-listview';
 import { environment } from '~/environments/environment';
 import { AuthService } from '~/services/auth.service';
-import { FeedService } from '~/services/feeds.service';
+import { FeedService } from '~/services/feed.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { ProfileIconComponent } from '~/shared/containers/profile-icon/profile-icon.component';
+import { MediaSrc } from '~/shared/models/common.model';
 import { Post } from '~/shared/models/post-action.model';
-
-class MediaSrc {
-  public type: string;
-  public src: string;
-  constructor(type: string, src: string) {
-    this.type = type;
-    this.src = src;
-  }
-}
 
 @Component({
   selector: 'qn-create-post-modal',

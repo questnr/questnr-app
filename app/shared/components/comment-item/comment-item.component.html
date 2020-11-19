@@ -1,31 +1,36 @@
-<StackLayout class="comment-box-wrapper" orientation="horizontal">
-  <StackLayout>
+<GridLayout class="comment-box-wrapper" verticalAlignment="top" row="*" columns="auto, *"
+  (swipe)="onSwipeComment($event)">
+  <StackLayout class="profile-icon" orientation="horizontal" col="0">
     <qn-profile-icon [slug]="comment?.userActorDTO?.slug" [isCommunityAvatar]="false"
-      [avatar]="comment.userActorDTO.avatarDTO" [height]="35" [sizeRef]="'small'">
+      [avatar]="comment.userActorDTO.avatarDTO" [height]="28" [sizeRef]="'small'">
     </qn-profile-icon>
   </StackLayout>
-  <StackLayout class="comment-box-body">
-    <StackLayout class="profile-detail">
-      <StackLayout class="head">
-        <qn-username [username]="comment.userActorDTO?.username" [slug]="comment.userActorDTO?.slug"></qn-username>
+  <GridLayout class="comment-box-body" col="1" rows="*, auto" horizontalAlignment="stretch" width="100%">
+    <StackLayout row="0" class="profile-detail">
+      <StackLayout class="head" orientation="horizontal">
+        <qn-username [username]="comment?.userActorDTO?.username" [slug]="comment?.userActorDTO?.slug"></qn-username>
       </StackLayout>
       <StackLayout class="comment-object" orientation="horizontal">
-        <StackLayout class="comment-left-part">
-          <Label [text]="comment.commentObject" verticalAlignment="center"></Label>
-        </StackLayout>
-        <StackLayout *ngIf="allowDelete()" (tap)="deleteComment()">
-          <Label text="Trash" verticalAlignment="center"></Label>
-        </StackLayout>
+        <Label [text]="comment?.commentObject" verticalAlignment="center"></Label>
+        <!-- <StackLayout col="1" *ngIf="allowDelete()" (tap)="deleteComment()">
+          <Label class="fa" text="&#xf014;" verticalAlignment="center"></Label>
+        </StackLayout> -->
       </StackLayout>
-      <!-- <app-attached-file-list [attachedFileLinkList]="comment.commentMediaList"></app-attached-file-list> -->
+      <StackLayout *ngIf="comment.commentMediaList?.length" orientation="horizontal" verticalAlignment="top">
+        <qn-attached-file-list [attachedFileLinkList]="comment.commentMediaList"></qn-attached-file-list>
+      </StackLayout>
     </StackLayout>
-    <!-- </div> -->
-    <StackLayout class="comment-actions" orientation="horizontal">
-      <Label (tap)="likeComment(comment.commentActionId)"
-        [innerHTML]="comment?.commentActionMeta?.liked? 'liked':'like'"></Label>
-      <Label (tap)="replyTo(comment.userActorDTO?.username, comment.commentActionId, parentComment?.commentActionId)"
-        text="Reply"></Label>
-      <qn-time-string [metaData]="comment.metaData"></qn-time-string>
+    <StackLayout row="1" class="comment-actions" orientation="horizontal">
+      <StackLayout class="action">
+        <Label class="like-action" (tap)="likeComment(comment.commentActionId)"
+          [text]="comment?.commentActionMeta?.liked? 'LIKED':'LIKE'"></Label>
+      </StackLayout>
+      <StackLayout class="action">
+        <Label class="reply-action" (tap)="replyTo()" text="Reply"></Label>
+      </StackLayout>
+      <StackLayout class="time-string">
+        <qn-time-string [metaData]="comment.metaData"></qn-time-string>
+      </StackLayout>
     </StackLayout>
-  </StackLayout>
-</StackLayout>
+  </GridLayout>
+</GridLayout>

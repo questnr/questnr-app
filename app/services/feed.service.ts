@@ -25,7 +25,7 @@ export class FeedService {
       },
       description: `Uploading ${postRequestId}`
     };
-    let session = bghttp.session(`image-upload ${postRequestId}`);
+    let session = bghttp.session(`post-upload ${postRequestId}`);
     return session.multipartUpload(formData, request);
   }
   editPost(text: string, blogTitle: string, postId: number) {
@@ -46,9 +46,24 @@ export class FeedService {
     if (!postId) return of();
     return this.http.get(this.baseUrl + `user/posts/${postId}/comment`, { params: { page } });
   }
-  postComment(postId, data) {
+  postComment(postId, formData): bghttp.Task {
+    if (!postId || !formData) return;
+    let commentRequestId = Math.floor(Math.random() * 100);
+    let request: bghttp.Request = {
+      url: `${this.baseUrl}user/posts/${postId}/comment`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/octet-stream",
+        "Authorization": 'Bearer ' + this.authService.getAccessToken()
+      },
+      description: `Uploading ${commentRequestId}`
+    };
+    let session = bghttp.session(`comment-upload ${commentRequestId}`);
+    return session.multipartUpload(formData, request);
+  }
+  postNormalComment(postId, data) {
     if (!postId) return of();
-    return this.http.post(this.baseUrl + `user/posts/${postId}/comment`, data);
+    return this.http.post(this.baseUrl + `user/posts/${postId}/comment/normal`, data);
   }
   likePost(postId) {
     if (!postId) return of();

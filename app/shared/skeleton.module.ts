@@ -5,6 +5,7 @@ import {
 } from '@nativescript/angular';
 import { MaterialModule } from './material.module';
 import { HorizontalProfileSkeletonComponent } from './skeletons/horizontal-profile-skeleton/horizontal-profile-skeleton.component';
+import { PostSkeletonComponent } from './skeletons/post-skeleton/post-skeleton.component';
 
 @NgModule({
   imports: [
@@ -13,12 +14,14 @@ import { HorizontalProfileSkeletonComponent } from './skeletons/horizontal-profi
     MaterialModule
   ],
   declarations: [
-    HorizontalProfileSkeletonComponent
+    HorizontalProfileSkeletonComponent,
+    PostSkeletonComponent
   ],
   providers: [
   ],
   exports: [
-    HorizontalProfileSkeletonComponent
+    HorizontalProfileSkeletonComponent,
+    PostSkeletonComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

@@ -55,3 +55,12 @@ export enum ProfileIconTemplateType {
     normal = 'normal',
     heading = 'heading'
 }
+
+export class MediaSrc {
+    public type: string;
+    public src: string;
+    constructor(type: string, src: string) {
+        this.type = type;
+        this.src = src;
+    }
+}

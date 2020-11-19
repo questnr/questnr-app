@@ -3,6 +3,7 @@ import {
   NativeScriptCommonModule,
   NativeScriptRouterModule
 } from '@nativescript/angular';
+import { AttachedFileModule } from '~/attached-file-list/attached-file.module';
 import { CommentItemComponent } from './components/comment-item/comment-item.component';
 import { PostMenuOptionComponent } from './components/post-menu-option/post-menu-option.component';
 import { ActionBarComponent } from './containers/action-bar/action-bar.component';
@@ -18,7 +19,7 @@ import { SimpleQuestionComponent } from './containers/simple-question/simple-que
 import { TimeStringComponent } from './containers/time-string/time-string.component';
 import { UsernameComponent } from './containers/username/username.component';
 import { MaterialModule } from './material.module';
-import { PostSkeletonComponent } from './skeletons/post-skeleton/post-skeleton.component';
+import { SkeletonModule } from './skeleton.module';
 import { CircularProgressBarComponent } from './util/circular-progress-bar/circular-progress-bar.component';
 import { HrComponent } from './util/hr/hr.component';
 import { SpaceComponent } from './util/space/space.component';
@@ -28,7 +29,9 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
   imports: [
     NativeScriptCommonModule,
     NativeScriptRouterModule,
-    MaterialModule
+    MaterialModule,
+    SkeletonModule,
+    AttachedFileModule
   ],
   declarations: [
     CircularProgressBarComponent,
@@ -45,7 +48,6 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     MediaContainerComponent,
     QNRVideoComponent,
     SimpleQuestionComponent,
-    PostSkeletonComponent,
     PostInteractionPanelComponent,
     PostMenuOptionComponent,
     CommentContainerComponent,
@@ -54,6 +56,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
   providers: [
   ],
   exports: [
+    SkeletonModule,
+    AttachedFileModule,
     ActionBarComponent,
     CircularProgressBarComponent,
     HorizontalProfileComponent,
@@ -68,7 +72,6 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     MediaContainerComponent,
     QNRVideoComponent,
     SimpleQuestionComponent,
-    PostSkeletonComponent,
     PostInteractionPanelComponent,
     PostMenuOptionComponent,
     CommentContainerComponent,

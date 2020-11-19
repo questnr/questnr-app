@@ -1,0 +1,14 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.attached-file {
+    padding: 1;
+    background-color: $primary;
+    border-radius: 5;
+    .normal {
+        @include make-font-size(-2);
+    }
+    .large {
+        @include make-font-size(-1);
+    }
+}

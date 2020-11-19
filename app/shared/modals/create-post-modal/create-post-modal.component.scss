@@ -106,7 +106,7 @@
             }
             .remove-media {
                 color: $heading;
-                font-size: 20;
+                @include make-font-size(3);
                 margin: 10;
             }
         }

@@ -1,0 +1,19 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.attached-file-container {
+    // margin: 1;
+    .caption {
+        margin-right: 3;
+    }
+}
+.attached-file-container.user-interaction {
+    .items-count {
+        margin: 1;
+    }
+    .remove-media {
+        color: $heading;
+        @include make-font-size(3);
+        margin: 10;
+    }
+}

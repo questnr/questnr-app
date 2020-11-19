@@ -1,0 +1,15 @@
+<StackLayout class="attached-file" *ngIf="!useLink" height="100%" width="100%" orientation="horizontal"
+    verticalAlignment="top">
+    <StackLayout class="attached-file-content">
+        <Label class="large" [text]="checkFileExtension() | uppercase" horizontalAlignment="center"></Label>
+        <Label class="normal" [text]="getFileName()" horizontalAlignment="center"></Label>
+        <!-- <Label class="normal" [text]="fileName | slice:0:7 + '..'" horizontalAlignment="center"></Label> -->
+    </StackLayout>
+</StackLayout>
+<StackLayout class="attached-file" *ngIf="useLink" height="100%" width="100%" orientation="horizontal"
+    verticalAlignment="top">
+    <StackLayout class="attached-file-content normal" (tap)="openLink()" orientation="horizontal"
+        verticalAlignment="middle">
+        <Label [text]="getFileExtension() | uppercase" verticalAlignment="middle"></Label>
+    </StackLayout>
+</StackLayout>

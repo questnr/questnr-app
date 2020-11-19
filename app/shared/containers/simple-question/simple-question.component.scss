@@ -19,7 +19,7 @@
     }
     .profile-detail {
       .head {
-        @include make-font-size(-1);
+        @include make-font-size(0);
         font-weight: 500;
       }
       .subhead {

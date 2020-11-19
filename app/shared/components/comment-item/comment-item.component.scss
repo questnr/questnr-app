@@ -3,17 +3,32 @@
 
 .comment-box-wrapper {
     @include make-font-size(-1);
+    .profile-icon {
+        margin-right: 5;
+    }
     .comment-box-body {
         .profile-detail {
             .head {
             }
             .comment-object {
-                .comment-left-part {
-                }
+                padding-left: 1;
+                // .comment-left-part {
+                //     padding: 3;
+                //     background-color: $background;
+                // }
             }
         }
         .comment-actions {
             @include make-font-size(-2);
+            .action {
+                margin-right: 5;
+                padding: 3;
+                color: $primary;
+                font-weight: 500;
+            }
+            .time-string {
+                padding: 3;
+            }
         }
     }
 }

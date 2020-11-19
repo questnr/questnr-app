@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { GestureTypes, GridLayout, StackLayout } from '@nativescript/core';
 import { AuthService } from '~/services/auth.service';
-import { FeedService } from '~/services/feeds.service';
+import { FeedService } from '~/services/feed.service';
 import { GlobalConstants } from '~/shared/constants';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { CommentAction } from '~/shared/models/comment-action.model';
@@ -12,16 +13,14 @@ import { Post } from '~/shared/models/post-action.model';
   styleUrls: ['./comment-item.component.scss']
 })
 export class CommentItemComponent implements OnInit {
-  isLoading = false;
-  isReplying = false;
+  isLoading: boolean = false;
+  isReplying: boolean = false;
   @Input() comment: CommentAction;
   @Input() parentComment: CommentAction;
   @Input() post: Post;
   @Output() reply = new EventEmitter();
   @Output() update = new EventEmitter();
   @Output() deleteEvent = new EventEmitter();
-  @Input() fontSize: string;
-  mobileView: boolean = false;
   loggedInUserId: any;
   defaultUserSrc: string = StaticMediaSrc.userFile;
   userPath: string = GlobalConstants.userPath;
@@ -54,8 +53,17 @@ export class CommentItemComponent implements OnInit {
       );
     }
   }
-  replyTo(username, commentId, parentCommentId) {
-    this.reply.emit({ username, commentId, parentCommentId });
+
+  onSwipeComment(swipeArgs): void {
+    // let commentBox = args.object as GridLayout;
+    // commentBox.on(GestureTypes.swipe, (swipeArgs: any) => {
+    //   console.log("Swipe Direction: " + swipeArgs.direction);
+    // });
+    console.log("Swipe Direction: " + swipeArgs.direction);
+  }
+
+  replyTo() {
+    this.reply.emit();
   }
 
   likedComment() {
@@ -67,7 +75,7 @@ export class CommentItemComponent implements OnInit {
     this.comment.commentActionMeta.liked = false;
   }
 
-  allowDelete() {
+  allowDelete(): boolean {
     return this.post.userDTO.userId == this.loggedInUserId || this.comment.userActorDTO.userId == this.loggedInUserId;
   }
 

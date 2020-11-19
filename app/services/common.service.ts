@@ -56,8 +56,8 @@ export class CommonService {
         return url.match(VID_REGEX) ? url.match(VID_REGEX)[1] : null;
     }
 
-    checkFileExtension(file: File) {
-        return file.name.split('.').pop();
+    checkFileExtension(file: string) {
+        return file.split('.').pop();
     }
 
     getCommunitySharableLink(communitySlug: string) {
