@@ -1,4 +1,4 @@
-@import "../variables";
+@import "~/variables";
 @import "scss/mixins/index";
 
 .search-wrapper {
@@ -16,10 +16,10 @@
     text-align: center;
     padding: 10;
     .static-text {
-      font-size: 14;
+      @include make-font-size(2);
     }
     .user-text {
-      font-size: 16;
+      @include make-font-size(4);
       font-weight: 500;
       color: $heading;
     }
@@ -44,6 +44,6 @@
 }
 
 .fa-back-button {
-  font-size: 20;
+  @include make-font-size(6);
   color: $white;
 }

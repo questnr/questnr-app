@@ -1,4 +1,5 @@
-@import "../../../variables";
+@import "~/variables";
+@import "scss/mixins/index";
 
 .action-bar-wrapper {
     background-color: $heading;
@@ -25,8 +26,18 @@
         }
     }
 
+    .title-wrapper {
+        @include make-font-size(3);
+        font-weight: 500;
+    }
+
     .fa-logout {
-        font-size: 20;
+        @include make-font-size(6);
         color: $white;
     }
+}
+
+.fa-back-button {
+    @include make-font-size(6);
+    color: $white;
 }

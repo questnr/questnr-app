@@ -8,6 +8,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { SearchOverlayComponent } from './search-overlay/search-overlay.component';
 import { GlobalConstants } from './shared/constants';
+import { CommentContainerComponent } from './comment-container/comment-container.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "/" + GlobalConstants.feedPath, pathMatch: "full" },
@@ -16,6 +17,13 @@ const routes: Routes = [
   { path: GlobalConstants.signUp, component: SignupComponent },
   { path: GlobalConstants.forgotPassword, component: ForgotPasswordComponent },
   { path: GlobalConstants.feedPath, component: HomeComponent, canActivate: [AuthGuard] },
+  {
+    path: [
+      GlobalConstants.feedPath,
+      ':postId',
+      GlobalConstants.feedCommentPath
+    ].join("/"), component: CommentContainerComponent, canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

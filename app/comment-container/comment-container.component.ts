@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import * as bghttp from '@nativescript/background-http';
-import { ObservableArray, StackLayout, TextField } from '@nativescript/core';
+import { ObservableArray, Page, StackLayout, TextField } from '@nativescript/core';
 import * as app from '@nativescript/core/application';
 import { Mediafilepicker } from 'nativescript-mediafilepicker';
 import { FilePickerOptions } from 'nativescript-mediafilepicker/mediafilepicker.common';
@@ -21,6 +22,11 @@ class CommentReply {
   username: string;
 }
 
+enum CommentContainerTemplate {
+  page,
+  section
+}
+
 @Component({
   selector: 'qn-comment-container',
   templateUrl: './comment-container.component.html',
@@ -29,6 +35,7 @@ class CommentReply {
 export class CommentContainerComponent implements OnInit {
   @Input() feed: Post;
   @Input() parentType: PostSourceType = PostSourceType.feed;
+  commentContainerPage: Page;
   commentContainer: StackLayout;
   isCommentLoading: boolean;
   isCommenting: boolean = false;
@@ -54,16 +61,28 @@ export class CommentContainerComponent implements OnInit {
   maxMediaLimit: number = 5;
   uploading: boolean = false;
   uploadProgress: number = 0;
+  userCommentInteractionPanelHeight: number = 40;
+  attachedFileContainerHeight: number = 90;
+  templateType: CommentContainerTemplate = CommentContainerTemplate.section;
 
-  constructor(private feedService: FeedService,
+  constructor(
+    public viewContainerRef: ViewContainerRef,
+    private feedService: FeedService,
     public authService: AuthService,
     private snackBarService: SnackBarService,
-    private cd: ChangeDetectorRef) { }
+    private cd: ChangeDetectorRef,
+    public route: ActivatedRoute) { }
 
   ngOnInit(): void {
     if (this.parentType === PostSourceType.singlePost) {
       this.isCommenting = true;
     }
+    this.route.queryParams.subscribe((params) => {
+      if (params.feed) {
+        this.feed = JSON.parse(params.feed) as Post;
+      }
+      this.templateType = CommentContainerTemplate.page;
+    });
   }
 
   toggleComments(isCommenting: boolean) {
@@ -77,6 +96,13 @@ export class CommentContainerComponent implements OnInit {
         this.container.nativeElement.hide();
       });
     }
+  }
+
+  onCommentPageLoaded(args) {
+    this.commentContainerPage = args.object as Page;
+    setTimeout(() => {
+      console.log("page height: ", this.commentContainerPage.getMeasuredHeight());
+    }, 100);
   }
 
   getComments() {
@@ -162,11 +188,7 @@ export class CommentContainerComponent implements OnInit {
     this.uploading = false;
     this.uploadProgress = 0;
     console.log("errorHandler", error);
-    if (error?.error?.errorMessage) {
-      this.snackBarService.show({ snackText: error?.error?.errorMessage });
-    } else {
-      this.snackBarService.showSomethingWentWrong();
-    }
+    this.snackBarService.showHTTPError(error);
   }
 
   commentMadeSuccessful(commentAction: CommentAction) {
@@ -184,9 +206,11 @@ export class CommentContainerComponent implements OnInit {
       this.feed.commentActionList.unshift(commentAction);
     }
     ++this.feed.postActionMeta.totalComments;
+    this.snackBarService.show({ snackText: "Comment has been made!" });
     this.isCommentLoading = false;
     this.commentReply = null;
     this.comment.setValue('');
+    this.commentInputRef.nativeElement.dismissSoftInput();
     this.clearAttachedFileList();
   }
 
@@ -266,7 +290,7 @@ export class CommentContainerComponent implements OnInit {
             this.attachedFileList.push(mediaSrc);
             this.attachedFileListComponent.pushFile(mediaSrc);
           }
-          this.cd.markForCheck();
+          this.cd.detectChanges();
         }
       });
       mediafilepicker.removeEventListener("getFiles");

@@ -6,7 +6,7 @@
       </SearchBar>
     </StackLayout>
   </ActionItem> -->
-  <GridLayout rows="*" columns="auto, *, auto">
+  <GridLayout rows="*" columns="auto, *, auto" *ngIf="!isChildPage">
     <StackLayout class="action-logo" col="0" orientation="horizontal">
       <Image src="res://icon" class="action-image"></Image>
       <!-- <Label text="uestnr" class="action-label"></Label> -->
@@ -17,6 +17,12 @@
       </SearchBar>
     </StackLayout>
     <Label col="2" (tap)="logout()" text="&#xf08b;" class="fa fa-logout" android:style="padding-right:10"></Label>
+  </GridLayout>
+
+  <GridLayout rows="*" *ngIf="isChildPage">
+    <Label row="0" text="&#xf060;" class="fa fa-back-button" verticalAlignment="middle" horizontalAlignment="left"
+      (tap)="onNavBtnTap($event)"></Label>
+    <Label row="0" class="title-wrapper" [text]="title" verticalAlignment="middle" horizontalAlignment="center"></Label>
   </GridLayout>
   <!-- <ActionItem ios.position="right" (tap)="logout()">
     <StackLayout>

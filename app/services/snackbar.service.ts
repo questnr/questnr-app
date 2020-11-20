@@ -16,6 +16,14 @@ export class SnackBarService {
         });
     }
 
+    showHTTPError(error) {
+        if (error?.error?.errorMessage) {
+            this.show({ snackText: error?.error?.errorMessage });
+        } else {
+            this.showSomethingWentWrong();
+        }
+    }
+
     showSomethingWentWrong(view = undefined): void {
         this.show({ snackText: 'something went wrong.', view });
     }

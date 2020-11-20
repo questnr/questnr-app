@@ -86,18 +86,18 @@ export class FeedService {
     return this.http.post(this.baseUrl + `post/${postId}/link`, {});
   }
   removePost(postId) {
+    if (!postId) return of();
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    if (!postId) return of();
     return this.http.delete(this.baseUrl + '/user/posts/' + postId, httpOptions);
   }
 
   deleteComment(postId, commentId) {
+    if (!postId || !commentId) return of();
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    if (!postId || !commentId) return of();
     return this.http.delete(this.baseUrl + `user/posts/${postId}/comment/${commentId}`, httpOptions);
   }
 

@@ -8,6 +8,7 @@ import { Fontawesome } from 'nativescript-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
+import { CommentContainerComponent } from './comment-container/comment-container.component';
 import { HomeModule } from './home/home.module';
 import { InterceptorService } from './interceptor.service';
 import { SearchOverlayComponent } from './search-overlay/search-overlay.component';
@@ -47,7 +48,8 @@ if (applicationModule.android) {
 @NgModule({
   declarations: [
     AppComponent,
-    SearchOverlayComponent
+    SearchOverlayComponent,
+    CommentContainerComponent
   ],
   imports: [
     NativeScriptModule,

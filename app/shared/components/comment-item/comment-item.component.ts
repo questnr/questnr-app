@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { GestureTypes, GridLayout, StackLayout } from '@nativescript/core';
+import { SwipeDirection } from '@nativescript/core';
 import { AuthService } from '~/services/auth.service';
 import { FeedService } from '~/services/feed.service';
+import { SnackBarService } from '~/services/snackbar.service';
 import { GlobalConstants } from '~/shared/constants';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { CommentAction } from '~/shared/models/comment-action.model';
@@ -24,9 +25,12 @@ export class CommentItemComponent implements OnInit {
   loggedInUserId: any;
   defaultUserSrc: string = StaticMediaSrc.userFile;
   userPath: string = GlobalConstants.userPath;
+  isTrashVisible: boolean = false;
+  trashTimeout: any;
 
   constructor(private feedService: FeedService,
-    public authService: AuthService) {
+    public authService: AuthService,
+    private snackBarService: SnackBarService) {
     this.loggedInUserId = authService.getStoredUserProfile().id;
   }
 
@@ -60,6 +64,20 @@ export class CommentItemComponent implements OnInit {
     //   console.log("Swipe Direction: " + swipeArgs.direction);
     // });
     console.log("Swipe Direction: " + swipeArgs.direction);
+    if (swipeArgs.direction === SwipeDirection.left) {
+      this.showTrash();
+    }
+  }
+
+  showTrash(): void {
+    console.log("showTrash");
+    if (this.trashTimeout) {
+      clearTimeout(this.trashTimeout);
+    }
+    this.isTrashVisible = true;
+    this.trashTimeout = setTimeout(() => {
+      this.isTrashVisible = false;
+    }, 2000);
   }
 
   replyTo() {
@@ -82,6 +100,9 @@ export class CommentItemComponent implements OnInit {
   deleteComment() {
     this.feedService.deleteComment(this.post.postActionId, this.comment.commentActionId).subscribe((res: any) => {
       this.deleteEvent.emit(this.comment.commentActionId);
+      this.snackBarService.show({ snackText: "Comment has been deleted!" });
+    }, err => {
+      this.snackBarService.showHTTPError(err);
     });
   }
 }

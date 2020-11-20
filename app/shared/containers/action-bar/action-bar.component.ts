@@ -13,14 +13,19 @@ declare var android: any;
 })
 export class ActionBarComponent implements OnInit {
   @Input() pageViewContainerRef: ViewContainerRef;
+  @Input() isChildPage: boolean = false;
+  @Input() title: string;
   searchBar: SearchBar;
 
   constructor(private authSerivce: AuthService,
-    private routerExtension: RouterExtensions) { }
+    private routerExtenstions: RouterExtensions) { }
 
   ngOnInit(): void {
   }
 
+  onNavBtnTap(args): void {
+    this.routerExtenstions.backToPreviousPage();
+  }
   logout() {
     this.authSerivce.logout();
   }
@@ -51,7 +56,7 @@ export class ActionBarComponent implements OnInit {
   }
 
   showSearchModal() {
-    this.routerExtension.navigate(['/', GlobalConstants.search]);
+    this.routerExtenstions.navigate(['/', GlobalConstants.search]);
   }
 
   onSubmit(args) {
