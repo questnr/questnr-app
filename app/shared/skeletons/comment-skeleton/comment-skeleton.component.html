@@ -1,3 +1,17 @@
-<p>
-  comment-skeleton works!
-</p>
+<GridLayout class="comment-skeleton-wrapper" verticalAlignment="top" row="*" columns="auto, *">
+  <StackLayout row="0" col="0" class="profile-icon" orientation="horizontal" verticalAlignment="stretch">
+    <Label text=" " class="skeleton" [height]="28" [width]="28" verticalAlignment="top"></Label>
+  </StackLayout>
+  <GridLayout row="0" class="comment-box-body" col="1" rows="*, auto" verticalAlignment="top"
+    horizontalAlignment="stretch">
+    <StackLayout row="0" class="profile-detail">
+      <Label text=" " class="head skeleton" width="35%" horizontalAlignment="left"></Label>
+      <Label text=" " class="comment-object skeleton" width="100%" horizontalAlignment="left"></Label>
+    </StackLayout>
+    <StackLayout row="1" class="comment-actions" orientation="horizontal">
+      <Label text=" " class="action like-action skeleton" width="30" horizontalAlignment="left"></Label>
+      <Label text=" " class="action reply-action skeleton" width="30" horizontalAlignment="left"></Label>
+      <Label text=" " class="action time-string skeleton" width="35" horizontalAlignment="left"></Label>
+    </StackLayout>
+  </GridLayout>
+</GridLayout>

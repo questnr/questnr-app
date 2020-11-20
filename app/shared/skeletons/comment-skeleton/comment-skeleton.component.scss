@@ -1,0 +1,36 @@
+@import "~/variables";
+
+.skeleton {
+    border-radius: 50;
+    background-color: $gray;
+    margin-bottom: 3;
+}
+
+.comment-skeleton-wrapper {
+    padding: 5;
+    .profile-icon {
+        margin-right: 5;
+    }
+    .comment-box-body {
+        .profile-detail {
+            .head {
+                height: 10;
+            }
+            .comment-object {
+                padding-left: 1;
+                height: 21;
+            }
+        }
+        .comment-actions {
+            .action {
+                margin-right: 5;
+                padding: 3;
+                height: 14;
+            }
+            .time-string {
+                padding: 3;
+                height: 14;
+            }
+        }
+    }
+}

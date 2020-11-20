@@ -19,7 +19,7 @@ export class CommentPageComponent implements OnInit {
   @Input() feed: Post;
   @Input() parentType: PostSourceType = PostSourceType.feed;
   commentContainer: StackLayout;
-  isCommentLoading: boolean;
+  isCommentLoading: boolean = false;
   isCommenting: boolean = false;
   isReplying: boolean = false;
   @ViewChild("container") container: ElementRef<any>;
@@ -70,10 +70,10 @@ export class CommentPageComponent implements OnInit {
   }
 
   getComments() {
-    this.isCommentLoading = true;
+    this.onCommentLoading(true);
     this.commentSectionService.getComments(this.feed.postActionId, this.page).subscribe(
       (res: QPage<CommentAction>) => {
-        this.isCommentLoading = false;
+        this.onCommentLoading(false);
         // console.log("res.content", res.content);
         if (res.content.length) {
           res.content.forEach(comment => {

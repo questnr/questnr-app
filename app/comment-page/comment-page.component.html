@@ -28,8 +28,8 @@
           </StackLayout>
         </StackLayout>  -->
           </StackLayout>
-          <StackLayout class="loader" *ngIf="false || isCommentLoading">
-            <Label text="Loading..."></Label>
+          <StackLayout class="loader" *ngIf="isCommentLoading">
+            <qn-comment-skeleton></qn-comment-skeleton>
           </StackLayout>
           <StackLayout class="load-more-button" orientation="horizontal" horizontalAlignment="center"
             verticalAlignment="top">
