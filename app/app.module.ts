@@ -14,6 +14,7 @@ import { InterceptorService } from './interceptor.service';
 import { SearchOverlayComponent } from './search-overlay/search-overlay.component';
 import { ApiService } from './services/api.service';
 import { AskQuestionService } from './services/ask-question.service';
+import { CommentSectionService } from './services/comment-section.service';
 import { CommonService } from './services/common.service';
 import { CommunityService } from './services/community.service';
 import { FeedService } from './services/feed.service';
@@ -81,7 +82,8 @@ if (applicationModule.android) {
     OverlayService,
     CommunityService,
     UserProfileService,
-    PostReportService
+    PostReportService,
+    CommentSectionService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

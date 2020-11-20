@@ -42,29 +42,6 @@ export class FeedService {
   getPostMediaList(postId: number): Observable<PostActionForMedia> {
     return this.http.get<PostActionForMedia>(this.baseUrl + `user/posts/${postId}/media`);
   }
-  getComments(postId, page) {
-    if (!postId) return of();
-    return this.http.get(this.baseUrl + `user/posts/${postId}/comment`, { params: { page } });
-  }
-  postComment(postId, formData): bghttp.Task {
-    if (!postId || !formData) return;
-    let commentRequestId = Math.floor(Math.random() * 100);
-    let request: bghttp.Request = {
-      url: `${this.baseUrl}user/posts/${postId}/comment`,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/octet-stream",
-        "Authorization": 'Bearer ' + this.authService.getAccessToken()
-      },
-      description: `Uploading ${commentRequestId}`
-    };
-    let session = bghttp.session(`comment-upload ${commentRequestId}`);
-    return session.multipartUpload(formData, request);
-  }
-  postNormalComment(postId, data) {
-    if (!postId) return of();
-    return this.http.post(this.baseUrl + `user/posts/${postId}/comment/normal`, data);
-  }
   likePost(postId) {
     if (!postId) return of();
     return this.http.post(this.baseUrl + `user/posts/${postId}/like`, {}, { observe: 'response' });
@@ -72,14 +49,6 @@ export class FeedService {
   dislikePost(postId) {
     if (!postId) return of();
     return this.http.delete(this.baseUrl + `user/posts/${postId}/like`, { observe: 'response' });
-  }
-  likeComment(commentId) {
-    if (!commentId) return of();
-    return this.http.post(this.baseUrl + `user/posts/comment/${commentId}/like`, {});
-  }
-  dislikeComment(commentId) {
-    if (!commentId) return of();
-    return this.http.delete(this.baseUrl + `user/posts/comment/${commentId}/like`);
   }
   getSharableLink(postId) {
     if (!postId) return of();
@@ -92,15 +61,6 @@ export class FeedService {
     };
     return this.http.delete(this.baseUrl + '/user/posts/' + postId, httpOptions);
   }
-
-  deleteComment(postId, commentId) {
-    if (!postId || !commentId) return of();
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
-    return this.http.delete(this.baseUrl + `user/posts/${postId}/comment/${commentId}`, httpOptions);
-  }
-
   visitPost(posts) {
     if (!posts) return of();
     return this.http.post(this.baseUrl + `user/posts/visit`, { posts: posts });

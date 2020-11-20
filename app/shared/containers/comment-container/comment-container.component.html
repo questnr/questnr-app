@@ -1,0 +1,27 @@
+<GridLayout class="comment-container-wrapper" (loaded)="onCommentContainerLoaded($event)" rows="*, auto">
+  <GridLayout class="comment-item-wrapper" row="0">
+    <FlexboxLayout class="comment-item-container" alignItems="stretch" flexDirection="column">
+      <StackLayout class="comment-box" *ngFor="let comment of (feed.commentActionList || [])" orientation="horizontal"
+        horizontalAlignment="stretch">
+        <qn-comment-item class="comment-item" [comment]="comment" (reply)="replyTo(comment)" [post]="feed"
+          [enableDeletion]="false" (deleteEvent)="onDeleteComment($event)">
+        </qn-comment-item>
+        <!-- <StackLayout class="child-comment-list" *ngIf="comment?.childCommentDTOSet?.length">
+          <StackLayout class="child-comment" *ngFor="let childComment of (comment.childCommentDTOSet || [])">
+            <qn-comment-item class="comment-item" [comment]="childComment" [parentComment]="comment"
+              (reply)="replyTo(childComment, comment)" [post]="feed" (deleteEvent)="deleteComment($event)">
+            </qn-comment-item>
+          </StackLayout>
+        </StackLayout>  -->
+      </StackLayout>
+      <StackLayout class="load-more-button" orientation="horizontal" horizontalAlignment="center"
+        verticalAlignment="top" *ngIf="feed.postActionMeta.totalComments > 0">
+        <Label horizontalAlignment="center" [text]="'View '+feed.postActionMeta.totalComments+' all comments'" ripple
+          [rippleColor]="qColors.$primary" (tap)="openCommentSectionPage()"></Label>
+      </StackLayout>
+    </FlexboxLayout>
+  </GridLayout>
+  <StackLayout class="comment-user-interaction-wrapper" row="1">
+    <qn-create-comment [post]="feed" (onCommentLoading)="onCommentLoading($event)" #createComment></qn-create-comment>
+  </StackLayout>
+</GridLayout>

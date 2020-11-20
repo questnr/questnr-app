@@ -5,8 +5,10 @@ import {
 } from '@nativescript/angular';
 import { AttachedFileModule } from '~/attached-file-list/attached-file.module';
 import { CommentItemComponent } from './components/comment-item/comment-item.component';
+import { CreateCommentComponent } from './components/create-comment/create-comment.component';
 import { PostMenuOptionComponent } from './components/post-menu-option/post-menu-option.component';
 import { ActionBarComponent } from './containers/action-bar/action-bar.component';
+import { CommentContainerComponent } from './containers/comment-container/comment-container.component';
 import { CreatePostComponent } from './containers/create-post/create-post.component';
 import { FeedTextComponent } from './containers/feed-text/feed-text.component';
 import { HorizontalProfileComponent } from './containers/horizontal-profile/horizontal-profile.component';
@@ -49,7 +51,9 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     SimpleQuestionComponent,
     PostInteractionPanelComponent,
     PostMenuOptionComponent,
-    CommentItemComponent
+    CommentItemComponent,
+    CommentContainerComponent,
+    CreateCommentComponent
   ],
   providers: [
   ],
@@ -72,7 +76,9 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     SimpleQuestionComponent,
     PostInteractionPanelComponent,
     PostMenuOptionComponent,
-    CommentItemComponent
+    CommentItemComponent,
+    CommentContainerComponent,
+    CreateCommentComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

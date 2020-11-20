@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SwipeDirection } from '@nativescript/core';
 import { AuthService } from '~/services/auth.service';
-import { FeedService } from '~/services/feed.service';
+import { CommentSectionService } from '~/services/comment-section.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { GlobalConstants } from '~/shared/constants';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
@@ -22,13 +22,14 @@ export class CommentItemComponent implements OnInit {
   @Output() reply = new EventEmitter();
   @Output() update = new EventEmitter();
   @Output() deleteEvent = new EventEmitter();
+  @Input() enableDeletion: boolean = false;
   loggedInUserId: any;
   defaultUserSrc: string = StaticMediaSrc.userFile;
   userPath: string = GlobalConstants.userPath;
   isTrashVisible: boolean = false;
   trashTimeout: any;
 
-  constructor(private feedService: FeedService,
+  constructor(private commentSectionService: CommentSectionService,
     public authService: AuthService,
     private snackBarService: SnackBarService) {
     this.loggedInUserId = authService.getStoredUserProfile().id;
@@ -41,14 +42,14 @@ export class CommentItemComponent implements OnInit {
     this.isLoading = true;
     if (this.comment.commentActionMeta.liked) {
       this.dislikedComment();
-      this.feedService.dislikeComment(id).subscribe(
+      this.commentSectionService.dislikeComment(id).subscribe(
         (res: any) => {
           this.isLoading = false;
         }, err => { this.likedComment(); }
       );
     } else {
       this.likedComment();
-      this.feedService.likeComment(id).subscribe(
+      this.commentSectionService.likeComment(id).subscribe(
         (res: any) => {
           if (res.likeCommentActionId) {
             return;
@@ -58,13 +59,26 @@ export class CommentItemComponent implements OnInit {
     }
   }
 
+  // onCommentLoaded(args): void {
+  //   console.log("onCommentLoaded", this.enableDeletion);
+  //   if (this.enableDeletion) {
+  //     let commentBox = args.object as GridLayout;
+  //     commentBox.on(GestureTypes.swipe, (swipeArgs: any) => {
+  //       console.log("Swipe Direction: " + swipeArgs.direction);
+  //       if (swipeArgs.direction === SwipeDirection.left) {
+  //         this.showTrash();
+  //       }
+  //     });
+  //   }
+  // }
+
   onSwipeComment(swipeArgs): void {
     // let commentBox = args.object as GridLayout;
     // commentBox.on(GestureTypes.swipe, (swipeArgs: any) => {
     //   console.log("Swipe Direction: " + swipeArgs.direction);
     // });
     console.log("Swipe Direction: " + swipeArgs.direction);
-    if (swipeArgs.direction === SwipeDirection.left) {
+    if (swipeArgs.direction === SwipeDirection.left && this.enableDeletion) {
       this.showTrash();
     }
   }
@@ -98,7 +112,7 @@ export class CommentItemComponent implements OnInit {
   }
 
   deleteComment() {
-    this.feedService.deleteComment(this.post.postActionId, this.comment.commentActionId).subscribe((res: any) => {
+    this.commentSectionService.deleteComment(this.post.postActionId, this.comment.commentActionId).subscribe((res: any) => {
       this.deleteEvent.emit(this.comment.commentActionId);
       this.snackBarService.show({ snackText: "Comment has been deleted!" });
     }, err => {

@@ -1,21 +1,21 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Page, StackLayout } from '@nativescript/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { RouterExtensions } from '@nativescript/angular';
+import { StackLayout } from '@nativescript/core';
+import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { AuthService } from '~/services/auth.service';
 import { CommentSectionService } from '~/services/comment-section.service';
 import { CreateCommentComponent } from '~/shared/components/create-comment/create-comment.component';
+import { GlobalConstants } from '~/shared/constants';
 import { CommentAction, PostSourceType } from '~/shared/models/comment-action.model';
-import { QPage } from '~/shared/models/page.model';
 import { Post } from '~/shared/models/post-action.model';
 import { qColors } from '~/_variables';
 
 @Component({
-  selector: 'qn-comment-page',
-  templateUrl: './comment-page.component.html',
-  styleUrls: ['./comment-page.component.scss']
+  selector: 'qn-comment-container',
+  templateUrl: './comment-container.component.html',
+  styleUrls: ['./comment-container.component.scss']
 })
-export class CommentPageComponent implements OnInit {
-  commentContainerPage: Page;
+export class CommentContainerComponent implements OnInit {
   @Input() feed: Post;
   @Input() parentType: PostSourceType = PostSourceType.feed;
   commentContainer: StackLayout;
@@ -33,20 +33,14 @@ export class CommentPageComponent implements OnInit {
   qColors = qColors;
 
   constructor(
-    public viewContainerRef: ViewContainerRef,
-    private commentSectionService: CommentSectionService,
     public authService: AuthService,
-    public route: ActivatedRoute) { }
+    private routerExtensions: RouterExtensions,
+    private commentSectionService: CommentSectionService) { }
 
   ngOnInit(): void {
-    if (this.parentType === PostSourceType.singlePost) {
-      this.isCommenting = true;
+    if (this.commentSectionService.getMaxCommentWithPostCount() < this.feed.commentActionList.length) {
+      this.feed.commentActionList = this.feed.commentActionList.slice(0, 2);
     }
-    this.route.queryParams.subscribe((params) => {
-      if (params.feed) {
-        this.feed = JSON.parse(params.feed) as Post;
-      }
-    });
   }
 
   toggleComments(isCommenting: boolean) {
@@ -62,29 +56,20 @@ export class CommentPageComponent implements OnInit {
     }
   }
 
-  onCommentPageLoaded(args) {
-    this.commentContainerPage = args.object as Page;
-    // setTimeout(() => {
-    //   console.log("page height: ", this.commentContainerPage.getMeasuredHeight());
-    // }, 100);
-  }
-
-  getComments() {
-    this.isCommentLoading = true;
-    this.commentSectionService.getComments(this.feed.postActionId, this.page).subscribe(
-      (res: QPage<CommentAction>) => {
-        this.isCommentLoading = false;
-        // console.log("res.content", res.content);
-        if (res.content.length) {
-          res.content.forEach(comment => {
-            this.feed.commentActionList.push(comment);
-          });
-          ++this.page;
-        } else {
-          this.endOfComments = true;
+  openCommentSectionPage() {
+    this.routerExtensions.navigate(['/',
+      GlobalConstants.feedPath,
+      this.feed.postActionId,
+      GlobalConstants.feedCommentPath],
+      {
+        queryParams: { feed: JSON.stringify(this.feed) },
+        animated: true,
+        transition: {
+          name: "slideLeft",
+          duration: 400,
+          curve: new CubicBezierAnimationCurve(.08, .47, .19, .97)
         }
-      }
-    );
+      })
   }
 
   onCommentContainerLoaded(args) {

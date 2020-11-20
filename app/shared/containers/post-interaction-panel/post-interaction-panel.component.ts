@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { FeedService } from '~/services/feed.service';
@@ -6,6 +6,7 @@ import { GlobalConstants } from '~/shared/constants';
 import { PostSourceType } from '~/shared/models/comment-action.model';
 import { Post } from '~/shared/models/post-action.model';
 import { qColors } from '~/_variables';
+import { CommentContainerComponent } from '../comment-container/comment-container.component';
 
 @Component({
   selector: 'qn-post-interaction-panel',
@@ -18,6 +19,8 @@ export class PostInteractionPanelComponent implements OnInit {
   isLoading: boolean = false;
   qColors = qColors;
   postSourceTypeClass = PostSourceType;
+  isCommenting: boolean = false;
+  @ViewChild("commentContainer") commentContainer: CommentContainerComponent;
 
   constructor(private feedService: FeedService,
     private cd: ChangeDetectorRef,
@@ -64,6 +67,11 @@ export class PostInteractionPanelComponent implements OnInit {
     this.isLoading = false;
     this.feed.postActionMeta.liked = false;
     --this.feed.postActionMeta.totalLikes;
+  }
+
+  toggleComments() {
+    this.isCommenting = !this.isCommenting;
+    this.commentContainer.toggleComments(this.isCommenting);
   }
 
   openCommentSectionPage() {

@@ -10,3 +10,8 @@
   <Button (tap)="openShareDialog()" class="fa" text="&#xf1e0; Share" ripple [rippleColor]="qColors.$primary">
   </Button>
 </FlexboxLayout>
+
+<StackLayout>
+  <qn-comment-container [feed]="feed" #commentContainer>
+  </qn-comment-container>
+</StackLayout>
