@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { RouterExtensions } from '@nativescript/angular';
+import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { FeedService } from '~/services/feed.service';
+import { GlobalConstants } from '~/shared/constants';
 import { PostSourceType } from '~/shared/models/comment-action.model';
 import { Post } from '~/shared/models/post-action.model';
 import { qColors } from '~/_variables';
-import { CommentContainerComponent } from '../comment-container/comment-container.component';
 
 @Component({
   selector: 'qn-post-interaction-panel',
@@ -14,13 +16,12 @@ import { CommentContainerComponent } from '../comment-container/comment-containe
 export class PostInteractionPanelComponent implements OnInit {
   @Input() feed: Post;
   isLoading: boolean = false;
-  isCommenting: boolean = false;
   qColors = qColors;
-  @ViewChild("commentContainer") commentContainer: CommentContainerComponent;
   postSourceTypeClass = PostSourceType;
 
   constructor(private feedService: FeedService,
-    private cd: ChangeDetectorRef) { }
+    private cd: ChangeDetectorRef,
+    private routerExtensions: RouterExtensions) { }
 
   ngOnInit() {
   }
@@ -65,9 +66,20 @@ export class PostInteractionPanelComponent implements OnInit {
     --this.feed.postActionMeta.totalLikes;
   }
 
-  toggleComments() {
-    this.isCommenting = !this.isCommenting;
-    this.commentContainer.toggleComments(this.isCommenting);
+  openCommentSectionPage() {
+    this.routerExtensions.navigate(['/',
+      GlobalConstants.feedPath,
+      this.feed.postActionId,
+      GlobalConstants.feedCommentPath],
+      {
+        queryParams: { feed: JSON.stringify(this.feed) },
+        animated: true,
+        transition: {
+          name: "slideLeft",
+          duration: 400,
+          curve: new CubicBezierAnimationCurve(.08, .47, .19, .97)
+        }
+      })
   }
 
   openShareDialog() {

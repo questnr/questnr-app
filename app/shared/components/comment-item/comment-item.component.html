@@ -1,11 +1,12 @@
 <GridLayout class="comment-box-wrapper" verticalAlignment="top" row="*" columns="auto, *"
-  (swipe)="onSwipeComment($event)">
+  (swipe)="onSwipeComment($event)" [ngClass]="isTrashVisible ? 'show-slide-left': ''">
   <StackLayout class="profile-icon" orientation="horizontal" col="0">
     <qn-profile-icon [slug]="comment?.userActorDTO?.slug" [isCommunityAvatar]="false"
       [avatar]="comment.userActorDTO.avatarDTO" [height]="28" [sizeRef]="'small'">
     </qn-profile-icon>
   </StackLayout>
-  <GridLayout class="comment-box-body" col="1" rows="*, auto" horizontalAlignment="stretch" width="100%">
+  <GridLayout class="comment-box-body" col="1" rows="*, auto" verticalAlignment="top" horizontalAlignment="stretch"
+    width="100%">
     <StackLayout row="0" class="profile-detail">
       <StackLayout class="head" orientation="horizontal">
         <qn-username [username]="comment?.userActorDTO?.username" [slug]="comment?.userActorDTO?.slug"></qn-username>
@@ -33,4 +34,11 @@
       </StackLayout>
     </StackLayout>
   </GridLayout>
+  <StackLayout class="trash-container" col="1" *ngIf="isTrashVisible" horizontalAlignment="right"
+    [ngClass]="isTrashVisible ? 'show-slide-left': ''" height="100%" verticalAlignment="middle">
+    <StackLayout orientation="horizontal" horizontalAlignment="center" verticalAlignment="stretch"
+      (tap)="deleteComment()">
+      <Label class="fa icon" text="&#xf1f8;" verticalAlignment="middle"></Label>
+    </StackLayout>
+  </StackLayout>
 </GridLayout>

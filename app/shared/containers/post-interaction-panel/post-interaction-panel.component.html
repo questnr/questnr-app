@@ -4,13 +4,9 @@
     [text]="feed?.postActionMeta?.liked? '&#xf004; Liked':'&#xf08a; Like'" ripple [rippleColor]="qColors.$primary"
     [rippleEnabled]="!isLoading">
   </Button>
-  <Button (tap)="toggleComments()" class="fa button-space" [ngClass]="isCommenting? 'fill':''"
-    [text]="isCommenting ? '&#xf075; Comments' :'&#xf0e5; Comments'" ripple [rippleColor]="qColors.$primary">
+  <Button (tap)="openCommentSectionPage()" class="fa button-space" [text]="'&#xf0e5; Comments'" ripple
+    [rippleColor]="qColors.$primary">
   </Button>
   <Button (tap)="openShareDialog()" class="fa" text="&#xf1e0; Share" ripple [rippleColor]="qColors.$primary">
   </Button>
 </FlexboxLayout>
-<StackLayout>
-  <qn-comment-container [feed]="feed" #commentContainer>
-  </qn-comment-container>
-</StackLayout>

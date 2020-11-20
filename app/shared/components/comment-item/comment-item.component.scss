@@ -2,6 +2,7 @@
 @import "scss/mixins/index";
 
 .comment-box-wrapper {
+    padding: 5;
     @include make-font-size(-1);
     .profile-icon {
         margin-right: 5;
@@ -30,5 +31,28 @@
                 padding: 3;
             }
         }
+    }
+    .trash-container {
+        @include make-font-size(2);
+        background-color: $red;
+        width: 25;
+        color: $white;
+        border-top-left-radius: 1;
+        border-bottom-left-radius: 1;
+        border-top-right-radius: 5;
+        border-bottom-right-radius: 5;
+    }
+}
+.show-slide-left {
+    animation: slide-left 300ms;
+}
+
+@keyframes slide-left {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(-30%, 0, 0);
     }
 }

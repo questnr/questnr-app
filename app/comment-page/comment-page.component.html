@@ -1,0 +1,94 @@
+<Page xmlns="http://www.nativescript.org/tns.xsd" (loaded)="onCommentPageLoaded($event)">
+  <Page.actionBar>
+    <qn-action-bar [isChildPage]="true" [title]="'Comments'" [pageViewContainerRef]="viewContainerRef"></qn-action-bar>
+  </Page.actionBar>
+  <GridLayout class="comment-page-wrapper" (loaded)="onCommentContainerLoaded($event)" rows="*, auto">
+    <GridLayout class="comment-item-wrapper" row="0">
+      <ScrollView>
+        <!-- <RadListView [items]="commentActionList" orientation="vertical">
+          <ListViewLinearLayout tkListViewLayout scrollDirection="vertical" dynamicItemSize="true">
+          </ListViewLinearLayout>
+          <ng-template tkListItemTemplate let-comment="item" let-index="index">
+            <qn-comment-item class="comment-item" [comment]="comment" (reply)="replyTo(comment)" [post]="feed"
+              (deleteEvent)="deleteComment($event)">
+            </qn-comment-item>
+          </ng-template>
+        </RadListView> -->
+        <FlexboxLayout class="comment-item-container" alignItems="stretch" flexDirection="column">
+          <StackLayout class="comment-box" *ngFor="let comment of (feed.commentActionList || [])"
+            orientation="horizontal" horizontalAlignment="stretch">
+            <qn-comment-item class="comment-item" [comment]="comment" (reply)="replyTo(comment)" [post]="feed"
+              (deleteEvent)="deleteComment($event)">
+            </qn-comment-item>
+            <!-- <StackLayout class="child-comment-list" *ngIf="comment?.childCommentDTOSet?.length">
+          <StackLayout class="child-comment" *ngFor="let childComment of (comment.childCommentDTOSet || [])">
+            <qn-comment-item class="comment-item" [comment]="childComment" [parentComment]="comment"
+              (reply)="replyTo(childComment, comment)" [post]="feed" (deleteEvent)="deleteComment($event)">
+            </qn-comment-item>
+          </StackLayout>
+        </StackLayout>  -->
+          </StackLayout>
+          <StackLayout class="loader" *ngIf="false || isCommentLoading">
+            <Label text="Loading..."></Label>
+          </StackLayout>
+          <StackLayout class="load-more-button" orientation="horizontal" horizontalAlignment="center"
+            verticalAlignment="top" ripple [rippleColor]="qColors.$primary">
+            <Label (tap)="getComments()" horizontalAlignment="center" text="View more comments"></Label>
+          </StackLayout>
+        </FlexboxLayout>
+      </ScrollView>
+    </GridLayout>
+    <StackLayout class="comment-user-interaction-wrapper" row="1">
+      <StackLayout>
+        <qn-hr [height]="1" [color]="qColors.$heading"></qn-hr>
+        <qn-hr [height]="1" [color]="qColors.$primary"></qn-hr>
+      </StackLayout>
+
+      <StackLayout class="comment-user-interaction-container">
+        <StackLayout class="attached-file-list-container">
+          <qn-attached-file-list [elementHeight]="attachedFileContainerHeight"
+            (finalizedAttachedFileListListener)="finalizedAttachedFileListListener($event)" #attachedFileListComponent>
+          </qn-attached-file-list>
+        </StackLayout>
+        <!-- <StackLayout class="reply-username-wrapper" *ngIf="commentReply" orientation="horizontal">
+          <StackLayout verticalAlignment="middle">
+            <qn-username [username]="commentReply.username" [disableLink]="true">
+            </qn-username>
+          </StackLayout>
+          <StackLayout verticalAlignment="middle">
+            <Label class="fa" text="&nbsp;&#xf2d4;"></Label>
+          </StackLayout>
+        </StackLayout> -->
+        <GridLayout [height]="userCommentInteractionPanelHeight" class="comment-user-interaction"
+          verticalAlignment="top" columns="auto, *, auto">
+          <StackLayout class="profile-icon" orientation="horizontal" verticalAlignment="middle">
+            <qn-profile-icon col="0" [avatar]="authService.getAvatar()" [height]="30" [sizeRef]="'medium'"
+              verticalAlignment="middle" #profileIcon>
+            </qn-profile-icon>
+          </StackLayout>
+          <GridLayout col="1" class="input-field-wrapper" verticalAlignment="top" columns="*, auto">
+            <TextField col="0" class="input-field"
+              [hint]="commentReply? 'Reply to ' + commentReply.username : 'Comment here..'" [formControl]="comment"
+              autocorrect="false" autocapitalizationType="none" verticalAlignment="middle"
+              (tap)="onCommentTextFieldTap($event)" #commentInput>
+            </TextField>
+            <StackLayout col="1" orientation="horizontal" height="100%">
+              <StackLayout class="reply-username-close" *ngIf="commentReply" orientation="horizontal" ripple
+                [rippleColor]="qColors.$red" (tap)="removeReplying()">
+                <Label class="fa" text="&#xf00d;" verticalAlignment="middle"></Label>
+              </StackLayout>
+              <StackLayout class="vertical-border"></StackLayout>
+              <Label class="submit fa" ripple [rippleColor]="qColors.$primary" [rippleEnabled]="comment.valid"
+                (tap)="postComment()" [isEnabled]="isCommentValid()" verticalAlignment="middle" text="&#xf1d9;">
+              </Label>
+            </StackLayout>
+          </GridLayout>
+          <StackLayout col="2" class="comment-feature" orientation="horizontal" verticalAlignment="middle">
+            <Button class="fa" horizontalAlignment="center" verticalAlignment="middle" ripple
+              [rippleColor]="qColors.$primary" (tap)="chooseFile()" [text]="'&#xf0c6;'"></Button>
+          </StackLayout>
+        </GridLayout>
+      </StackLayout>
+    </StackLayout>
+  </GridLayout>
+</Page>
