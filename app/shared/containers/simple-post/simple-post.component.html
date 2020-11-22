@@ -5,14 +5,14 @@
         [slug]="feed?.userDTO?.slug">
       </qn-profile-icon>
     </StackLayout>
-    <GridLayout verticalAlignment="top" row="0" col="1" columns="*, auto" class="profile-detail">
+    <GridLayout verticalAlignment="top" row="0" col="1" columns="55*, 45*" class="profile-detail">
       <StackLayout row="0" col="0">
         <qn-username class="head" [username]="feed?.userDTO?.username" [slug]="feed.userDTO.slug">
         </qn-username>
         <qn-time-string class="time-string" [metaData]="feed.metaData"></qn-time-string>
       </StackLayout>
       <StackLayout col="1">
-        <Label class="subhead" [text]="'Posted in '+feed?.communityDTO?.communityName"
+        <Label class="subhead" horizontalAlignment="right" [text]="'Posted in '+feed?.communityDTO?.communityName"
           [nsRouterLink]="['/', communityPath, feed?.communityDTO.slug]">
         </Label>
       </StackLayout>

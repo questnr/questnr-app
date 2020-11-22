@@ -1,3 +1,5 @@
+import { environment } from "~/environments/environment";
+
 const staticLoginReponse = {
     "loginSuccess": true,
     "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJicmlqZXNobGFra2FkMjIiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn0seyJhdXRob3JpdHkiOiJST0xFX1VTRVIifV0sImNyZWF0ZWQiOjE2MDU1NDcwOTgzNjUsIm5hbWUiOiJicmlqZXNobGFra2FkMjIiLCJlbWFpbElkIjoiZHVtbXkxQGR1bW15LnF1ZXN0bnIuY29tIiwiaWQiOjEsImV4cCI6MTYwNjE1MTg5OCwiaWF0IjoxNjA1NTQ3MDk4LCJzbHVnIjoiYnJpamVzaGxha2thZDIyLTMwMTk4MjUwMzMifQ.T48IaEKNUYOlUgLn4M5Q48KLIGpgSo5ilYfn163_5xRt4NRHqVEeWlQ9vAhHyRdQvh3fGcAFW1373hChI6wrDw",
@@ -16,4 +18,4 @@ const staticLoginReponse2 = {
     "firstAttempt": true
 };
 
-export default staticLoginReponse2;
+export default environment.production ? staticLoginReponse2 : staticLoginReponse;
