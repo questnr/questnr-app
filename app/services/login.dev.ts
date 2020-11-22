@@ -9,11 +9,11 @@ const staticLoginReponse = {
 
 const staticLoginReponse2 = {
     "loginSuccess": true,
-    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJicmlqZXNobGFra2FkIiwicm9sZSI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn0seyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJjcmVhdGVkIjoxNjA1MzQ0ODMyMzAxLCJuYW1lIjoiQnJpamVzaCBMYWtrYWQiLCJlbWFpbElkIjoiYnJpamVzaGxha2thZDIyQGdtYWlsLmNvbSIsImlkIjoxLCJleHAiOjE2MDU5NDk2MzIsImlhdCI6MTYwNTM0NDgzMiwic2x1ZyI6ImJyaWplc2gtbGFra2FkLTA0ODc1MTA2NzYifQ.gnKA8-XLMNi3iRdJWGqeW1JwfEXH41KiG2hIy_EMwTjzggI7bbBgV250GnktTNAZt9SPUrw8lEHfCJX_gSFQrA",
+    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJicmlqZXNobGFra2FkIiwicm9sZSI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn0seyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJjcmVhdGVkIjoxNjA2MDM2OTU5MTU0LCJuYW1lIjoiQnJpamVzaCBMYWtrYWQiLCJlbWFpbElkIjoiYnJpamVzaGxha2thZDIyQGdtYWlsLmNvbSIsImlkIjoxLCJleHAiOjE2MDY2NDE3NTksImlhdCI6MTYwNjAzNjk1OSwic2x1ZyI6ImJyaWplc2gtbGFra2FkLTA0ODc1MTA2NzYifQ.VBSxsSguCc6K_KmoVH4QKHTJSpwUfzzHBt6mu_ndl-I15fW_4mzmtMGNCQZ0YfmYTxjBMC4j8rlsfw_qWNEXYw",
     "userName": "brijeshlakkad",
     "errorMessage": null,
     "communitySuggestion": false,
     "firstAttempt": true
 };
 
-export default staticLoginReponse;
+export default staticLoginReponse2;

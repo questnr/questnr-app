@@ -1,0 +1,23 @@
+<PullToRefresh (refresh)="refreshList($event)" [indicatorFillColor]="qColors.$primary"
+  [indicatorColor]="qColors.$white">
+  <ScrollView (scroll)="onScroll($event)"
+    [isUserInteractionEnabled]="userInteractionService.isUserInteractionEnabled$ | async">
+    <StackLayout>
+      <StackLayout #container>
+        <StackLayout *ngFor="let feed of userExploreFeeds;">
+          <StackLayout *ngIf="feed.postType == postTypeClass.simple">
+            <qn-simple-post [feed]="feed">
+            </qn-simple-post>
+          </StackLayout>
+          <StackLayout *ngIf="feed.postType == postTypeClass.question">
+            <qn-simple-question [feed]="feed" [questionParentType]="questionParentTypeClass.feedPage">
+            </qn-simple-question>
+          </StackLayout>
+        </StackLayout>
+        <StackLayout *ngIf="isLoading">
+          <qn-post-skeleton></qn-post-skeleton>
+        </StackLayout>
+      </StackLayout>
+    </StackLayout>
+  </ScrollView>
+</PullToRefresh>

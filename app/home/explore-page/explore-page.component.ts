@@ -1,7 +1,7 @@
 import { Component, ElementRef, NgZone, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { EventData } from '@nativescript-community/ui-image';
-import { ListView, ScrollView } from '@nativescript/core';
-import { FeedService } from '~/services/feed.service';
+import { ScrollView } from '@nativescript/core';
+import { ExploreService } from '~/services/explore.service';
 import { PostMenuService } from '~/services/post-menu.service';
 import { UserInteractionService } from '~/services/user-interaction.service';
 import { UtilityService } from '~/services/utility.service';
@@ -12,17 +12,16 @@ import { Post, PostType, QuestionParentType } from '~/shared/models/post-action.
 import { qColors } from '~/_variables';
 
 @Component({
-  selector: 'qn-feed',
-  templateUrl: './feed.component.html',
-  styleUrls: ['./feed.component.scss']
+  selector: 'qn-explore-page',
+  templateUrl: './explore-page.component.html',
+  styleUrls: ['./explore-page.component.scss']
 })
-export class FeedComponent implements OnInit {
+export class ExplorePageComponent implements OnInit {
   isLoading: boolean = false;
-  userFeeds: Post[] = [];
+  userExploreFeeds: Post[] = [];
   pathLink = GlobalConstants.feedPath;
   page: number = 0;
   endOfPosts: boolean = false;
-  userFeedListView: ListView;
   @ViewChildren(SimplePostComponent) simplePostComponentList!: QueryList<SimplePostComponent>;
   @ViewChild("container") container: ElementRef;
   scrollCached: any;
@@ -34,16 +33,16 @@ export class FeedComponent implements OnInit {
 
   constructor(public viewContainerRef: ViewContainerRef,
     private utilityService: UtilityService,
-    private userFeedService: FeedService,
+    private exploreService: ExploreService,
     private ngZone: NgZone,
     public userInteractionService: UserInteractionService,
     public postMenuService: PostMenuService) {
   }
 
   ngOnInit(): void {
-    this.getUserFeed();
+    this.getExploreFeed();
     this.postMenuService.postDeleteRequest$.subscribe((postActionId: number) => {
-      this.userFeeds = this.userFeeds.filter((feed: Post) => {
+      this.userExploreFeeds = this.userExploreFeeds.filter((feed: Post) => {
         return feed.postActionId !== postActionId;
       });
     });
@@ -67,9 +66,9 @@ export class FeedComponent implements OnInit {
           visibleRange = verticalOffset + height;
         this.feedComponentHelper(visibleRange, verticalOffset);
         if (visibleRange >= scrollableHeight - 300) {
-          if (this.userFeeds.length > 0 && !this.endOfPosts) {
+          if (this.userExploreFeeds.length > 0 && !this.endOfPosts) {
             if (!this.isLoading) {
-              this.getUserFeed();
+              this.getExploreFeed();
             }
           }
         }
@@ -86,19 +85,14 @@ export class FeedComponent implements OnInit {
     // });
   }
 
-  onUserFeedListViewLoaded(args): void {
-    this.userFeedListView = args.object as ListView;
-  }
-
-  getUserFeed() {
+  getExploreFeed() {
     this.isLoading = true;
-    this.userFeedService.getFeeds(this.page, this.pageSize).subscribe(
-      (feedPage: QPage<Post>) => {
-        // console.log("feedPage", feedPage);
-        if (!feedPage.empty && feedPage.content.length) {
+    this.exploreService.explore(this.page, this.pageSize).subscribe(
+      (explorePage: QPage<Post>) => {
+        if (!explorePage.empty && explorePage.content.length) {
           this.page++;
-          feedPage.content.forEach(post => {
-            this.userFeeds.push(post);
+          explorePage.content.forEach(post => {
+            this.userExploreFeeds.push(post);
           });
 
           // If the page was 0, then feedComponentHelper would have been called
@@ -120,15 +114,15 @@ export class FeedComponent implements OnInit {
   }
 
   refreshUserFeed() {
-    this.userFeedService.getFeeds(0, this.pageSize).subscribe(
-      (feedPage: QPage<Post>) => {
-        // console.log("feedPage", feedPage);
-        if (!feedPage.empty && feedPage.content.length) {
+    this.exploreService.explore(0, this.pageSize).subscribe(
+      (explorePage: QPage<Post>) => {
+        // console.log("explorePage", explorePage);
+        if (!explorePage.empty && explorePage.content.length) {
           // this.page++;
 
           let postExists = [];
-          feedPage.content.forEach((newPost: Post) => {
-            this.userFeeds.forEach((feed: Post) => {
+          explorePage.content.forEach((newPost: Post) => {
+            this.userExploreFeeds.forEach((feed: Post) => {
               if (newPost.postActionId === feed.postActionId) {
                 postExists.push(newPost.postActionId);
               }
@@ -137,18 +131,18 @@ export class FeedComponent implements OnInit {
           // let newPost = Number(this.pageSize) - postExists.length;
           // console.log("postExists.length", postExists.length, newPost);
           if (postExists.length == 0) {
-            this.userFeeds = [];
-            feedPage.content.forEach(post => {
-              this.userFeeds.push(post);
+            this.userExploreFeeds = [];
+            explorePage.content.forEach(post => {
+              this.userExploreFeeds.push(post);
             });
           } else {
             let index = 0;
             let spliceIndex = 0;
-            feedPage.content.forEach((post: Post) => {
+            explorePage.content.forEach((post: Post) => {
               if (postExists[index] == post.postActionId) {
                 index++;
               } else {
-                this.userFeeds.splice(spliceIndex, 0, post);
+                this.userExploreFeeds.splice(spliceIndex, 0, post);
                 spliceIndex++;
               }
             });
@@ -168,11 +162,11 @@ export class FeedComponent implements OnInit {
     this.ngZone.run(() => {
       // console.log("handlePostCreation", !!newPost)
       if (typeof newPost === 'undefined') return;
-      if (this.userFeeds?.length) {
-        this.userFeeds.splice(0, 0, newPost);
+      if (this.userExploreFeeds?.length) {
+        this.userExploreFeeds.splice(0, 0, newPost);
         // console.log("Added 1");
       } else {
-        this.userFeeds = [newPost];
+        this.userExploreFeeds = [newPost];
         // console.log("Added 2");
       }
     });
@@ -181,10 +175,10 @@ export class FeedComponent implements OnInit {
   handlePostEditing(editedPost: Post) {
     this.ngZone.run(() => {
       if (typeof editedPost === 'undefined') return;
-      if (this.userFeeds?.length) {
-        this.userFeeds.forEach((feed: Post, index: number) => {
+      if (this.userExploreFeeds?.length) {
+        this.userExploreFeeds.forEach((feed: Post, index: number) => {
           if (feed.postActionId === editedPost.postActionId) {
-            this.userFeeds[index] = editedPost;
+            this.userExploreFeeds[index] = editedPost;
           }
         });
       }

@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { CommentPageComponent } from './comment-page/comment-page.component';
+import { ExplorePageComponent } from './home/explore-page/explore-page.component';
 import { FeedComponent } from './home/feed/feed.component';
 import { HomeComponent } from './home/home.component';
 import { UserPageComponent } from './home/user-page/user-page.component';
@@ -15,7 +16,7 @@ import { GlobalConstants } from './shared/constants';
 const routes: Routes = [
   {
     path: "", redirectTo: "/" +
-      GlobalConstants.homePath + `/(feedTab:${GlobalConstants.feedPath}//userPageTab:${GlobalConstants.userPath})`, pathMatch: "full"
+      GlobalConstants.homePath + `/(feedTab:${GlobalConstants.feedPath}//userPageTab:${GlobalConstants.userPath}//explorePageTab:${GlobalConstants.explorePath})`, pathMatch: "full"
   },
   { path: GlobalConstants.search, component: SearchOverlayComponent },
   { path: GlobalConstants.login, component: LoginComponent },
@@ -33,6 +34,11 @@ const routes: Routes = [
         path: GlobalConstants.userPath,
         component: UserPageComponent,
         outlet: 'userPageTab'
+      },
+      {
+        path: GlobalConstants.explorePath,
+        component: ExplorePageComponent,
+        outlet: 'explorePageTab'
       }
     ],
     canActivate: [AuthGuard]

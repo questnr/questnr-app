@@ -17,6 +17,7 @@ import { AskQuestionService } from './services/ask-question.service';
 import { CommentSectionService } from './services/comment-section.service';
 import { CommonService } from './services/common.service';
 import { CommunityService } from './services/community.service';
+import { ExploreService } from './services/explore.service';
 import { FeedService } from './services/feed.service';
 import { JWTService } from './services/jwt.service';
 import { LoaderService } from './services/loader.service';
@@ -83,7 +84,8 @@ if (applicationModule.android) {
     CommunityService,
     UserProfileService,
     PostReportService,
-    CommentSectionService
+    CommentSectionService,
+    ExploreService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
