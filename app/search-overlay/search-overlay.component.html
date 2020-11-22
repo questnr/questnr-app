@@ -5,14 +5,14 @@
                 <Label text="&#xf060;" class="fa fa-back-button" (tap)="onNavBtnTap($event)"></Label>
                 <StackLayout col="1" class="search-wrapper" orientation="horizontal"
                     (loaded)="onSearchLayoutLoaded($event)">
-                    <SearchBar class="search-bar" hint="Search" (textChange)="onTextChanged($event)"
+                    <SearchBar class="search-bar" hint="Search Questnr..." (textChange)="onTextChanged($event)"
                         (clear)="onClear($event)" (submit)="onSubmit($event)" (loaded)="onSearchBarLoaded($event)">
                     </SearchBar>
                 </StackLayout>
             </GridLayout>
         </ActionBar>
     </Page.actionBar>
-    <StackLayout class="search-wrapper">
+    <StackLayout class="search-overlay-wrapper">
         <TabView [androidSelectedTabHighlightColor]="qColors.$heading" [tabTextColor]="qColors.$black"
             [selectedTabTextColor]="qColors.$primary" [selectedIndex]="selectedSearchOption"
             (loaded)="onTabViewLoaded($event)" (selectedIndexChanged)="selectedIndex.setValue($event)">

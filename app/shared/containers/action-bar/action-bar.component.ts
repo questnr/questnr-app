@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewContainerRef } from '@angular/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { SearchBar } from '@nativescript/core';
+import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { AuthService } from '~/services/auth.service';
 import { GlobalConstants } from '~/shared/constants';
 
@@ -56,7 +57,16 @@ export class ActionBarComponent implements OnInit {
   }
 
   showSearchModal() {
-    this.routerExtenstions.navigate(['/', GlobalConstants.search]);
+    this.routerExtenstions.navigate(
+      ['/',
+        GlobalConstants.search,
+      ], {
+      animated: true,
+      transition: {
+        duration: 400,
+        curve: new CubicBezierAnimationCurve(.08, .47, .19, .97)
+      }
+    });
   }
 
   onSubmit(args) {

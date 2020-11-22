@@ -11,18 +11,22 @@
         }
     }
     .search-wrapper {
-        margin-left: 7;
-        margin-right: 7;
+        margin-left: 20;
+        margin-right: 20;
+        margin-top: 5;
+        margin-bottom: 5;
         height: 35;
         border-radius: 5;
         background: #eee;
         border-radius: 5;
-        border-width: 1;
+        border-width: 2;
         border-color: $primary;
         .search-bar {
             background: transparent;
-            border: 0;
-            color: #000;
+            border-width: 0;
+            color: $gray-font-2;
+            placeholder-color: $colors-placeholder;
+            @include make-font-size(1);
         }
     }
 
@@ -35,9 +39,9 @@
         @include make-font-size(6);
         color: $white;
     }
-}
 
-.fa-back-button {
-    @include make-font-size(6);
-    color: $white;
+    .fa-back-button {
+        @include make-font-size(6);
+        color: $white;
+    }
 }

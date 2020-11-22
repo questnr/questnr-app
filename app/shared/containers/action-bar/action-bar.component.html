@@ -1,4 +1,4 @@
-<ActionBar class="action-bar-wrapper" android:style="padding-top:5" flat="true">
+<ActionBar id="action-bar" class="action-bar-wrapper" android:style="padding-top:5" flat="true">
   <!-- <ActionItem ios.position="center">
     <StackLayout class="search-wrapper">
       <SearchBar class="search-bar" hint="Search" backgroundColor="#eee" textFieldHintColor="#f15152"
@@ -12,8 +12,8 @@
       <!-- <Label text="uestnr" class="action-label"></Label> -->
     </StackLayout>
     <StackLayout col="1" class="search-wrapper" orientation="horizontal" (loaded)="onSearchLayoutLoaded($event)">
-      <SearchBar class="search-bar" hint="Search" (textChange)="onTextChanged($event)" (clear)="onClear($event)"
-        (submit)="onSubmit($event)" (loaded)="onSearchBarLoaded($event)">
+      <SearchBar class="search-bar" hint="Search Questnr..." (textChange)="onTextChanged($event)"
+        (clear)="onClear($event)" (submit)="onSubmit($event)" (loaded)="onSearchBarLoaded($event)">
       </SearchBar>
     </StackLayout>
     <Label col="2" (tap)="logout()" text="&#xf08b;" class="fa fa-logout" android:style="padding-right:10"></Label>
