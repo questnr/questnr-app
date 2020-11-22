@@ -2,7 +2,7 @@
     <Page.actionBar>
         <ActionBar class="action-bar-wrapper" android:style="padding-top:5" flat="true" #actionBar>
             <GridLayout rows="*" columns="10*, 90*">
-                <Label text="&#xf060;" class="fa fa-back-button" (tap)="onNavBtnTap($event)"></Label>
+                <Label text="&#xf060;" id="back-button" class="fa fa-back-button" (tap)="onNavBtnTap($event)"></Label>
                 <StackLayout col="1" class="search-wrapper" orientation="horizontal"
                     (loaded)="onSearchLayoutLoaded($event)">
                     <SearchBar class="search-bar" hint="Search Questnr..." (textChange)="onTextChanged($event)"

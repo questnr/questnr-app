@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { RouterExtensions } from '@nativescript/angular';
-import { ActionBar, Page, SearchBar, Tabs } from '@nativescript/core';
+import { ActionBar, Label, Page, SearchBar, Tabs } from '@nativescript/core';
+import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ApiService } from '~/services/api.service';
@@ -100,6 +101,19 @@ export class SearchOverlayComponent implements OnInit {
       .subscribe((queryField: number) => {
         this.selectSearchOption(queryField);
       });
+
+    // back button animation
+    let backButton: Label = this._page.getViewById('back-button');
+    backButton.animate({
+      rotate: 90
+    }).then(() => {
+      backButton.animate({
+        rotate: 0,
+        duration: 1000,
+        curve: new CubicBezierAnimationCurve(.54, .35, .19, .97)
+      }).then(() => {
+      })
+    });
   }
 
   ngAfterViewInit(): void {
