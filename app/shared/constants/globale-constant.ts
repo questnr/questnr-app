@@ -16,6 +16,7 @@ export class GlobalConstants {
 
   public static signUpAgeRestriction = 16;
 
+  public static homePath = 'home';
   public static feedPath = 'feed';
   public static feedCommentPath = 'feed-comments';
   public static termsPath = 'terms';

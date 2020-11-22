@@ -1,46 +1,52 @@
-<Page xmlns="http://www.nativescript.org/tns.xsd">
+<Page xmlns="http://www.nativescript.org/tns.xsd" class="home-wrapper">
   <Page.actionBar>
     <qn-action-bar [pageViewContainerRef]="viewContainerRef"></qn-action-bar>
   </Page.actionBar>
-  <PullToRefresh (refresh)="refreshList($event)" [indicatorFillColor]="qColors.$primary"
-    [indicatorColor]="qColors.$white">
-    <ScrollView (scroll)="onScroll($event)"
-      [isUserInteractionEnabled]="userInteractionService.isUserInteractionEnabled$ | async">
-      <StackLayout>
-        <qn-create-post (onPostCreated)="handlePostCreation($event)" (onPostEdited)="handlePostEditing($event)"
-          (loaded)="onPostCreationBoxLoaded($event)">
-        </qn-create-post>
-        <StackLayout #container>
-          <StackLayout *ngFor="let feed of userFeeds;">
-            <StackLayout *ngIf="feed.postType == postTypeClass.simple">
-              <qn-simple-post [feed]="feed">
-              </qn-simple-post>
-            </StackLayout>
-            <StackLayout *ngIf="feed.postType == postTypeClass.question">
-              <qn-simple-question [feed]="feed" [questionParentType]="questionParentTypeClass.feedPage">
-              </qn-simple-question>
-            </StackLayout>
-          </StackLayout>
-          <StackLayout *ngIf="isLoading">
-            <qn-post-skeleton></qn-post-skeleton>
-          </StackLayout>
-        </StackLayout>
-        <!-- <ListView [items]="userFeeds" [itemTemplateSelector]="templateSelector">
-        <ng-template nsTemplateKey="simple" let-feed="item" let-i="index">
-          <qn-simple-post [feed]="feed">
-          </qn-simple-post>
-        </ng-template>
-      </ListView> -->
-        <!-- <RadListView [items]="userFeeds" orientation="vertical" [itemTemplateSelector]="templateSelector"
-        (loaded)="onUserFeedListViewLoaded($event)">
-        <ListViewLinearLayout tkListViewLayout scrollDirection="vertical" dynamicItemSize="true">
-        </ListViewLinearLayout>
-        <ng-template tkListItemTemplate let-feed="item" let-index="index" tkTemplateKey="simple">
-          <qn-simple-post [feed]="feed">
-          </qn-simple-post>
-        </ng-template>
-      </RadListView> -->
-      </StackLayout>
-    </ScrollView>
-  </PullToRefresh>
+  <BottomNavigation selectedIndex="0">
+
+    <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
+    <TabStrip>
+      <TabStripItem>
+        <Label text="Home"></Label>
+        <Image src="font://&#xf015;" class="fa t-36"></Image>
+      </TabStripItem>
+      <TabStripItem class="special">
+        <Label text="Explore"></Label>
+        <Image src="font://&#xf2de;" class="fa t-36"></Image>
+      </TabStripItem>
+      <TabStripItem class="special">
+        <Label text="Create"></Label>
+        <Image src="font://&#xf055;" class="fa t-36"></Image>
+      </TabStripItem>
+      <TabStripItem class="special">
+        <Label text="Account"></Label>
+        <Image src="font://&#xf007;" class="fa t-36"></Image>
+      </TabStripItem>
+    </TabStrip>
+
+    <!-- The number of TabContentItem components should corespond to the number of TabStripItem components -->
+    <TabContentItem>
+      <GridLayout>
+        <router-outlet name="feedTab"></router-outlet>
+      </GridLayout>
+    </TabContentItem>
+    <TabContentItem>
+      <GridLayout>
+        <Label text="EXPLORE TAB"></Label>
+        <!-- <router-outlet name="exploreTab"></router-outlet> -->
+      </GridLayout>
+    </TabContentItem>
+    <TabContentItem>
+      <GridLayout>
+        <Label text="CREATE TAB"></Label>
+        <!-- <router-outlet name="createTab"></router-outlet> -->
+      </GridLayout>
+    </TabContentItem>
+    <TabContentItem>
+      <GridLayout>
+        <router-outlet name="userPageTab"></router-outlet>
+      </GridLayout>
+    </TabContentItem>
+
+  </BottomNavigation>
 </Page>

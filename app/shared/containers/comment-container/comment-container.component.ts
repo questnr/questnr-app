@@ -58,9 +58,9 @@ export class CommentContainerComponent implements OnInit {
 
   openCommentSectionPage() {
     this.routerExtensions.navigate(['/',
-      GlobalConstants.feedPath,
-      this.feed.postActionId,
-      GlobalConstants.feedCommentPath],
+      GlobalConstants.feedCommentPath,
+      this.feed.postActionId
+    ],
       {
         queryParams: { feed: JSON.stringify(this.feed) },
         animated: true,

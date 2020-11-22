@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
+import * as SocialShare from "nativescript-social-share-ns-7";
+import { CommonService } from '~/services/common.service';
 import { FeedService } from '~/services/feed.service';
 import { GlobalConstants } from '~/shared/constants';
 import { PostSourceType } from '~/shared/models/comment-action.model';
@@ -24,7 +26,8 @@ export class PostInteractionPanelComponent implements OnInit {
 
   constructor(private feedService: FeedService,
     private cd: ChangeDetectorRef,
-    private routerExtensions: RouterExtensions) { }
+    private routerExtensions: RouterExtensions,
+    private commonService: CommonService) { }
 
   ngOnInit() {
   }
@@ -75,10 +78,11 @@ export class PostInteractionPanelComponent implements OnInit {
   }
 
   openCommentSectionPage() {
-    this.routerExtensions.navigate(['/',
-      GlobalConstants.feedPath,
-      this.feed.postActionId,
-      GlobalConstants.feedCommentPath],
+    this.routerExtensions.navigate([
+      '/',
+      GlobalConstants.feedCommentPath,
+      this.feed.postActionId
+    ],
       {
         queryParams: { feed: JSON.stringify(this.feed) },
         animated: true,
@@ -91,6 +95,6 @@ export class PostInteractionPanelComponent implements OnInit {
   }
 
   openShareDialog() {
-
+    SocialShare.shareUrl(this.commonService.getPostSharableLink(this.feed), "Questnr Post");
   }
 }

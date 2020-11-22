@@ -2,7 +2,9 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptCommonModule, NativeScriptRouterModule } from '@nativescript/angular';
 import { MaterialModule } from '~/shared/material.module';
 import { SharedModule } from '~/shared/shared.module';
+import { FeedComponent } from './feed/feed.component';
 import { HomeComponent } from './home.component';
+import { UserPageComponent } from './user-page/user-page.component';
 
 @NgModule({
   imports: [
@@ -12,7 +14,9 @@ import { HomeComponent } from './home.component';
     SharedModule
   ],
   declarations: [
-    HomeComponent
+    HomeComponent,
+    FeedComponent,
+    UserPageComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

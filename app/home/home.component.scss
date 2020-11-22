@@ -1,0 +1,10 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.home-wrapper {
+    TabStrip {
+        selected-item-color: $primary;
+        un-selected-item-color: $heading;
+        highlight-color: gold;
+    }
+}

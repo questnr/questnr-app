@@ -36,7 +36,8 @@ export class CommentPageComponent implements OnInit {
     public viewContainerRef: ViewContainerRef,
     private commentSectionService: CommentSectionService,
     public authService: AuthService,
-    public route: ActivatedRoute) { }
+    public route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     if (this.parentType === PostSourceType.singlePost) {
