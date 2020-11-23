@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { CommentPageComponent } from './comment-page/comment-page.component';
+import { CreateCommunityPageComponent } from './home/create-community-page/create-community-page.component';
 import { ExplorePageComponent } from './home/explore-page/explore-page.component';
 import { FeedComponent } from './home/feed/feed.component';
 import { HomeComponent } from './home/home.component';
@@ -16,7 +17,7 @@ import { GlobalConstants } from './shared/constants';
 const routes: Routes = [
   {
     path: "", redirectTo: "/" +
-      GlobalConstants.homePath + `/(feedTab:${GlobalConstants.feedPath}//userPageTab:${GlobalConstants.userPath}//explorePageTab:${GlobalConstants.explorePath})`, pathMatch: "full"
+      GlobalConstants.homePath + `/(feedTab:${GlobalConstants.feedPath}//userPageTab:${GlobalConstants.userPath}//explorePageTab:${GlobalConstants.explorePath}//createCommunityPageTab:${GlobalConstants.createCommunityPath})`, pathMatch: "full"
   },
   { path: GlobalConstants.search, component: SearchOverlayComponent },
   { path: GlobalConstants.login, component: LoginComponent },
@@ -39,6 +40,11 @@ const routes: Routes = [
         path: GlobalConstants.explorePath,
         component: ExplorePageComponent,
         outlet: 'explorePageTab'
+      },
+      {
+        path: GlobalConstants.createCommunityPath,
+        component: CreateCommunityPageComponent,
+        outlet: 'createCommunityPageTab'
       }
     ],
     canActivate: [AuthGuard]

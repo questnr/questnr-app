@@ -2,7 +2,7 @@
   <Page.actionBar>
     <qn-action-bar [pageViewContainerRef]="viewContainerRef"></qn-action-bar>
   </Page.actionBar>
-  <BottomNavigation selectedIndex="0">
+  <BottomNavigation selectedIndex="0" (selectedIndexChanged)="onSelectedIndexChanged($event)">
 
     <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
     <TabStrip>
@@ -37,8 +37,7 @@
     </TabContentItem>
     <TabContentItem>
       <GridLayout>
-        <Label text="CREATE TAB"></Label>
-        <!-- <router-outlet name="createTab"></router-outlet> -->
+        <router-outlet name="createCommunityPageTab"></router-outlet>
       </GridLayout>
     </TabContentItem>
     <TabContentItem>

@@ -1,0 +1,145 @@
+<GridLayout class="create-community-wrapper" rows="auto, *" (loaded)="onContainerLoaded($event)">
+    <StackLayout class="header" row="0" id="header">
+        <Label text="Create Your Community"></Label>
+        <StackLayout>
+            <qn-hr [color]="qColors.$white"></qn-hr>
+        </StackLayout>
+    </StackLayout>
+    <GridLayout row="1" class="form-step-base-wrapper" id="form-container" rows="auto, *, auto">
+        <StackLayout class="step-details" row="0" (loaded)="onStepDetailsLoaded($event)">
+            <StackLayout class="step-title">
+                <Label [text]="getStepTitle()"></Label>
+            </StackLayout>
+            <StackLayout class="step-description">
+                <Label [text]="getStepDescription()" textWrap="true"></Label>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout class="form-step-base" id="community-step-1" row="1">
+            <StackLayout class="input-field-wrapper">
+                <StackLayout class="input-field-container" [ngClass]="{'input-field-error': hasCommunityNameErrors()}"
+                    (loaded)="onCommunityNameFieldLoaded($event)">
+                    <TextField class="input-field" hint="Community name" [formControl]="communityName"
+                        autocorrect="false" verticalAlignment="middle" (focus)="onCommunityNameFocus()">
+                    </TextField>
+                </StackLayout>
+                <StackLayout *ngIf="hasCommunityNameErrors()" class="m-t-2 field-label">
+                    <Label *ngIf="communityName.hasError('required')" text="Community name is required."></Label>
+                    <Label *ngIf="communityName.hasError('minlength')"
+                        text="Field should contain at least 3 characters">
+                    </Label>
+                    <Label *ngIf="communityName.hasError('maxlength')" text="Community name is too long">
+                    </Label>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout>
+                <qn-space [space]="10"></qn-space>
+            </StackLayout>
+            <StackLayout class="input-field-wrapper">
+                <StackLayout class="input-field-container" (loaded)="onCommunityDescriptionFieldLoaded($event)"
+                    [ngClass]="{'input-field-error': hasCommunityDescriptionErrors()}">
+                    <TextView class="input-field" hint="Community description/purpose"
+                        [formControl]="communityDescription">
+                    </TextView>
+                </StackLayout>
+                <StackLayout *ngIf="hasCommunityDescriptionErrors()" class="m-t-2 field-label">
+                    <Label *ngIf="communityDescription.hasError('required')" text="Description is required."></Label>
+                    <Label *ngIf="communityDescription.hasError('maxlength')"
+                        text="Community description name is too long">
+                    </Label>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout class="form-step-base" id="community-step-2" row="1">
+            <StackLayout class="image-selector-container">
+                <GridLayout class="image-selector" [height]="250">
+                    <NSImg class="community-avatar" (tap)="onTapCommunityAvatar($event)"
+                        [placeholderImageUri]="defaultSrc" [failureImageUri]="defaultSrc" verticalAlignment="center"
+                        [src]="communityImage ? communityImage : defaultSrc" loadMode="async" stretch="aspectFill"
+                        (failure)="onCommunityAvatarFailure($event)">
+                    </NSImg>
+                </GridLayout>
+                <Label *ngIf="showAvatarNotSet" class="field-label"
+                    text="You have not chosen an avatar for the community"></Label>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout class="form-step-base" id="community-step-3" row="1">
+            <StackLayout>
+                <qn-space [space]="10"></qn-space>
+            </StackLayout>
+            <GridLayout class="filter-wrapper">
+                <GridLayout class="keyword-wrapper" [rows]="searchResults?.length > 0 ? 'auto, 150, *' : 'auto, 10, *'">
+                    <StackLayout class="input-field-wrapper" row="0">
+                        <GridLayout class="input-field-container" orientation="horizontal" verticalAlignment="top"
+                            (loaded)="onCommunityTagFieldLoaded($event)"
+                            [ngClass]="{'input-field-error': (hasCommunityTagInputErrors() || hasCommunityTagListErrors())}"
+                            columns="*, auto">
+                            <TextField class="input-field" hint="Community tag" [formControl]="communityTag"
+                                autocorrect="false" (focus)="onCommunityTagInputFocus()" col="0" returnKeyType="done">
+                            </TextField>
+                            <StackLayout col="1" orientation="horizontal">
+                                <StackLayout class="vertical-border"></StackLayout>
+                                <Label class="submit fa" ripple [rippleColor]="qColors.$primary"
+                                    [rippleEnabled]="communityTag.valid"
+                                    (tap)="addTagToBucket(communityTag.value, true)" [isEnabled]="communityTag.valid"
+                                    verticalAlignment="middle" text="&#xf149;">
+                                </Label>
+                            </StackLayout>
+                        </GridLayout>
+                        <StackLayout class="m-t-2 field-label">
+                            <StackLayout *ngIf="hasCommunityTagInputErrors()">
+                                <Label *ngIf="communityTag.hasError('pattern')"
+                                    text="Use characters and number only"></Label>
+                                <Label *ngIf="tagExistsError" text="Tag already added"></Label>
+                                <Label *ngIf="tagMaxLengthError" text="Tag is too long"></Label>
+                            </StackLayout>
+                            <StackLayout *ngIf="hasCommunityTagListErrors()">
+                                <Label *ngIf="tagsCount.hasError('max')" text="Up to only 5 tags are allowed"></Label>
+                                <Label *ngIf="tagsCount.hasError('min')" text="At least 2 tags are required"></Label>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                    <GridLayout class="filter-select-wrapper" row="1" [height]="searchResults?.length> 0 ? 150 : 0">
+                        <ScrollView class="filter-select">
+                            <StackLayout>
+                                <Label class="user-interest" *ngFor="let userInterest of searchResults"
+                                    (tap)="addTagToBucket(userInterest.interest, false)" ripple
+                                    [rippleColor]="qColors.$gray" [text]="userInterest.interest"></Label>
+                            </StackLayout>
+                        </ScrollView>
+                    </GridLayout>
+                    <GridLayout row="1">
+                        <qn-space [space]="10"></qn-space>
+                    </GridLayout>
+                    <GridLayout class="tag-list-wrapper" row="2">
+                        <ScrollView *ngIf="tagList.length > 0">
+                            <StackLayout>
+                                <Label class="tag-list-title"
+                                    [text]="'Selected tags for '+this.communityName.value"></Label>
+                                <FlexboxLayout flexWrap="wrap">
+                                    <StackLayout class="tag-container" orientation="horizontal"
+                                        *ngFor="let tag of tagList, let ind = index" [id]="'community-tag-'+ind">
+                                        <Label class="tag" [text]="tag.value"></Label>
+                                        <Label (tap)="removeTagFromBucket(ind)" class="tag-remove fa" text="&#xf12d;"
+                                            verticalAlignment="middle">
+                                        </Label>
+                                    </StackLayout>
+                                </FlexboxLayout>
+                            </StackLayout>
+                        </ScrollView>
+                    </GridLayout>
+                </GridLayout>
+            </GridLayout>
+        </StackLayout>
+        <FlexboxLayout class="submit-button-container" row="2" justifyContent="space-around">
+            <Button class="fa back" ripple [rippleColor]="qColors.$primary" text="&#xf060; Back"
+                *ngIf="isBackStepAvailable()" (tap)="backStep()"></Button>
+            <Button class="fa skip" ripple [rippleColor]="qColors.$primary" text="Skip &#xf051;"
+                *ngIf="isSkipStepAvailable()" (tap)="skipStep()"></Button>
+            <Button class="fa next" ripple [rippleColor]="qColors.$primary" text="Next &#xf061;"
+                *ngIf="isNextStepAvailable()" (tap)="nextStep()"></Button>
+            <Button class="fa submit"
+                [ngClass]="hasCommunityTagInputErrors() || hasCommunityTagListErrors() ? 'error' : ''" ripple
+                [rippleColor]="qColors.$primary" text="Create" *ngIf="isFinalStep()" (tap)="submit()"></Button>
+        </FlexboxLayout>
+    </GridLayout>
+</GridLayout>

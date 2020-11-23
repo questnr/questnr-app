@@ -1,0 +1,130 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.create-community-wrapper {
+    margin-top: 10;
+    background-color: $primary;
+    border-top-right-radius: 20;
+    border-top-left-radius: 20;
+    padding-bottom: 5;
+    color: $white;
+    .header {
+        margin: 10;
+        font-weight: 300;
+        @include make-font-size(9);
+    }
+    .form-step-base-wrapper {
+        margin-top: 40;
+        margin-left: 15;
+        margin-right: 15;
+        .step-details {
+            .step-title {
+                @include make-font-size(5);
+                font-weight: 600;
+            }
+            .step-description {
+                @include make-font-size(1);
+            }
+        }
+        .input-field-wrapper {
+            .input-field-container {
+                border-width: 2;
+                border-color: $heading;
+                border-radius: 10;
+                background-color: $white;
+                .input-field {
+                    @include make-font-size(2);
+                    color: $gray-font-2;
+                    placeholder-color: $colors-placeholder;
+                    padding-left: 5;
+                    margin-top: -1;
+                    margin-bottom: 0;
+                    border-width: 0;
+                    width: 100%;
+                    padding-top: 5;
+                    padding-bottom: 5;
+                }
+                .vertical-border {
+                    // margin: 1;
+                    width: 1;
+                    background-color: $gray;
+                    padding-top: 5;
+                    padding-bottom: 5;
+                }
+                .submit {
+                    @include make-font-size(2);
+                    padding: 10;
+                    height: 100%;
+                    // margin-left: 8;
+                    // margin-right: 3;
+                    border-top-right-radius: 10;
+                    border-bottom-right-radius: 10;
+                    color: $black;
+                }
+            }
+            .field-label {
+                @include make-font-size(-1);
+                font-weight: bold;
+            }
+
+            .input-field-error {
+                border-width: 2;
+                border-color: $red;
+            }
+        }
+        .image-selector-container {
+            .image-selector {
+                .community-avatar {
+                    border-width: 2;
+                    border-color: $gray;
+                    border-radius: 2;
+                }
+            }
+        }
+        .filter-select-wrapper {
+            .filter-select {
+                .user-interest {
+                    margin-top: 1;
+                    margin-bottom: 1;
+                    padding: 2;
+                    border-radius: 5;
+                }
+            }
+        }
+        .tag-list-wrapper {
+            .tag-list-title {
+                @include make-font-size(1);
+            }
+            .tag-container {
+                @include make-font-size(3);
+                margin: 2;
+                padding: 4;
+                background-color: rgba(0, 0, 0, 0.11);
+                border-radius: 10;
+                .tag {
+                    padding: 3;
+                }
+                .tag-remove {
+                    padding: 3;
+                }
+            }
+        }
+        .submit-button-container {
+            Button {
+                @include make-font-size(2);
+                border-radius: 5;
+                margin: 0;
+            }
+            Button.skip {
+                background-color: $gray;
+            }
+            Button.next {
+                background-color: $heading;
+                color: $white;
+            }
+            Button.error {
+                color: $red;
+            }
+        }
+    }
+}

@@ -16,7 +16,9 @@ import { ApiService } from './services/api.service';
 import { AskQuestionService } from './services/ask-question.service';
 import { CommentSectionService } from './services/comment-section.service';
 import { CommonService } from './services/common.service';
+import { CommunitySuggestionGuideService } from './services/community-suggestion-guide.service';
 import { CommunityService } from './services/community.service';
+import { CreateCommunityService } from './services/create-community.service';
 import { ExploreService } from './services/explore.service';
 import { FeedService } from './services/feed.service';
 import { JWTService } from './services/jwt.service';
@@ -25,6 +27,7 @@ import { OTPVerificationService } from './services/otp-verification.service';
 import { OverlayService } from './services/overlay.service';
 import { PostMenuService } from './services/post-menu.service';
 import { PostReportService } from './services/post-report.service';
+import { QFileService } from './services/q-file.service';
 import { SnackBarService } from './services/snackbar.service';
 import { UserInteractionService } from './services/user-interaction.service';
 import { UserProfileService } from './services/user-profile.service';
@@ -85,7 +88,10 @@ if (applicationModule.android) {
     UserProfileService,
     PostReportService,
     CommentSectionService,
-    ExploreService
+    ExploreService,
+    CreateCommunityService,
+    CommunitySuggestionGuideService,
+    QFileService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
