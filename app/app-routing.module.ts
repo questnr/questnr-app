@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { CommentPageComponent } from './comment-page/comment-page.component';
+import { CommunityPageComponent } from './community-page/community-page.component';
 import { CreateCommunityPageComponent } from './home/create-community-page/create-community-page.component';
 import { ExplorePageComponent } from './home/explore-page/explore-page.component';
 import { FeedComponent } from './home/feed/feed.component';
@@ -56,7 +57,8 @@ const routes: Routes = [
     //   GlobalConstants.feedCommentPath
     // ].join("/"),
     component: CommentPageComponent
-  }
+  },
+  { path: GlobalConstants.communityPath + "/:communitySlug", component: CommunityPageComponent },
 ];
 
 @NgModule({

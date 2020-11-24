@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { CommentPageComponent } from './comment-page/comment-page.component';
+import { CommunityPageComponent } from './community-page/community-page.component';
 import { HomeModule } from './home/home.module';
 import { InterceptorService } from './interceptor.service';
 import { SearchOverlayComponent } from './search-overlay/search-overlay.component';
@@ -16,6 +17,7 @@ import { ApiService } from './services/api.service';
 import { AskQuestionService } from './services/ask-question.service';
 import { CommentSectionService } from './services/comment-section.service';
 import { CommonService } from './services/common.service';
+import { CommunityActivityService } from './services/community-activity.service';
 import { CommunitySuggestionGuideService } from './services/community-suggestion-guide.service';
 import { CommunityService } from './services/community.service';
 import { CreateCommunityService } from './services/create-community.service';
@@ -54,7 +56,8 @@ if (applicationModule.android) {
   declarations: [
     AppComponent,
     SearchOverlayComponent,
-    CommentPageComponent
+    CommentPageComponent,
+    CommunityPageComponent
   ],
   imports: [
     NativeScriptModule,
@@ -91,7 +94,8 @@ if (applicationModule.android) {
     ExploreService,
     CreateCommunityService,
     CommunitySuggestionGuideService,
-    QFileService
+    QFileService,
+    CommunityActivityService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

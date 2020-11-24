@@ -7,7 +7,7 @@
     </StackLayout>
   </ActionItem> -->
   <GridLayout rows="*" columns="auto, *, auto" *ngIf="!isChildPage">
-    <StackLayout class="action-logo" col="0" orientation="horizontal">
+    <StackLayout class="action-logo" col="0" orientation="horizontal" (tap)="onLogoTap($event)">
       <Image src="res://icon" class="action-image"></Image>
       <!-- <Label text="uestnr" class="action-label"></Label> -->
     </StackLayout>

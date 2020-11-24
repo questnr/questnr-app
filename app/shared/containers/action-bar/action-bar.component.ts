@@ -24,6 +24,10 @@ export class ActionBarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onLogoTap(args): void {
+    this.routerExtenstions.navigate(['/', GlobalConstants.homePath], { clearHistory: true });
+  }
+
   onNavBtnTap(args): void {
     this.routerExtenstions.backToPreviousPage();
   }

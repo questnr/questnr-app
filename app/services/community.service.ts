@@ -46,11 +46,11 @@ export class CommunityService {
     return this.http.get(this.baseUrl + 'user/community/' + slug + '/users');
   }
 
-  getCommunityFeeds(id, page) {
+  getCommunityFeeds(id, page, size = "4") {
     if (!id) {
       return of();
     }
-    return this.http.get(this.baseUrl + 'user/community/' + id + '/posts', { params: { page } });
+    return this.http.get(this.baseUrl + 'user/community/' + id + '/posts', { params: { page: page, size: size } });
   }
 
   updateCommunityAvatar(formData, comId) {

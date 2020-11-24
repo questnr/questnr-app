@@ -71,16 +71,16 @@ export class CreateQuestionModalComponent implements OnInit {
       agreeText, disagreeText, text: questionText
     };
     if (this.params.context.isCommunityQuestion) {
-      // this.askQuestionService.postQuestionInCommunity(this.params.context.communityId, questionObj).subscribe((res: any) => {
-      //   if (res) {
-      //     this.isLoading = false;
-      //     setTimeout(() => {
-      //       this.params.closeCallback(res);
-      //     }, 2000);
-      //   }else {
-      // this.errorHandler(null);
-      // }
-      // });
+      this.askQuestionService.postQuestionInCommunity(this.params.context.communityId, questionObj).subscribe((post: Post) => {
+        if (post) {
+          this.isLoading = false;
+          this.uploadCompleted(post);
+        } else {
+          this.errorHandler(null);
+        }
+      }, (error) => {
+        this.errorHandler(error);
+      });
     }
     else {
       this.askQuestionService.postQuestion(questionObj).subscribe((post: Post) => {

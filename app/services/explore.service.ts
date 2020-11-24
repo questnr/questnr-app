@@ -13,12 +13,12 @@ export class ExploreService {
   }
 
   explore(page, size = "4") {
-    return this.http.get(this.baseUrl + '/user/explore', { params: { page: page, size: size } });
+    return this.http.get(this.baseUrl + 'user/explore', { params: { page: page, size: size } });
   }
 
   getHashtagPost(hashTags, page) {
     if (!hashTags) return of();
-    return this.http.get(this.baseUrl + '/user/hash-tag/posts', { params: { page, hashTags: hashTags } });
+    return this.http.get(this.baseUrl + 'user/hash-tag/posts', { params: { page, hashTags: hashTags } });
   }
 
 }

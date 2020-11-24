@@ -1,0 +1,19 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.community-page-wrapper {
+    .community-avatar {
+        .community-details {
+            transition: all 500ms ease-in-out;
+            padding: 5;
+            background: linear-gradient(to top, $black, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.233));
+            .community-name {
+                @include make-font-size(2);
+                color: $white;
+                padding-left: 10;
+                border-left-width: 3;
+                border-left-color: $primary;
+            }
+        }
+    }
+}

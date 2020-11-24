@@ -196,8 +196,8 @@ export class CreatePostModalComponent implements OnInit, AfterViewInit {
         // Check if the blog title is valid
         if ((!this.isPostInvalid()) && (this.validateBlogTitle())) {
           this.isLoading = true;
-          if (this.params.context?.isCommunityPost && this.params.context?.community?.communityId != null) {
-            this.apiUrl = `${environment.baseUrl}user/community/${this.params.context.community.communityId}/posts`;
+          if (this.params.context?.isCommunityPost && this.params.context?.communityId != null) {
+            this.apiUrl = `${environment.baseUrl}user/community/${this.params.context.communityId}/posts`;
           } else {
             this.apiUrl = `${environment.baseUrl}user/posts`;
           }

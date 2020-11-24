@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventData } from '@nativescript-community/ui-image';
-import { registerElement } from '@nativescript/angular';
+import { registerElement, RouterExtensions } from '@nativescript/angular';
 import { GridLayout } from '@nativescript/core';
 import { CardView } from '@nstudio/nativescript-cardview';
 import { Video } from '@nstudio/nativescript-exoplayer';
@@ -11,6 +11,7 @@ import { LoaderService } from './services/loader.service';
 import { OverlayReasonType, OverlayService } from './services/overlay.service';
 import { MenuState, PostMenuService } from './services/post-menu.service';
 import { UserInteractionService } from './services/user-interaction.service';
+import { GlobalConstants } from './shared/constants';
 import { qColors } from './_variables';
 const tnsfx = require('nativescript-effects');
 registerElement('Carousel', () => Carousel);
@@ -31,7 +32,8 @@ export class AppComponent implements OnInit {
   constructor(public loaderService: LoaderService,
     public postMenuService: PostMenuService,
     public userInteractionService: UserInteractionService,
-    public overlayService: OverlayService) {
+    public overlayService: OverlayService,
+    private routerExtensions: RouterExtensions) {
     // Set orientation to portrait
     orientation.setOrientation("portrait");
     // Disable rotation
@@ -39,6 +41,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // To navigate to community page
+    // setTimeout(() => {
+    //   this.routerExtensions.navigate(['/', GlobalConstants.communityPath, 'electronjs--5368833300105140974'])
+    // }, 1000);
   }
 
   onMainLayoutLoaded(args) {

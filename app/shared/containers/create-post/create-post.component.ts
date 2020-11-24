@@ -1,8 +1,7 @@
-import { Component, EventEmitter, OnInit, Output, ViewContainerRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
 import { ModalDialogOptions, ModalDialogService } from '@nativescript/angular';
 import { AuthService } from '~/services/auth.service';
 import { PostMenuService } from '~/services/post-menu.service';
-import { SnackBarService } from '~/services/snackbar.service';
 import { UtilityService } from '~/services/utility.service';
 import { CreatePostModalComponent } from '~/shared/modals/create-post-modal/create-post-modal.component';
 import { CreateQuestionModalComponent } from '~/shared/modals/create-question-modal/create-question-modal.component';
@@ -15,6 +14,8 @@ import { Post } from '~/shared/models/post-action.model';
   styleUrls: ['./create-post.component.scss']
 })
 export class CreatePostComponent implements OnInit {
+  @Input() isCommunityPost: boolean = false;
+  @Input() communityId: number;
   @Output() onPostCreated = new EventEmitter();
   @Output() onPostEdited = new EventEmitter();
   avatar: AvatarDTO;
@@ -48,7 +49,10 @@ export class CreatePostComponent implements OnInit {
     const options: ModalDialogOptions = {
       viewContainerRef: this.viewContainerRef,
       fullscreen: true,
-      context: {}
+      context: {
+        isCommunityPost: this.isCommunityPost,
+        communityId: this.communityId
+      }
     };
     this.modalService.showModal(CreateQuestionModalComponent, options).then((newPost: Post) => {
       // console.log("createQuestion", newPost);
@@ -60,7 +64,10 @@ export class CreatePostComponent implements OnInit {
     const options: ModalDialogOptions = {
       viewContainerRef: this.viewContainerRef,
       fullscreen: true,
-      context: {}
+      context: {
+        isCommunityPost: this.isCommunityPost,
+        communityId: this.communityId
+      }
     };
     this.modalService.showModal(CreatePostModalComponent, options).then((newPost: Post) => {
       // console.log("createQuestnr", newPost);

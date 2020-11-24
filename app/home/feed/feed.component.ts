@@ -1,6 +1,7 @@
-import { Component, ElementRef, NgZone, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, NgZone, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { EventData } from '@nativescript-community/ui-image';
 import { ListView, ScrollView } from '@nativescript/core';
+import { Subscription } from 'rxjs';
 import { FeedService } from '~/services/feed.service';
 import { PostMenuService } from '~/services/post-menu.service';
 import { UserInteractionService } from '~/services/user-interaction.service';
@@ -16,7 +17,7 @@ import { qColors } from '~/_variables';
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss']
 })
-export class FeedComponent implements OnInit {
+export class FeedComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   userFeeds: Post[] = [];
   pathLink = GlobalConstants.feedPath;
@@ -31,6 +32,7 @@ export class FeedComponent implements OnInit {
   postTypeClass = PostType;
   pageSize = "4";
   qColors = qColors;
+  feedSubscriber: Subscription;
 
   constructor(public viewContainerRef: ViewContainerRef,
     private utilityService: UtilityService,
@@ -47,6 +49,10 @@ export class FeedComponent implements OnInit {
         return feed.postActionId !== postActionId;
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.cancelIfAnyCurrentFeedSubscription();
   }
 
   refreshList(args) {
@@ -90,7 +96,15 @@ export class FeedComponent implements OnInit {
     this.userFeedListView = args.object as ListView;
   }
 
+  cancelIfAnyCurrentFeedSubscription(): void {
+    // If already feed is being fetched, stop the thread
+    if (this.feedSubscriber) {
+      this.feedSubscriber.unsubscribe();
+    }
+  }
+
   getUserFeed() {
+    this.cancelIfAnyCurrentFeedSubscription();
     this.isLoading = true;
     this.userFeedService.getFeeds(this.page, this.pageSize).subscribe(
       (feedPage: QPage<Post>) => {
@@ -120,6 +134,7 @@ export class FeedComponent implements OnInit {
   }
 
   refreshUserFeed() {
+    this.cancelIfAnyCurrentFeedSubscription();
     this.userFeedService.getFeeds(0, this.pageSize).subscribe(
       (feedPage: QPage<Post>) => {
         // console.log("feedPage", feedPage);
