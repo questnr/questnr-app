@@ -4,6 +4,7 @@ import { EventData, FinalEventData, Img } from '@nativescript-community/ui-image
 import { ScrollView } from '@nativescript/core';
 import { Subscription } from 'rxjs';
 import { CommunityActivityService } from '~/services/community-activity.service';
+import { CommunityMembersService } from '~/services/community-members.service';
 import { CommunityService } from '~/services/community.service';
 import { PostMenuService } from '~/services/post-menu.service';
 import { SnackBarService } from '~/services/snackbar.service';
@@ -11,6 +12,7 @@ import { UserInteractionService } from '~/services/user-interaction.service';
 import { UtilityService } from '~/services/utility.service';
 import { GlobalConstants } from '~/shared/constants';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
+import { CommunityMembersComponent } from '~/shared/containers/community-members/community-members.component';
 import { SimplePostComponent } from '~/shared/containers/simple-post/simple-post.component';
 import { Community, CommunityPrivacy, CommunityProfileMeta } from '~/shared/models/community.model';
 import { QPage } from '~/shared/models/page.model';
@@ -50,6 +52,11 @@ export class CommunityPageComponent implements OnInit {
   // communitySubject = new Subject<Community>();
   communityInfo: CommunityProfileMeta;
   relationType: RelationType;
+  communityMemeberCompRef: CommunityMembersComponent;
+  @ViewChild('communityMemeberComp')
+  set communityMemeberComp(communityMemeberCompRef: CommunityMembersComponent) {
+    this.communityMemeberCompRef = communityMemeberCompRef;
+  }
   // questionListRef: UserQuestionListComponent;
   // @ViewChild("questionList")
   // set questionList(questionListRef: UserQuestionListComponent) {
@@ -78,6 +85,8 @@ export class CommunityPageComponent implements OnInit {
           this.community = community;
           this.relationType = this.community.communityMeta.relationShipType;
           this.restartCommunityFeeds(true);
+
+          this.communityMemeberCompRef.setCommunity(this.community);
         });
     });
   }

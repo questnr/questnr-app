@@ -42,9 +42,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     // To navigate to community page
-    // setTimeout(() => {
-    //   this.routerExtensions.navigate(['/', GlobalConstants.communityPath, 'electronjs--5368833300105140974'])
-    // }, 1000);
+    setTimeout(() => {
+      this.routerExtensions.navigate(['/', GlobalConstants.communityPath, 'electronjs--5368833300105140974'])
+    }, 1000);
   }
 
   onMainLayoutLoaded(args) {

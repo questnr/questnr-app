@@ -1,0 +1,26 @@
+<GridLayout class="community-members-wrapper" rows="*" height="50">
+  <RadListView row="0" [items]="communityMemberList" orientation="horizontal" [itemTemplateSelector]="templateSelector"
+    selectionBehavior="LongPress" (loaded)="onMemberListViewLoaded($event)">
+    <ListViewLinearLayout tkListViewLayout scrollDirection="Horizontal">
+    </ListViewLinearLayout>
+    <ng-template let-user="item" let-index="index" tkTemplateKey="member">
+      <GridLayout>
+        <GridLayout *ngIf="index == communityMemberList.length - 1" rows="*" columns="*, auto">
+          <GridLayout row="0" col="0">
+            <qn-profile-icon class="profile-icon" verticalAlignment="middle" [avatar]="user.avatarDTO"
+              [slug]="user.slug" [height]="50">
+            </qn-profile-icon>
+          </GridLayout>
+          <GridLayout row="0" col="1">
+            <Button class="fa view-more-button" text="&#xf138;"></Button>
+          </GridLayout>
+        </GridLayout>
+        <GridLayout *ngIf="index < communityMemberList.length - 1">
+          <qn-profile-icon class="profile-icon" verticalAlignment="middle" [avatar]="user.avatarDTO" [slug]="user.slug"
+            [height]="50">
+          </qn-profile-icon>
+        </GridLayout>
+      </GridLayout>
+    </ng-template>
+  </RadListView>
+</GridLayout>

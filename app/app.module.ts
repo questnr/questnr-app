@@ -18,6 +18,7 @@ import { AskQuestionService } from './services/ask-question.service';
 import { CommentSectionService } from './services/comment-section.service';
 import { CommonService } from './services/common.service';
 import { CommunityActivityService } from './services/community-activity.service';
+import { CommunityMembersService } from './services/community-members.service';
 import { CommunitySuggestionGuideService } from './services/community-suggestion-guide.service';
 import { CommunityService } from './services/community.service';
 import { CreateCommunityService } from './services/create-community.service';
@@ -95,7 +96,8 @@ if (applicationModule.android) {
     CreateCommunityService,
     CommunitySuggestionGuideService,
     QFileService,
-    CommunityActivityService
+    CommunityActivityService,
+    CommunityMembersService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

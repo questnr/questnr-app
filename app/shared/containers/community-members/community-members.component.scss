@@ -1,0 +1,17 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.community-members-wrapper {
+    .profile-icon {
+        background-color: $black;
+    }
+
+    .view-more-button {
+        margin: 0;
+        height: 40;
+        width: 40;
+        color: $white;
+        background-color: $heading;
+        border-radius: 50;
+    }
+}

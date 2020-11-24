@@ -9,6 +9,7 @@ import { CreateCommentComponent } from './components/create-comment/create-comme
 import { PostMenuOptionComponent } from './components/post-menu-option/post-menu-option.component';
 import { ActionBarComponent } from './containers/action-bar/action-bar.component';
 import { CommentContainerComponent } from './containers/comment-container/comment-container.component';
+import { CommunityMembersComponent } from './containers/community-members/community-members.component';
 import { CreatePostComponent } from './containers/create-post/create-post.component';
 import { FeedTextComponent } from './containers/feed-text/feed-text.component';
 import { HorizontalProfileComponent } from './containers/horizontal-profile/horizontal-profile.component';
@@ -53,7 +54,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     PostMenuOptionComponent,
     CommentItemComponent,
     CommentContainerComponent,
-    CreateCommentComponent
+    CreateCommentComponent,
+    CommunityMembersComponent
   ],
   providers: [
   ],
@@ -78,7 +80,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     PostMenuOptionComponent,
     CommentItemComponent,
     CommentContainerComponent,
-    CreateCommentComponent
+    CreateCommentComponent,
+    CommunityMembersComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA
