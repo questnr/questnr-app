@@ -19,8 +19,7 @@
             <ScrollView *tabItem="{title: label(userIndex)}" orientation="vertical">
                 <FlexboxLayout flexDirection="column" class="horizontal-profile-container">
                     <StackLayout *ngFor="let user of users; let userIndex = index;" orientation="horizontal"
-                        class="horizontal-profile" horizontalAlignment="stretch"
-                        [nsRouterLink]="['/', currentPath, user?.slug]">
+                        class="horizontal-profile" horizontalAlignment="stretch" (tap)="onOpenUserPage(user.slug)">
                         <qn-horizontal-profile [avatar]="user?.avatarDTO" [head]="user?.username"
                             [subhead]="user?.firstName && user?.lastName ? user?.firstName+' '+user?.lastName: ''">
                         </qn-horizontal-profile>
@@ -54,7 +53,7 @@
                 <FlexboxLayout flexDirection="column" class="horizontal-profile-container">
                     <StackLayout *ngFor="let community of communities; let communityIndex = index;"
                         orientation="horizontal" horizontalAlignment="stretch" class="horizontal-profile"
-                        [nsRouterLink]="['/', currentPath, community?.slug]">
+                        (tap)="onOpenComunityPage(community.slug)">
                         <qn-horizontal-profile [isCommunityAvatar]="true" [avatar]="community?.avatarDTO"
                             [head]="community?.communityName" [subhead]="community?.ownerUserDTO?.username">
                         </qn-horizontal-profile>
@@ -90,7 +89,7 @@
                     <StackLayout *ngFor="let hashtag of hashtags; let hashTagIndex = index;" orientation="horizontal"
                         horizontalAlignment="stretch">
                         <StackLayout class="hash-tag" orientation="horizontal" verticalAlignment="center"
-                            [nsRouterLink]="['/', currentPath]">
+                            (tap)="onOpenHashTagPage(hashtag.hashTagValue)">
                             <Label class="hash-tag-symbol" text="#"></Label>
                             <Label [text]="hashtag.hashTagValue"></Label>
                         </StackLayout>

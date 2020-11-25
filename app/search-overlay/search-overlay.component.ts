@@ -394,4 +394,23 @@ export class SearchOverlayComponent implements OnInit {
       && !this.isDataLoading(index) &&
       !this.endOfResults(index);
   }
+
+  onOpenUserPage(userSlug: string): void {
+    if (userSlug)
+      this.routerExtenstions.navigate(['/', GlobalConstants.userPath, userSlug])
+  }
+
+  onOpenComunityPage(communitySlug: string): void {
+    if (communitySlug)
+      this.routerExtenstions.navigate(['/', GlobalConstants.communityPath, communitySlug])
+  }
+
+  onOpenHashTagPage(hashTagValue: string): void {
+    if (hashTagValue)
+      this.routerExtenstions.navigate(['/', GlobalConstants.hashTagPath], {
+        queryParams: {
+          q: hashTagValue
+        }
+      })
+  }
 }
