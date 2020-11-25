@@ -14,6 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { UserPageComponent } from './home/user-page/user-page.component';
 import { SearchOverlayComponent } from './search-overlay/search-overlay.component';
 import { GlobalConstants } from './shared/constants';
+import { UserListPageComponent } from './user-list-page/user-list-page.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,12 @@ const routes: Routes = [
     component: CommentPageComponent
   },
   { path: GlobalConstants.communityPath + "/:communitySlug", component: CommunityPageComponent },
+  {
+    path: [
+      GlobalConstants.userListPath,
+      ':type'
+    ].join("/"), component: UserListPageComponent
+  }
 ];
 
 @NgModule({

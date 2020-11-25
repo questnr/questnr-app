@@ -26,6 +26,7 @@
             .subhead {
                 color: $primary;
                 @include make-font-size(-2);
+                padding: 5;
             }
         }
         .post-menu {

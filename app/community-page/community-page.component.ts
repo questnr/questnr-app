@@ -1,6 +1,7 @@
 import { Component, ElementRef, NgZone, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { EventData, FinalEventData, Img } from '@nativescript-community/ui-image';
+import { RouterExtensions } from '@nativescript/angular';
 import { ScrollView } from '@nativescript/core';
 import { Subscription } from 'rxjs';
 import { CommunityActivityService } from '~/services/community-activity.service';
@@ -76,7 +77,8 @@ export class CommunityPageComponent implements OnInit {
     public userInteractionService: UserInteractionService,
     private ngZone: NgZone,
     private snackBarService: SnackBarService,
-    private communityActivityService: CommunityActivityService) {
+    private communityActivityService: CommunityActivityService,
+    private routerExtensions: RouterExtensions) {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.communitySlug = params.get('communitySlug');
       // console.log("communitySlug", this.communitySlug);
@@ -87,6 +89,9 @@ export class CommunityPageComponent implements OnInit {
           this.restartCommunityFeeds(true);
 
           this.communityMemeberCompRef.setCommunity(this.community);
+        }, (error) => {
+          this.routerExtensions.backToPreviousPage();
+          this.snackBarService.showHTTPError(error);
         });
     });
   }
@@ -136,13 +141,6 @@ export class CommunityPageComponent implements OnInit {
       }, 100);
     }
     this.scrollCached = event;
-
-    // let index = 0;
-    // container.eachLayoutChild((childView) => {
-    //   const locationY = childView.getLocationRelativeTo(container).y;
-    //   this.cards[index].isShown = locationY >= verticalOffset && locationY <= visibleRange
-    //   index += 1;
-    // });
   }
 
   restartCommunityFeeds(callFromConstructor: boolean = false) {

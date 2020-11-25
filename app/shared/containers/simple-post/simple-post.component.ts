@@ -8,6 +8,7 @@ import { GlobalConstants } from '~/shared/constants';
 import { HashTag } from '~/shared/models/hashtag.model';
 import { Post, PostEditorType, PostMedia, ResourceType } from '~/shared/models/post-action.model';
 import { UserListType } from '~/shared/models/user-list.model';
+import { qColors } from '~/_variables';
 import { FeedTextComponent } from '../feed-text/feed-text.component';
 import { MediaContainerComponent } from '../media-container/media-container.component';
 import { PostInteractionPanelComponent } from '../post-interaction-panel/post-interaction-panel.component';
@@ -19,6 +20,7 @@ import { ProfileIconComponent } from '../profile-icon/profile-icon.component';
   styleUrls: ['./simple-post.component.scss']
 })
 export class SimplePostComponent implements OnInit {
+  qColors = qColors;
   @Input() feed: Post;
   @ViewChild('feedTextComponent') feedTextComponent: FeedTextComponent;
   @Output() removePostEvent = new EventEmitter();

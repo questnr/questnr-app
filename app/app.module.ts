@@ -24,6 +24,7 @@ import { CommunityService } from './services/community.service';
 import { CreateCommunityService } from './services/create-community.service';
 import { ExploreService } from './services/explore.service';
 import { FeedService } from './services/feed.service';
+import { InviteUserService } from './services/invite-user.service';
 import { JWTService } from './services/jwt.service';
 import { LoaderService } from './services/loader.service';
 import { OTPVerificationService } from './services/otp-verification.service';
@@ -32,13 +33,16 @@ import { PostMenuService } from './services/post-menu.service';
 import { PostReportService } from './services/post-report.service';
 import { QFileService } from './services/q-file.service';
 import { SnackBarService } from './services/snackbar.service';
+import { UserFollowerService } from './services/user-follower.service';
 import { UserInteractionService } from './services/user-interaction.service';
+import { UserListService } from './services/user-list.service';
 import { UserProfileService } from './services/user-profile.service';
 import { UtilityService } from './services/utility.service';
 import { VideoService } from './services/video.service';
 import { AppModalModule } from './shared/app-modal.module';
 import { MaterialModule } from './shared/material.module';
 import { SharedModule } from './shared/shared.module';
+import { UserListPageComponent } from './user-list-page/user-list-page.component';
 
 Fontawesome.init();
 
@@ -58,7 +62,8 @@ if (applicationModule.android) {
     AppComponent,
     SearchOverlayComponent,
     CommentPageComponent,
-    CommunityPageComponent
+    CommunityPageComponent,
+    UserListPageComponent
   ],
   imports: [
     NativeScriptModule,
@@ -97,7 +102,10 @@ if (applicationModule.android) {
     CommunitySuggestionGuideService,
     QFileService,
     CommunityActivityService,
-    CommunityMembersService
+    CommunityMembersService,
+    UserListService,
+    UserFollowerService,
+    InviteUserService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

@@ -1,16 +1,16 @@
-<StackLayout class="profile" orientation="horizontal" horizontalAlignment="stretch" (tap)="handleTap($event)" ripple
-    [rippleColor]="rippleColor" [rippleEnabled]="rippleEnabled">
-    <StackLayout class="profile-icon" orientation="horizontal">
-        <qn-profile-icon [isCommunityAvatar]="isCommunityAvatar" [avatar]="avatar" [height]="30" [sizeRef]="iconSize">
+<GridLayout class="horizontal-profile" (tap)="handleTap($event)" ripple [rippleColor]="rippleColor"
+    [rippleEnabled]="rippleEnabled" columns="auto, *" rows="*">
+    <GridLayout class="profile-icon" orientation="horizontal" col="0" row="0" rows="*" verticalAlignment="middle"
+        [height]="iconHeight">
+        <qn-profile-icon row="*" [isCommunityAvatar]="isCommunityAvatar" [avatar]="avatar" [height]="iconHeight"
+            [sizeRef]="iconSize">
         </qn-profile-icon>
-    </StackLayout>
-    <StackLayout class="profile-detail" orientation="horizontal" verticalAlignment="center"
-        horizontalAlignment="stretch">
-        <StackLayout class="head">
-            <Label [text]="head"></Label>
-        </StackLayout>
-        <StackLayout *ngIf="subhead" class="subhead">
-            <Label [text]="subhead"></Label>
-        </StackLayout>
-    </StackLayout>
-</StackLayout>
+    </GridLayout>
+    <GridLayout class="profile-detail" row="0" col="1" orientation="horizontal" verticalAlignment="middle"
+        horizontalAlignment="stretch" rows="*">
+        <GridLayout row="0" [columns]="subhead ? '*, auto' :'*'" verticalAlignment="middle">
+            <Label col="0" [text]="head" class="head"></Label>
+            <Label col="1" class="subhead" [text]="subhead" *ngIf="subhead"></Label>
+        </GridLayout>
+    </GridLayout>
+</GridLayout>

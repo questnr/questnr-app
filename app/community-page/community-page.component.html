@@ -19,7 +19,7 @@
               <Label class="community-name" [text]="community?.communityName"></Label>
             </StackLayout>
           </GridLayout>
-          <StackLayout>
+          <StackLayout class="community-members">
             <qn-community-members #communityMemeberComp></qn-community-members>
           </StackLayout>
           <qn-create-post [isCommunityPost]="true" [communityId]="community?.communityId"

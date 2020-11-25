@@ -1,0 +1,40 @@
+<Page xmlns="http://www.nativescript.org/tns.xsd">
+  <Page.actionBar>
+    <qn-action-bar [pageViewContainerRef]="viewContainerRef" [isChildPage]="true" [title]="listTitle"></qn-action-bar>
+  </Page.actionBar>
+  <GridLayout class="user-list-page-wrapper">
+    <RadListView row="0" [items]="userList" orientation="vertical" [itemTemplateSelector]="templateSelector"
+      selectionBehavior="LongPress" (loaded)="onUserListViewLoaded($event)" loadOnDemandMode="Auto"
+      (loadMoreDataRequested)="onLoadMoreItemsRequested($event)">
+      <ListViewLinearLayout scrollDirection="Vertical" dynamicItemSize="false" itemHeight="45">
+      </ListViewLinearLayout>
+      <ng-template tkListItemTemplate let-user="item" let-index="index" tkTemplateKey="userView">
+        <GridLayout class="horizontal-profile-container" rows="*">
+          <qn-horizontal-profile [avatar]="user?.avatarDTO" [head]="user?.username" [iconHeight]="50"
+            [subhead]="user?.firstName && user?.lastName ? user?.firstName+' '+user?.lastName: ''" row="0"
+            verticalAlignment="middle" [nsRouterLink]="['/', currentPath, user?.slug]">
+          </qn-horizontal-profile>
+        </GridLayout>
+      </ng-template>
+      <!-- <GridLayout *tkListLoadOnDemandTemplate backgroundColor="black" height="100" width="100"
+        (loaded)="onLoadOnDemandLoaded($event)">
+      </GridLayout> -->
+    </RadListView>
+  </GridLayout>
+</Page>
+
+<!-- <ng-template>
+  <StackLayout *ngIf="isLoading" orientation="vertical">
+    <qn-horizontal-profile-skeleton [items]="4" [height]="30"></qn-horizontal-profile-skeleton>
+  </StackLayout>
+
+  <StackLayout *ngIf="endOfResult" orientation="horizontal" horizontalAlignment="center">
+    <Label text="You have reached the end!"></Label>
+  </StackLayout>
+
+  <StackLayout orientation="horizontal">
+    <Label class="no-data" textWrap="true" *ngIf="isEmpty" horizontalAlignment="center"
+      text="Sorry, we don't have any data matching with given input">
+    </Label>
+  </StackLayout>
+</ng-template> -->

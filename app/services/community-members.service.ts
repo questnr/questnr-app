@@ -14,7 +14,7 @@ export class CommunityMembersService {
 
   getCommunityMembers(url: string, page, size = "4"): Observable<QPage<User>> {
     if (!url) return of();
-    return this.http.get<QPage<User>>(this.baseUrl + `user/community/${url}/users`, { params: { page, size } });
+    return this.http.get<QPage<User>>(this.baseUrl + `user/community/${url}/users`, { params: { page: page, size: size } });
   }
 
   removeUserFromCommunity(communityId, userId) {

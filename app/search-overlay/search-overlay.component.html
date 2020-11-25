@@ -19,7 +19,8 @@
             <ScrollView *tabItem="{title: label(userIndex)}" orientation="vertical">
                 <FlexboxLayout flexDirection="column" class="horizontal-profile-container">
                     <StackLayout *ngFor="let user of users; let userIndex = index;" orientation="horizontal"
-                        horizontalAlignment="stretch" [nsRouterLink]="['/', currentPath, user?.slug]">
+                        class="horizontal-profile" horizontalAlignment="stretch"
+                        [nsRouterLink]="['/', currentPath, user?.slug]">
                         <qn-horizontal-profile [avatar]="user?.avatarDTO" [head]="user?.username"
                             [subhead]="user?.firstName && user?.lastName ? user?.firstName+' '+user?.lastName: ''">
                         </qn-horizontal-profile>
@@ -52,7 +53,7 @@
             <ScrollView *tabItem="{title: label(communityIndex)}" orientation="vertical">
                 <FlexboxLayout flexDirection="column" class="horizontal-profile-container">
                     <StackLayout *ngFor="let community of communities; let communityIndex = index;"
-                        orientation="horizontal" horizontalAlignment="stretch"
+                        orientation="horizontal" horizontalAlignment="stretch" class="horizontal-profile"
                         [nsRouterLink]="['/', currentPath, community?.slug]">
                         <qn-horizontal-profile [isCommunityAvatar]="true" [avatar]="community?.avatarDTO"
                             [head]="community?.communityName" [subhead]="community?.ownerUserDTO?.username">

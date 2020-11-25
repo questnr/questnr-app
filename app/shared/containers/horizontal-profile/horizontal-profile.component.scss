@@ -1,12 +1,9 @@
 @import "~/variables";
 @import "scss/mixins/index";
 
-.profile {
-  width: 95%;
-  padding: 5;
-  margin-top: 5;
-  margin-bottom: 5;
+.horizontal-profile {
   border-radius: 5;
+  padding: 3;
   .profile-icon {
   }
   .profile-detail {

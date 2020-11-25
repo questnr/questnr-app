@@ -12,7 +12,8 @@
             </qn-profile-icon>
           </GridLayout>
           <GridLayout row="0" col="1">
-            <Button class="fa view-more-button" text="&#xf138;"></Button>
+            <Button class="fa view-more-button" text="&#xf138;" ripple [rippleColor]="qColors.$primary"
+              (tap)="openUserListView($event)"></Button>
           </GridLayout>
         </GridLayout>
         <GridLayout *ngIf="index < communityMemberList.length - 1">

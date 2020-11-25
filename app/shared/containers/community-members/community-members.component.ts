@@ -1,15 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable, ObservableArray } from '@nativescript/core';
+import { RouterExtensions } from '@nativescript/angular';
+import { ObservableArray } from '@nativescript/core';
+import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { RadListView } from 'nativescript-ui-listview';
 import { Subscription } from 'rxjs';
 import { AuthService } from '~/services/auth.service';
 import { CommunityMembersService } from '~/services/community-members.service';
 import { CommunityService } from '~/services/community.service';
+import { GlobalConstants } from '~/shared/constants';
 import { Community, CommunityPrivacy, CommunityProfileMeta, CommunityUsersListViewType } from '~/shared/models/community.model';
 import { QPage } from '~/shared/models/page.model';
 import { RelationType } from '~/shared/models/relation-type';
 import { UserListType } from '~/shared/models/user-list.model';
 import { User } from '~/shared/models/user.model';
+import { qColors } from '~/_variables';
 
 @Component({
   selector: 'qn-community-members',
@@ -17,6 +21,7 @@ import { User } from '~/shared/models/user.model';
   styleUrls: ['./community-members.component.scss']
 })
 export class CommunityMembersComponent implements OnInit {
+  qColors = qColors;
   @Input() community: Community;
   @Output() onPendingRequestCount = new EventEmitter();
   isLoading: boolean = false;
@@ -36,7 +41,8 @@ export class CommunityMembersComponent implements OnInit {
 
   constructor(private authService: AuthService,
     private communityService: CommunityService,
-    public communityMembersService: CommunityMembersService) {
+    public communityMembersService: CommunityMembersService,
+    private routerExtensions: RouterExtensions) {
     this.loggedInUserId = this.authService.getStoredUserProfile().id;
   }
 
@@ -101,9 +107,29 @@ export class CommunityMembersComponent implements OnInit {
         });
     this.onPendingRequestCount.emit(this.pendingRequests);
   }
+
   onMemberListViewLoaded(args): void {
     let radListView = args.object as RadListView;
     // radListView.androidListView.setPadding(0, 0, 0, 0);
+  }
+
+  openUserListView(args) {
+    this.routerExtensions.navigate(['/',
+      GlobalConstants.userListPath,
+      UserListType.members
+    ],
+      {
+        queryParams: {
+          community: JSON.stringify(this.community),
+          type: UserListType.members
+        },
+        animated: true,
+        transition: {
+          name: "slideLeft",
+          duration: 400,
+          curve: new CubicBezierAnimationCurve(.08, .47, .19, .97)
+        }
+      })
   }
 
   templateSelector(item, index, items) {
