@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { FinalEventData, Img } from '@nativescript-community/ui-image';
 import * as bghttp from '@nativescript/background-http';
 import { GridLayout, ImageSource, Page, StackLayout } from '@nativescript/core';
@@ -30,9 +29,19 @@ enum USER_FOCUS {
   styleUrls: ['./create-community-page.component.scss']
 })
 export class CreateCommunityPageComponent implements OnInit, AfterViewInit {
+  /**
+   * Starts edit community
+   */
+  @Input() isEditing: boolean = false;
+  @Input() communityToBeEdited: Community;
+  @Output() onClose = new EventEmitter();
+  /**
+   * Ends edit community
+   */
+  createTitle: string = "Create Your Community";
+  editTitle: string = "Edit Community";
   qColors = qColors;
   openView: boolean = false;
-  isLinear: boolean = true;
   defaultSrc: string = StaticMediaSrc.communityFile;
   showAvatarNotSet: boolean = false;
   src: any;
@@ -107,13 +116,11 @@ export class CreateCommunityPageComponent implements OnInit, AfterViewInit {
   static FILE_EXTENSION = "jpeg";
 
   constructor(public fb: FormBuilder,
-    public communityService: CreateCommunityService,
+    public createCommunityService: CreateCommunityService,
     public snackBarService: SnackBarService,
     private qFileService: QFileService,
     private _communitySuggestionGuideService: CommunitySuggestionGuideService,
-    public page: Page,
-    private activatedRoute: ActivatedRoute) {
-    // this.activatedRoute.
+    public page: Page) {
   }
 
   ngOnInit(): void {
@@ -141,20 +148,24 @@ export class CreateCommunityPageComponent implements OnInit, AfterViewInit {
             })
         }
       });
+    if (!this.page) {
+      this.isEditing = false;
+    }
+    if (!this.isEditing) {
+      this.header = this.page.getViewById('header');
+      this.stepContainer = this.page.getViewById('form-container');
 
-    this.header = this.page.getViewById('header');
-    this.stepContainer = this.page.getViewById('form-container');
+      let formStep1: any = this.page.getViewById('community-step-1');
+      this.stepTray.push(formStep1);
 
-    let formStep1: any = this.page.getViewById('community-step-1');
-    this.stepTray.push(formStep1);
+      let formStep2: any = this.page.getViewById('community-step-2');
+      formStep2.hide();
+      this.stepTray.push(formStep2);
 
-    let formStep2: any = this.page.getViewById('community-step-2');
-    formStep2.hide();
-    this.stepTray.push(formStep2);
-
-    let formStep3: any = this.page.getViewById('community-step-3');
-    formStep3.hide();
-    this.stepTray.push(formStep3);
+      let formStep3: any = this.page.getViewById('community-step-3');
+      formStep3.hide();
+      this.stepTray.push(formStep3);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -174,6 +185,27 @@ export class CreateCommunityPageComponent implements OnInit, AfterViewInit {
   onContainerLoaded(args) {
     this.container = args.object;
     this.container.hide();
+
+    if (this.isEditing) {
+      let gridView = this.container as GridLayout;
+      this.header = gridView.getViewById('header');
+      this.stepContainer = gridView.getViewById('form-container');
+
+      let formStep1: any = gridView.getViewById('community-step-1');
+      this.stepTray.push(formStep1);
+
+      let formStep2: any = gridView.getViewById('community-step-2');
+      formStep2.hide();
+      this.stepTray.push(formStep2);
+
+      let formStep3: any = gridView.getViewById('community-step-3');
+      formStep3.hide();
+      this.stepTray.push(formStep3);
+
+      this.communityName.setValue(this.communityToBeEdited.communityName);
+      this.communityDescription.setValue(this.communityToBeEdited.description);
+    }
+
     this.container.animate({
       translate: { x: 0, y: platformModule.Screen.mainScreen.heightDIPs }
     }).then(() => {
@@ -329,20 +361,24 @@ export class CreateCommunityPageComponent implements OnInit, AfterViewInit {
     return this.currentIndex === this.stepContent.length - 1;
   }
 
+  showErrorStatusOnFirstStep() {
+    this.onCommunityNameFocus();
+    this.onCommunityDescriptionFocus();
+    this.communityDetailsForm.markAllAsTouched();
+    if (!this.communityName.valid) {
+      this.communityNameField.shake();
+    }
+    if (!this.communityDescription.valid) {
+      this.communityDescriptionField.shake();
+    }
+  }
+
   checkStepIsValid(): boolean {
     if (this.currentIndex === 0) {
       if (this.communityDetailsForm.valid) {
         return true;
       } else {
-        this.onCommunityNameFocus();
-        this.onCommunityDescriptionFocus();
-        this.communityDetailsForm.markAllAsTouched();
-        if (!this.communityName.valid) {
-          this.communityNameField.shake();
-        }
-        if (!this.communityDescription.valid) {
-          this.communityDescriptionField.shake();
-        }
+        this.showErrorStatusOnFirstStep();
         // let vibrator = new Vibrate();
         // vibrator.vibrate(200);
         return false;
@@ -493,7 +529,7 @@ export class CreateCommunityPageComponent implements OnInit, AfterViewInit {
         formData.push({ name: 'avatarFile', filename: this.communityAvatarPath });
       }
       console.log("formData", formData);
-      let task: bghttp.Task = this.communityService.createCommunity(formData);
+      let task: bghttp.Task = this.createCommunityService.createCommunity(formData);
       task.on("progress", (e) => {
         // this.uploading = true;
         // this.uploadProgress = Math.round(e.currentBytes / e.totalBytes * 100);
@@ -521,6 +557,24 @@ export class CreateCommunityPageComponent implements OnInit, AfterViewInit {
       if (!this.communityTag.valid) {
         this.communityTagField.shake();
       }
+    }
+  }
+
+  modify(): void {
+    if (this.communityDetailsForm.valid) {
+      this.isCreatingCommunity = true;
+      this.createCommunityService.updateDescription(this.communityDescription.value,
+        this.communityToBeEdited.communityId).subscribe((community: Community) => {
+          // console.log("community", community);
+          this.isCreatingCommunity = false;
+          this.onClose.emit(community);
+          this.snackBarService.show({ snackText: "Community description has been updated!" });
+        }, error => {
+          this.close();
+          this.snackBarService.showHTTPError(error);
+        });
+    } else {
+      this.showErrorStatusOnFirstStep();
     }
   }
 
@@ -656,5 +710,9 @@ export class CreateCommunityPageComponent implements OnInit, AfterViewInit {
   onCommunityAvatarFailure(args: FinalEventData): void {
     let img = args.object as Img;
     img.src = this.defaultSrc;
+  }
+
+  close(): void {
+    this.onClose.emit();
   }
 }

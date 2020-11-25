@@ -19,25 +19,45 @@
               <Label class="community-name" [text]="community?.communityName"></Label>
             </StackLayout>
           </GridLayout>
-          <GridLayout class="community-members">
-            <qn-community-members #communityMemeberComp></qn-community-members>
-          </GridLayout>
-          <qn-create-post [isCommunityPost]="true" [communityId]="community?.communityId"
-            (onPostCreated)="handlePostCreation($event)" (onPostEdited)="handlePostEditing($event)">
-          </qn-create-post>
-          <StackLayout #container>
-            <StackLayout *ngFor="let feed of communityFeeds;">
-              <StackLayout *ngIf="feed.postType == postTypeClass.simple">
-                <qn-simple-post [feed]="feed">
-                </qn-simple-post>
+
+          <StackLayout class="community-body">
+            <GridLayout class="community-members">
+              <qn-community-members #communityMemeberComp></qn-community-members>
+            </GridLayout>
+            <GridLayout class="community-settings">
+              <FlexboxLayout justifyContent="space-between">
+                <GridLayout alignSelf="flex-start">
+                  <qn-community-relation-action-button *ngIf="relationType !== relationTypeClass.OWNED"
+                    [relation]="relationType" [communityName]="community?.communityName"
+                    [communityId]="community?.communityId" (actionEvent)="onRelationChangeEvent($event)"
+                    horizontalAlignment="left">
+                  </qn-community-relation-action-button>
+                </GridLayout>
+                <GridLayout alignSelf="flex-end">
+                  <Button class="fa settings-button" text="&#xf013;" (tap)="onOpenCommunitySettings($event)"
+                    horizontalAlignment="right"></Button>
+                </GridLayout>
+              </FlexboxLayout>
+            </GridLayout>
+            <GridLayout class="create-post">
+              <qn-create-post [isCommunityPost]="true" [communityId]="community?.communityId"
+                (onPostCreated)="handlePostCreation($event)" (onPostEdited)="handlePostEditing($event)">
+              </qn-create-post>
+            </GridLayout>
+            <StackLayout #container>
+              <StackLayout *ngFor="let feed of communityFeeds;" class="user-feed">
+                <StackLayout *ngIf="feed.postType == postTypeClass.simple">
+                  <qn-simple-post [feed]="feed">
+                  </qn-simple-post>
+                </StackLayout>
+                <StackLayout *ngIf="feed.postType == postTypeClass.question">
+                  <qn-simple-question [feed]="feed" [questionParentType]="questionParentTypeClass.feedPage">
+                  </qn-simple-question>
+                </StackLayout>
               </StackLayout>
-              <StackLayout *ngIf="feed.postType == postTypeClass.question">
-                <qn-simple-question [feed]="feed" [questionParentType]="questionParentTypeClass.feedPage">
-                </qn-simple-question>
+              <StackLayout *ngIf="isLoading">
+                <qn-post-skeleton></qn-post-skeleton>
               </StackLayout>
-            </StackLayout>
-            <StackLayout *ngIf="isLoading">
-              <qn-post-skeleton></qn-post-skeleton>
             </StackLayout>
           </StackLayout>
         </StackLayout>

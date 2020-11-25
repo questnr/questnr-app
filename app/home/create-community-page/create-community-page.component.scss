@@ -12,6 +12,11 @@
         margin: 10;
         font-weight: 300;
         @include make-font-size(9);
+        .close-modal {
+            @include make-font-size(2);
+            height: 30;
+            width: 30;
+        }
     }
     .form-step-base-wrapper {
         margin-top: 40;

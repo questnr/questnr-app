@@ -1,0 +1,14 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+Button {
+    border-radius: 10;
+}
+Button.none {
+    background-color: $white;
+    color: $primary;
+}
+Button.following {
+    background-color: $primary;
+    color: $white;
+}

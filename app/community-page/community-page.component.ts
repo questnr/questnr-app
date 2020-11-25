@@ -1,11 +1,13 @@
 import { Component, ElementRef, NgZone, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { EventData, FinalEventData, Img } from '@nativescript-community/ui-image';
-import { RouterExtensions } from '@nativescript/angular';
+import { ModalDialogOptions, ModalDialogService, RouterExtensions } from '@nativescript/angular';
 import { ScrollView } from '@nativescript/core';
 import { combineLatest, of, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { AuthService } from '~/services/auth.service';
 import { CommunityActivityService } from '~/services/community-activity.service';
+import { CommunityMenuService } from '~/services/community-menu.service';
 import { CommunityService } from '~/services/community.service';
 import { PostMenuService } from '~/services/post-menu.service';
 import { SnackBarService } from '~/services/snackbar.service';
@@ -15,6 +17,7 @@ import { GlobalConstants } from '~/shared/constants';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { CommunityMembersComponent } from '~/shared/containers/community-members/community-members.component';
 import { SimplePostComponent } from '~/shared/containers/simple-post/simple-post.component';
+import { ModifyCommunityModalComponent } from '~/shared/modals/modify-community-modal/modify-community-modal.component';
 import { Community, CommunityPrivacy, CommunityProfileMeta } from '~/shared/models/community.model';
 import { QPage } from '~/shared/models/page.model';
 import { Post, PostType, QuestionParentType } from '~/shared/models/post-action.model';
@@ -61,6 +64,7 @@ export class CommunityPageComponent implements OnInit {
       this.communityMemeberCompRef.setCommunity(this.community);
     }
   }
+  relationTypeClass = RelationType;
   // questionListRef: UserQuestionListComponent;
   // @ViewChild("questionList")
   // set questionList(questionListRef: UserQuestionListComponent) {
@@ -81,7 +85,10 @@ export class CommunityPageComponent implements OnInit {
     private ngZone: NgZone,
     private snackBarService: SnackBarService,
     private communityActivityService: CommunityActivityService,
-    private routerExtensions: RouterExtensions) {
+    private routerExtensions: RouterExtensions,
+    private communityMenuService: CommunityMenuService,
+    private authService: AuthService,
+    private modalService: ModalDialogService) {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.communitySlug = params.get('communitySlug');
       // console.log("communitySlug", this.communitySlug);
@@ -113,10 +120,7 @@ export class CommunityPageComponent implements OnInit {
           /**
            * Starts community
            */
-          this.relationType = this.community.communityMeta.relationShipType;
-          this.restartCommunityFeeds(true);
-
-          this.communityMemeberCompRef?.setCommunity(this.community);
+          this.afterReceivingCommunity(true);
           /**
            * Ends community
            */
@@ -141,6 +145,13 @@ export class CommunityPageComponent implements OnInit {
       this.communityFeeds = this.communityFeeds.filter((feed: Post) => {
         return feed.postActionId !== postActionId;
       });
+    });
+
+    this.communityMenuService.communityEditRequest$.subscribe((communityToBeEdited: Community) => {
+      if (communityToBeEdited && communityToBeEdited.communityId
+        && this.authService.isThisLoggedInUser(communityToBeEdited.ownerUserDTO.userId)) {
+        this.onEdit(communityToBeEdited);
+      }
     });
   }
 
@@ -183,6 +194,12 @@ export class CommunityPageComponent implements OnInit {
     this.scrollCached = event;
   }
 
+  afterReceivingCommunity(callFromConstructor: boolean = false): void {
+    this.relationType = this.community.communityMeta.relationShipType;
+    this.restartCommunityFeeds(callFromConstructor);
+    this.communityMemeberCompRef?.setCommunity(this.community);
+  }
+
   restartCommunityFeeds(callFromConstructor: boolean = false) {
     // this.ngOnInit();
     // this.getCommunityDetailsById();
@@ -195,6 +212,8 @@ export class CommunityPageComponent implements OnInit {
 
     this.communityFeeds = [];
     this.page = 0;
+
+    if (!this.isAllowedIntoCommunity) return;
 
     this.getCommunityFeed();
   }
@@ -340,5 +359,24 @@ export class CommunityPageComponent implements OnInit {
   onFailure(args: FinalEventData): void {
     let img = args.object as Img;
     img.src = this.defaultSrc;
+  }
+
+  onOpenCommunitySettings(args) {
+    this.communityMenuService.onRequestStart(this.community);
+  }
+
+  onEdit(communityToBeEdited: Community): void {
+    const options: ModalDialogOptions = {
+      viewContainerRef: this.viewContainerRef,
+      fullscreen: true,
+      context: {
+        community: communityToBeEdited
+      }
+    };
+    this.modalService.showModal(ModifyCommunityModalComponent, options).then((newCommunity: Community) => {
+      // console.log("onEdit: newCommunity", newCommunity);
+      this.community = newCommunity;
+      this.afterReceivingCommunity();
+    });
   }
 }

@@ -25,7 +25,8 @@
                         </qn-horizontal-profile>
                     </StackLayout>
 
-                    <StackLayout *ngIf="isDataLoading(userIndex)" orientation="vertical">
+                    <StackLayout *ngIf="isDataLoading(userIndex)" orientation="vertical"
+                        class="horizontal-profile-skeleton">
                         <qn-horizontal-profile-skeleton [items]="4" [height]="30"></qn-horizontal-profile-skeleton>
                     </StackLayout>
 
@@ -59,7 +60,8 @@
                         </qn-horizontal-profile>
                     </StackLayout>
 
-                    <StackLayout *ngIf="isDataLoading(communityIndex)" orientation="vertical">
+                    <StackLayout *ngIf="isDataLoading(communityIndex)" orientation="vertical"
+                        class="horizontal-profile-skeleton">
                         <qn-horizontal-profile-skeleton [items]="4" [height]="30"></qn-horizontal-profile-skeleton>
                     </StackLayout>
 
@@ -95,7 +97,8 @@
                         </StackLayout>
                     </StackLayout>
 
-                    <StackLayout *ngIf="isDataLoading(hashTagIndex)" orientation="vertical">
+                    <StackLayout *ngIf="isDataLoading(hashTagIndex)" orientation="vertical"
+                        class="horizontal-profile-skeleton">
                         <qn-horizontal-profile-skeleton [items]="4" [height]="30"></qn-horizontal-profile-skeleton>
                     </StackLayout>
 

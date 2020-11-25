@@ -1,0 +1,42 @@
+<Page xmlns="http://www.nativescript.org/tns.xsd" class="post-menu-wrapper" (loaded)="onPageLoaded($event)">
+    <StackLayout isPassthroughParentEnabled="false" *ngIf="currentCommunity">
+        <StackLayout>
+            <qn-hr [height]="2" [color]="qColors.$heading"></qn-hr>
+            <qn-hr [height]="1" [color]="qColors.$primary"></qn-hr>
+        </StackLayout>
+        <StackLayout>
+            <StackLayout *ngIf="isOwner">
+                <StackLayout (tap)="onCommunityEdit()">
+                    <qn-post-menu-option [border]="true" [icon]="'&#xf044;'" [text]="'Edit Community'">
+                    </qn-post-menu-option>
+                </StackLayout>
+                <!-- <StackLayout (tap)="removeCommunity()">
+                    <qn-post-menu-option [border]="true" [icon]="'&#xf014;'" [text]="'Delete Community'">
+                    </qn-post-menu-option>
+                </StackLayout> -->
+                <StackLayout (tap)="onCommunityShare()">
+                    <qn-post-menu-option [border]="true" [icon]="'&#xf1e0;'" [text]="'Share'">
+                    </qn-post-menu-option>
+                </StackLayout>
+                <StackLayout (tap)="onCopyCommunityLink()">
+                    <qn-post-menu-option [border]="false" [icon]="'&#xf0c1;'" [text]="'Copy Link'">
+                    </qn-post-menu-option>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout *ngIf="!isOwner" horizontalAlignment="stretch">
+                <!-- <StackLayout (tap)="reportCommunity()">
+                    <qn-post-menu-option [border]="true" [icon]="'&#xf24a;'" [text]="'Report Post'">
+                    </qn-post-menu-option>
+                </StackLayout> -->
+                <StackLayout (tap)="onCommunityShare()">
+                    <qn-post-menu-option [border]="true" [icon]="'&#xf1e0;'" [text]="'Share'">
+                    </qn-post-menu-option>
+                </StackLayout>
+                <StackLayout (tap)="onCopyCommunityLink()">
+                    <qn-post-menu-option [border]="true" [icon]="'&#xf0c1;'" [text]="'Copy Link'">
+                    </qn-post-menu-option>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+</Page>

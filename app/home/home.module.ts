@@ -22,6 +22,9 @@ import { UserPageComponent } from './user-page/user-page.component';
     ExplorePageComponent,
     CreateCommunityPageComponent
   ],
+  exports: [
+    CreateCommunityPageComponent
+  ],
   schemas: [
     NO_ERRORS_SCHEMA
   ]

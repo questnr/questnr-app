@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as bghttp from '@nativescript/background-http';
+import { of } from 'rxjs';
 import { environment } from '~/environments/environment';
 import { AuthService } from './auth.service';
 
@@ -26,5 +27,10 @@ export class CreateCommunityService {
     };
     let session = bghttp.session(`community-create ${communityRequestId}`);
     return session.multipartUpload(formData, request);
+  }
+
+  updateDescription(desc: string, communityId: number) {
+    if (!communityId) return of();
+    return this.http.put(this.baseUrl + `user/community/${communityId}`, { description: desc });
   }
 }

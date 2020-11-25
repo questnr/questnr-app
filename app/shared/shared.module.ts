@@ -5,6 +5,7 @@ import {
 } from '@nativescript/angular';
 import { AttachedFileModule } from '~/attached-file-list/attached-file.module';
 import { CommentItemComponent } from './components/comment-item/comment-item.component';
+import { CommunityRelationActionButtonComponent } from './components/community-relation-action-button/community-relation-action-button.component';
 import { CreateCommentComponent } from './components/create-comment/create-comment.component';
 import { PostMenuOptionComponent } from './components/post-menu-option/post-menu-option.component';
 import { ActionBarComponent } from './containers/action-bar/action-bar.component';
@@ -21,7 +22,7 @@ import { SimpleQuestionComponent } from './containers/simple-question/simple-que
 import { TimeStringComponent } from './containers/time-string/time-string.component';
 import { UsernameComponent } from './containers/username/username.component';
 import { MaterialModule } from './material.module';
-import { SkeletonModule } from './skeleton.module';
+import { SkeletonModule } from './skeletons/skeletons.module';
 import { CircularProgressBarComponent } from './util/circular-progress-bar/circular-progress-bar.component';
 import { HrComponent } from './util/hr/hr.component';
 import { SpaceComponent } from './util/space/space.component';
@@ -55,7 +56,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     CommentItemComponent,
     CommentContainerComponent,
     CreateCommentComponent,
-    CommunityMembersComponent
+    CommunityMembersComponent,
+    CommunityRelationActionButtonComponent
   ],
   providers: [
   ],
@@ -81,7 +83,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     CommentItemComponent,
     CommentContainerComponent,
     CreateCommentComponent,
-    CommunityMembersComponent
+    CommunityMembersComponent,
+    CommunityRelationActionButtonComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

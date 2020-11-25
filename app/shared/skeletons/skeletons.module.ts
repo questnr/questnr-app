@@ -3,10 +3,10 @@ import {
   NativeScriptCommonModule,
   NativeScriptRouterModule
 } from '@nativescript/angular';
-import { MaterialModule } from './material.module';
-import { CommentSkeletonComponent } from './skeletons/comment-skeleton/comment-skeleton.component';
-import { HorizontalProfileSkeletonComponent } from './skeletons/horizontal-profile-skeleton/horizontal-profile-skeleton.component';
-import { PostSkeletonComponent } from './skeletons/post-skeleton/post-skeleton.component';
+import { MaterialModule } from '../material.module';
+import { CommentSkeletonComponent } from './comment-skeleton/comment-skeleton.component';
+import { HorizontalProfileSkeletonComponent } from './horizontal-profile-skeleton/horizontal-profile-skeleton.component';
+import { PostSkeletonComponent } from './post-skeleton/post-skeleton.component';
 
 @NgModule({
   imports: [

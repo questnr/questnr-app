@@ -19,6 +19,7 @@ import { CommentSectionService } from './services/comment-section.service';
 import { CommonService } from './services/common.service';
 import { CommunityActivityService } from './services/community-activity.service';
 import { CommunityMembersService } from './services/community-members.service';
+import { CommunityMenuService } from './services/community-menu.service';
 import { CommunitySuggestionGuideService } from './services/community-suggestion-guide.service';
 import { CommunityService } from './services/community.service';
 import { CreateCommunityService } from './services/create-community.service';
@@ -39,7 +40,7 @@ import { UserListService } from './services/user-list.service';
 import { UserProfileService } from './services/user-profile.service';
 import { UtilityService } from './services/utility.service';
 import { VideoService } from './services/video.service';
-import { AppModalModule } from './shared/app-modal.module';
+import { AppModalModule } from './shared/modals/modals.module';
 import { MaterialModule } from './shared/material.module';
 import { SharedModule } from './shared/shared.module';
 import { UserListPageComponent } from './user-list-page/user-list-page.component';
@@ -105,7 +106,8 @@ if (applicationModule.android) {
     CommunityMembersService,
     UserListService,
     UserFollowerService,
-    InviteUserService
+    InviteUserService,
+    CommunityMenuService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

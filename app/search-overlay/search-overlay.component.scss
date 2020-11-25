@@ -9,6 +9,7 @@
     .horizontal-profile {
       margin-top: 5;
       margin-bottom: 5;
+      padding: 3;
     }
   }
   .load-more {
@@ -44,6 +45,9 @@
       border-color: $black;
       color: $black;
     }
+  }
+  .horizontal-profile-skeleton {
+    padding: 3;
   }
 }
 

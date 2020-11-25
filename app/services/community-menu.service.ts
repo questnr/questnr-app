@@ -1,32 +1,32 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
+import { Community } from "~/shared/models/community.model";
 import { MenuState } from "~/shared/models/menu.model";
-import { Post } from "~/shared/models/post-action.model";
 import { OverlayReasonType, OverlayService } from "./overlay.service";
 import { UserInteractionService } from "./user-interaction.service";
 
 @Injectable({
     providedIn: "root"
 })
-export class PostMenuService {
-    postRequests$: BehaviorSubject<Post>;
-    postEditRequest$: BehaviorSubject<Post>;
-    postDeleteRequest$: BehaviorSubject<number>;
+export class CommunityMenuService {
+    communityRequests$: BehaviorSubject<Community>;
+    communityEditRequest$: BehaviorSubject<Community>;
+    // communityDeleteRequest$: BehaviorSubject<number>;
     prevShowingMenu: MenuState = MenuState.unset;
     currentlyShowingMenu: MenuState = MenuState.unset;
     isShowing$: Observable<boolean>;
 
     constructor(private userInteractionService: UserInteractionService,
         private overlayService: OverlayService) {
-        this.postRequests$ = new BehaviorSubject(null);
-        this.postEditRequest$ = new BehaviorSubject(null);
-        this.postDeleteRequest$ = new BehaviorSubject(null);
-        this.isShowing$ = this.postRequests$.pipe(
+        this.communityRequests$ = new BehaviorSubject(null);
+        this.communityEditRequest$ = new BehaviorSubject(null);
+        // this.communityDeleteRequest$ = new BehaviorSubject(null);
+        this.isShowing$ = this.communityRequests$.pipe(
             map(requests => {
                 this.prevShowingMenu = this.currentlyShowingMenu;
                 if (requests != null) {
-                    this.overlayService.onOverlayStart(OverlayReasonType.postMenu);
+                    this.overlayService.onOverlayStart(OverlayReasonType.communityMenu);
                     this.userInteractionService.onUserInteractionDisabled();
                     this.currentlyShowingMenu = MenuState.showing;
                 } else {
@@ -39,20 +39,20 @@ export class PostMenuService {
         );
     }
 
-    public onRequestPostEdit(post: Post) {
-        this.postEditRequest$.next(post);
+    public onRequestCommunityEdit(community: Community) {
+        this.communityEditRequest$.next(community);
     }
 
-    public onRequestPostDeletion(postActionId: number) {
-        this.postDeleteRequest$.next(postActionId);
-    }
+    // public onRequestPostDeletion(postActionId: number) {
+    //     this.postDeleteRequest$.next(postActionId);
+    // }
 
-    public onRequestStart(post: Post) {
-        setTimeout(() => this.postRequests$.next(post), 10);
+    public onRequestStart(community: Community) {
+        setTimeout(() => this.communityRequests$.next(community), 10);
     }
 
     public onRequestEnd() {
         if (this.currentlyShowingMenu === MenuState.showing)
-            setTimeout(() => this.postRequests$.next(null), 10);
+            setTimeout(() => this.communityRequests$.next(null), 10);
     }
 }

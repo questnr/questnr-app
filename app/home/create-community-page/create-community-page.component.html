@@ -1,6 +1,10 @@
 <GridLayout class="create-community-wrapper" rows="auto, *" (loaded)="onContainerLoaded($event)">
     <StackLayout class="header" row="0" id="header">
-        <Label text="Create Your Community"></Label>
+        <GridLayout rows="*">
+            <Label row="0" [text]="isEditing ? editTitle: createTitle"></Label>
+            <Label *ngIf="isEditing" class="close-modal fa" row="0" verticalAlignment="center"
+                horizontalAlignment="right" text="&#xf00d;" (tap)="close()"></Label>
+        </GridLayout>
         <StackLayout>
             <qn-hr [color]="qColors.$white"></qn-hr>
         </StackLayout>
@@ -19,7 +23,8 @@
                 <StackLayout class="input-field-container" [ngClass]="{'input-field-error': hasCommunityNameErrors()}"
                     (loaded)="onCommunityNameFieldLoaded($event)">
                     <TextField class="input-field" hint="Community name" [formControl]="communityName"
-                        autocorrect="false" verticalAlignment="middle" (focus)="onCommunityNameFocus()">
+                        autocorrect="false" verticalAlignment="middle" (focus)="onCommunityNameFocus()"
+                        [editable]="!isEditing">
                     </TextField>
                 </StackLayout>
                 <StackLayout *ngIf="hasCommunityNameErrors()" class="m-t-2 field-label">
@@ -130,7 +135,7 @@
                 </GridLayout>
             </GridLayout>
         </StackLayout>
-        <FlexboxLayout class="submit-button-container" row="2" justifyContent="space-around">
+        <FlexboxLayout *ngIf="!isEditing" class="submit-button-container" row="2" justifyContent="space-around">
             <Button class="fa back" ripple [rippleColor]="qColors.$primary" text="&#xf060; Back"
                 *ngIf="isBackStepAvailable()" (tap)="backStep()"></Button>
             <Button class="fa skip" ripple [rippleColor]="qColors.$primary" text="Skip &#xf051;"
@@ -140,6 +145,11 @@
             <Button class="fa submit"
                 [ngClass]="hasCommunityTagInputErrors() || hasCommunityTagListErrors() ? 'error' : ''" ripple
                 [rippleColor]="qColors.$primary" text="Create" *ngIf="isFinalStep()" (tap)="submit()"></Button>
+        </FlexboxLayout>
+        <FlexboxLayout *ngIf="isEditing" class="submit-button-container" row="2" justifyContent="space-around">
+            <Button class="fa submit"
+                [ngClass]="hasCommunityNameErrors() || hasCommunityDescriptionErrors() ? 'error' : ''" ripple
+                [rippleColor]="qColors.$primary" text="Modify" (tap)="modify()"></Button>
         </FlexboxLayout>
     </GridLayout>
 </GridLayout>
