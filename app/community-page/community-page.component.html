@@ -19,9 +19,9 @@
               <Label class="community-name" [text]="community?.communityName"></Label>
             </StackLayout>
           </GridLayout>
-          <StackLayout class="community-members">
+          <GridLayout class="community-members">
             <qn-community-members #communityMemeberComp></qn-community-members>
-          </StackLayout>
+          </GridLayout>
           <qn-create-post [isCommunityPost]="true" [communityId]="community?.communityId"
             (onPostCreated)="handlePostCreation($event)" (onPostEdited)="handlePostEditing($event)">
           </qn-create-post>

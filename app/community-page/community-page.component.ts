@@ -3,9 +3,9 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { EventData, FinalEventData, Img } from '@nativescript-community/ui-image';
 import { RouterExtensions } from '@nativescript/angular';
 import { ScrollView } from '@nativescript/core';
-import { Subscription } from 'rxjs';
+import { combineLatest, of, Subscription } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { CommunityActivityService } from '~/services/community-activity.service';
-import { CommunityMembersService } from '~/services/community-members.service';
 import { CommunityService } from '~/services/community.service';
 import { PostMenuService } from '~/services/post-menu.service';
 import { SnackBarService } from '~/services/snackbar.service';
@@ -57,6 +57,9 @@ export class CommunityPageComponent implements OnInit {
   @ViewChild('communityMemeberComp')
   set communityMemeberComp(communityMemeberCompRef: CommunityMembersComponent) {
     this.communityMemeberCompRef = communityMemeberCompRef;
+    if (this.community) {
+      this.communityMemeberCompRef.setCommunity(this.community);
+    }
   }
   // questionListRef: UserQuestionListComponent;
   // @ViewChild("questionList")
@@ -82,16 +85,53 @@ export class CommunityPageComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.communitySlug = params.get('communitySlug');
       // console.log("communitySlug", this.communitySlug);
-      this.communityService.getCommunityDetails(this.communitySlug)
-        .subscribe((community: Community) => {
+
+      // fetch community entity
+      const communitySubscriber = this.communityService.getCommunityDetails(this.communitySlug)
+        .pipe(catchError((error: any) => {
+          this.routerExtensions.backToPreviousPage();
+          this.snackBarService.showHTTPError(error);
+          return of(null);
+        }));
+
+      // fetch community profile information
+      const communityAcitivitySubscriber = this.communityActivityService.getCommunityMetaInfo(this.communitySlug)
+        .pipe(catchError((error: any) => {
+          this.routerExtensions.backToPreviousPage();
+          this.snackBarService.showHTTPError(error);
+          return of(null);
+        }));
+
+      combineLatest([communitySubscriber, communityAcitivitySubscriber]).subscribe(
+        ([community, communityProfileMeta]) => {
+          if (!community || !communityProfileMeta) {
+            this.snackBarService.show({ snackText: 'Community not found!' });
+            this.routerExtensions.backToPreviousPage();
+          }
           this.community = community;
+          this.communityInfo = communityProfileMeta;
+          /**
+           * Starts community
+           */
           this.relationType = this.community.communityMeta.relationShipType;
           this.restartCommunityFeeds(true);
 
-          this.communityMemeberCompRef.setCommunity(this.community);
-        }, (error) => {
-          this.routerExtensions.backToPreviousPage();
-          this.snackBarService.showHTTPError(error);
+          this.communityMemeberCompRef?.setCommunity(this.community);
+          /**
+           * Ends community
+           */
+          /**
+           * Starts communityProfileMeta
+           */
+          // this.communityActivityRef.setCommunityInfo(this.communityInfo);
+          // this.questionListRef.setTotalCounts(this.communityInfo.totalQuestions);
+          // this.communityHorizontalCardRef?.setCommunityInfo(this.communityInfo);
+          if (this.isOwner) {
+            this.pendingRequests = this.communityInfo.totalRequests;
+          }
+          /**
+           * Ends communityProfileMeta
+           */
         });
     });
   }
@@ -236,20 +276,6 @@ export class CommunityPageComponent implements OnInit {
         // console.log("err", err);
       }
     );
-  }
-
-  getCommunityInfo() {
-    this.isLoading = true;
-    this.communityActivityService.getCommunityMetaInfo(this.communitySlug).subscribe((res: CommunityProfileMeta) => {
-      this.communityInfo = res;
-      // this.communityActivityRef.setCommunityInfo(this.communityInfo);
-      // this.questionListRef.setTotalCounts(this.communityInfo.totalQuestions);
-      // this.communityHorizontalCardRef?.setCommunityInfo(this.communityInfo);
-      if (this.isOwner) {
-        this.pendingRequests = this.communityInfo.totalRequests;
-      }
-    }, error => {
-    });
   }
 
   feedComponentHelper = (visibleRange, verticalOffset) => {
