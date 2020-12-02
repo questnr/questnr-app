@@ -63,7 +63,7 @@ export class CommunityMembersComponent implements OnInit {
       this.restartCommunityMembersList();
       this.getCommunityMetaInfo();
     }
-    this.isOwner = this.community.communityMeta.relationShipType === RelationType.OWNED;
+    this.isOwner = this.communityService.isOwner(this.community);
     this.getCommunityJoinRequestsCount();
   }
 

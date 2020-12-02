@@ -138,7 +138,7 @@ export class CommunityService {
   }
 
   isOwner(community: Community) {
-    return community.communityMeta.relationShipType === RelationType.OWNED;
+    return community?.communityMeta.relationShipType === RelationType.OWNED;
   }
 }
 

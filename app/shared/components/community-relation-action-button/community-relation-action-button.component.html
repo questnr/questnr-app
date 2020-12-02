@@ -1,12 +1,9 @@
-<Button *ngIf="relation ==='followed'; else notOwned" (tap)="unfollowThisCommunity()" class="following" text="Joined">
+<Button *ngIf="relation === relationTypeClass.FOLLOWED" (tap)="unfollowThisCommunity()" [height]="qHeight"
+  class="followed" text="Joined">
 </Button>
-<ng-template #notOwned>
-  <Button class="none" *ngIf="relation==='requested' ; else notFollowed" [disableRipple]="true"
-    (tap)="deleteUsersOwnPendingCommunityJoinRequests()" text="Requested">
-  </Button>
-  <ng-template #notFollowed>
-    <Button (tap)="followThisCommunty()" class="fa none"
-      [text]="communityType===CommunityPrivacy.pri ? '&#xf09c; join': '&#xf023; join'">
-    </Button>
-  </ng-template>
-</ng-template>
+<Button class="requested" *ngIf="relation===relationTypeClass.REQUESTED" [disableRipple]="true" [height]="qHeight"
+  (tap)="deleteUsersOwnPendingCommunityJoinRequests()" text="Requested">
+</Button>
+<Button class="fa none" *ngIf="relation===relationTypeClass.NONE" (tap)="followThisCommunty()" [height]="qHeight"
+  [text]="communityType===communityPrivacyClass.pri ? '&#xf09c;&nbsp;Join': '&#xf023;&nbsp;Join'">
+</Button>

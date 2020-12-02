@@ -27,14 +27,16 @@
             <GridLayout class="community-settings">
               <FlexboxLayout justifyContent="space-between">
                 <GridLayout alignSelf="flex-start">
-                  <qn-community-relation-action-button *ngIf="relationType !== relationTypeClass.OWNED"
-                    [relation]="relationType" [communityName]="community?.communityName"
-                    [communityId]="community?.communityId" (actionEvent)="onRelationChangeEvent($event)"
-                    horizontalAlignment="left">
-                  </qn-community-relation-action-button>
+                  <StackLayout orientation="horizontal" horizontalAlignment="left">
+                    <qn-community-relation-action-button *ngIf="relationType !== relationTypeClass.OWNED"
+                      [relation]="relationType" [communityName]="community?.communityName"
+                      [communityId]="community?.communityId" (actionEvent)="onRelationChangeEvent($event)"
+                      [qHeight]="45">
+                    </qn-community-relation-action-button>
+                  </StackLayout>
                 </GridLayout>
                 <GridLayout alignSelf="flex-end">
-                  <Button class="fa settings-button" text="&#xf013;" (tap)="onOpenCommunitySettings($event)"
+                  <Button class="fa settings-button" height="50" text="&#xf013;" (tap)="onOpenCommunitySettings($event)"
                     horizontalAlignment="right"></Button>
                 </GridLayout>
               </FlexboxLayout>

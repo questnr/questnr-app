@@ -2,13 +2,25 @@
 @import "scss/mixins/index";
 
 Button {
+    @include make-font-size(1);
     border-radius: 10;
+    padding: 0;
+    margin: 2;
+    width: 60%;
 }
 Button.none {
     background-color: $white;
     color: $primary;
+    border-width: 1;
+    border-color: $gray;
 }
-Button.following {
+Button.requested {
+    background-color: $white;
+    color: $primary;
+    border-width: 1;
+    border-color: $heading;
+}
+Button.followed {
     background-color: $primary;
     color: $white;
 }

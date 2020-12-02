@@ -16,8 +16,10 @@ export class CommunityRelationActionButtonComponent implements OnInit {
   @Input() communityName: string;
   @Input() mobileView: boolean = false;
   @Input() communityType: string;
+  @Input() qHeight: number = 50;
   @Output() actionEvent = new EventEmitter();
-  CommunityPrivacy = CommunityPrivacy;
+  communityPrivacyClass = CommunityPrivacy;
+  relationTypeClass = RelationType;
 
   constructor(private communityService: CommunityService,
     private authService: AuthService,
