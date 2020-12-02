@@ -1,16 +1,23 @@
-<CardView class="owner-profile-wrapper" radius="10" (tap)="openUserProfile()">
+<CardView class="owner-profile-wrapper" radius="10">
     <GridLayout rows="auto, *">
-        <StackLayout class="header" row="0" verticalAlignment="top">
-            <Label text="View Community Owner's Profile" horizontalAlignment="center"></Label>
-        </StackLayout>
-        <GridLayout class="content" columns="auto, *" rows="*" row="1">
-            <StackLayout class="profile-icon" col="0" row="0">
-                <qn-profile-icon class="head" [avatar]="user?.avatarDTO" [height]="40" [sizeRef]="'small'"
-                    [slug]="user?.slug">
-                </qn-profile-icon>
-            </StackLayout>
-            <Label class="username" [text]="user?.username" col="1" row="0" verticalAlignment="middle">
-            </Label>
+        <GridLayout class="header" rows="*" row="0" verticalAlignment="top" ripple [rippleColor]="qColors.$primary"
+            (tap)="onSlideProfile($event)">
+            <Label row="0" text="View Community Owner's Profile" horizontalAlignment="center"
+                verticalAlignment="middle"></Label>
+            <Label class="fa caret" row="0" text="&#xf0d7;" horizontalAlignment="right" verticalAlignment="middle"
+                (loaded)="onCaretLoaded($event)"></Label>
+        </GridLayout>
+        <GridLayout row="1">
+            <GridLayout class="content" columns="auto, *" rows="*" (tap)="openUserProfile()" ripple
+                [rippleColor]="qColors.$gray" (loaded)="onUserDetailsLoaded($event)">
+                <StackLayout class="profile-icon" col="0" row="0">
+                    <qn-profile-icon class="head" [avatar]="user?.avatarDTO" [height]="40" [sizeRef]="'small'"
+                        [slug]="user?.slug">
+                    </qn-profile-icon>
+                </StackLayout>
+                <Label class="username" [text]="user?.username" col="1" row="0" verticalAlignment="middle">
+                </Label>
+            </GridLayout>
         </GridLayout>
     </GridLayout>
 </CardView>
