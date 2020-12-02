@@ -19,7 +19,8 @@ import { UserListPageComponent } from './user-list-page/user-list-page.component
 const routes: Routes = [
   {
     path: "", redirectTo: "/" +
-      GlobalConstants.homePath + `/(feedTab:${GlobalConstants.feedPath}//userPageTab:${GlobalConstants.userPath}//explorePageTab:${GlobalConstants.explorePath}//createCommunityPageTab:${GlobalConstants.createCommunityPath})`, pathMatch: "full"
+      GlobalConstants.homePath + `/(feedTab:${GlobalConstants.feedPath}//userPageTab:${GlobalConstants.userPath}//explorePageTab:${GlobalConstants.explorePath}//createCommunityPageTab:${GlobalConstants.createCommunityPath})`,
+    pathMatch: "full"
   },
   { path: GlobalConstants.search, component: SearchOverlayComponent },
   { path: GlobalConstants.login, component: LoginComponent },

@@ -500,7 +500,17 @@ export class SignupComponent implements OnInit {
 
   signUpSuccess(res: LoginResponse) {
     this.snackbarService.show({ snackText: "Your account has been created successfully" });
-    this.routerExtensions.navigate(['/', GlobalConstants.homePath, GlobalConstants.feedPath]);
+    this.routerExtensions.navigate(
+      ["/",
+        GlobalConstants.homePath,
+        {
+          outlets: {
+            feedTab: [GlobalConstants.feedPath],
+            userPageTab: [GlobalConstants.userPath],
+            explorePageTab: [GlobalConstants.explorePath],
+            createCommunityPageTab: [GlobalConstants.createCommunityPath]
+          }
+        }], { clearHistory: true });
     // { state: { communitySuggestion: res.communitySuggestion ? true : false } });
   }
 

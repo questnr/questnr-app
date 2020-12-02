@@ -1,0 +1,57 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.community-privacy-change-wrapper {
+    margin: 5;
+    .header {
+        @include make-font-size(4);
+        padding-bottom: 7;
+        font-weight: 500;
+    }
+
+    .body {
+        margin-left: 3;
+        margin-right: 3;
+        .rule {
+            margin-top: 5;
+            margin-bottom: 5;
+            .bullet {
+                @include make-font-size(-2);
+            }
+            .text {
+                @include make-font-size(-1);
+                color: $gray-font-2;
+            }
+        }
+    }
+
+    .footer {
+        margin-top: 10;
+        margin-bottom: 5;
+        .subheader {
+            color: $black;
+            @include make-font-size(-2);
+        }
+        .button-row {
+            .loading {
+                color: $primary;
+            }
+            Button {
+                @include make-font-size(-1);
+                border-width: 1;
+                border-radius: 10;
+                padding: 0;
+                margin: 0;
+            }
+            Button.primary {
+                border-color: $primary;
+                color: $white;
+                background-color: $heading;
+            }
+            Button.secondary {
+                border-color: $heading;
+                color: $primary;
+            }
+        }
+    }
+}

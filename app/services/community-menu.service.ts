@@ -10,8 +10,9 @@ import { UserInteractionService } from "./user-interaction.service";
     providedIn: "root"
 })
 export class CommunityMenuService {
-    communityRequests$: BehaviorSubject<Community>;
-    communityEditRequest$: BehaviorSubject<Community>;
+    communityRequests$: BehaviorSubject<Community> = new BehaviorSubject(null);
+    communityEditRequest$: BehaviorSubject<Community> = new BehaviorSubject(null);
+    communityRefreshRequest$: BehaviorSubject<Community> = new BehaviorSubject(null);
     // communityDeleteRequest$: BehaviorSubject<number>;
     prevShowingMenu: MenuState = MenuState.unset;
     currentlyShowingMenu: MenuState = MenuState.unset;
@@ -21,6 +22,7 @@ export class CommunityMenuService {
         private overlayService: OverlayService) {
         this.communityRequests$ = new BehaviorSubject(null);
         this.communityEditRequest$ = new BehaviorSubject(null);
+        this.communityRefreshRequest$ = new BehaviorSubject(null);
         // this.communityDeleteRequest$ = new BehaviorSubject(null);
         this.isShowing$ = this.communityRequests$.pipe(
             map(requests => {
@@ -46,6 +48,10 @@ export class CommunityMenuService {
     // public onRequestPostDeletion(postActionId: number) {
     //     this.postDeleteRequest$.next(postActionId);
     // }
+
+    public onRequestCommunityRefresh(community: Community) {
+        this.communityRefreshRequest$.next(community);
+    }
 
     public onRequestStart(community: Community) {
         setTimeout(() => this.communityRequests$.next(community), 10);

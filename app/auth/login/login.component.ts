@@ -180,7 +180,17 @@ export class LoginComponent implements OnInit {
         this.isAuthenticating = false;
         console.log("res", loginResponse);
         if (loginResponse.accessToken && loginResponse.loginSuccess) {
-          this.routerExtensions.navigate(["/", GlobalConstants.homePath, GlobalConstants.feedPath], { clearHistory: true });
+          this.routerExtensions.navigate(
+            ["/",
+              GlobalConstants.homePath,
+              {
+                outlets: {
+                  feedTab: [GlobalConstants.feedPath],
+                  userPageTab: [GlobalConstants.userPath],
+                  explorePageTab: [GlobalConstants.explorePath],
+                  createCommunityPageTab: [GlobalConstants.createCommunityPath]
+                }
+              }], { clearHistory: true });
         } else {
           this.loginError = loginResponse.errorMessage;
         }

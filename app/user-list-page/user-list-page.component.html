@@ -2,7 +2,7 @@
   <Page.actionBar>
     <qn-action-bar [pageViewContainerRef]="viewContainerRef" [isChildPage]="true" [title]="listTitle"></qn-action-bar>
   </Page.actionBar>
-  <GridLayout class="user-list-page-wrapper">
+  <GridLayout class="user-list-page-wrapper" *ngIf="userList?.length">
     <RadListView row="0" [items]="userList" orientation="vertical" [itemTemplateSelector]="templateSelector"
       selectionBehavior="LongPress" (loaded)="onUserListViewLoaded($event)" loadOnDemandMode="Auto"
       (loadMoreDataRequested)="onLoadMoreItemsRequested($event)">

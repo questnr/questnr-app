@@ -10,9 +10,9 @@ import { UserInteractionService } from "./user-interaction.service";
     providedIn: "root"
 })
 export class PostMenuService {
-    postRequests$: BehaviorSubject<Post>;
-    postEditRequest$: BehaviorSubject<Post>;
-    postDeleteRequest$: BehaviorSubject<number>;
+    postRequests$: BehaviorSubject<Post> = new BehaviorSubject(null);
+    postEditRequest$: BehaviorSubject<Post> = new BehaviorSubject(null);
+    postDeleteRequest$: BehaviorSubject<number> = new BehaviorSubject(null);
     prevShowingMenu: MenuState = MenuState.unset;
     currentlyShowingMenu: MenuState = MenuState.unset;
     isShowing$: Observable<boolean>;

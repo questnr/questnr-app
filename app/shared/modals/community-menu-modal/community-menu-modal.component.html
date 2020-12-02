@@ -10,6 +10,12 @@
                     <qn-post-menu-option [border]="true" [icon]="'&#xf044;'" [text]="'Edit Community'">
                     </qn-post-menu-option>
                 </StackLayout>
+                <StackLayout (tap)="onCommunityPrivacyChangeRequest()">
+                    <qn-post-menu-option [border]="true" [icon]="currentCommunity.communityPrivacy ===
+                    communityPrivacyClass.pri ? '&#xf13e;' : '&#xf023;'" [text]="currentCommunity.communityPrivacy ===
+                    communityPrivacyClass.pri ? 'Make Public' : 'Make Private'">
+                    </qn-post-menu-option>
+                </StackLayout>
                 <!-- <StackLayout (tap)="removeCommunity()">
                     <qn-post-menu-option [border]="true" [icon]="'&#xf014;'" [text]="'Delete Community'">
                     </qn-post-menu-option>
@@ -25,7 +31,7 @@
             </StackLayout>
             <StackLayout *ngIf="!isOwner" horizontalAlignment="stretch">
                 <!-- <StackLayout (tap)="reportCommunity()">
-                    <qn-post-menu-option [border]="true" [icon]="'&#xf24a;'" [text]="'Report Post'">
+                    <qn-post-menu-option [border]="true" [icon]="'&#xf24a;'" [text]="'Report Community'">
                     </qn-post-menu-option>
                 </StackLayout> -->
                 <StackLayout (tap)="onCommunityShare()">

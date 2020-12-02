@@ -153,6 +153,10 @@ export class CommunityPageComponent implements OnInit {
         this.onEdit(communityToBeEdited);
       }
     });
+
+    this.communityMenuService.communityRefreshRequest$.subscribe((community: Community) => {
+      this.community = community;
+    });
   }
 
   ngAfterViewInit() {

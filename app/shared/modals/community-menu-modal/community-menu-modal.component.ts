@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { ModalDialogService } from '@nativescript/angular';
+import { ModalDialogOptions, ModalDialogService } from '@nativescript/angular';
 import { Page } from '@nativescript/core';
 import * as platformModule from '@nativescript/core/platform';
 import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
@@ -7,12 +7,10 @@ import * as SocialShare from "nativescript-social-share-ns-7";
 import { AuthService } from '~/services/auth.service';
 import { CommonService } from '~/services/common.service';
 import { CommunityMenuService } from '~/services/community-menu.service';
-import { CommunityService } from '~/services/community.service';
-import { FeedService } from '~/services/feed.service';
-import { SnackBarService } from '~/services/snackbar.service';
 import { UserInteractionService } from '~/services/user-interaction.service';
-import { Community } from '~/shared/models/community.model';
+import { Community, CommunityPrivacy } from '~/shared/models/community.model';
 import { qColors } from '~/_variables';
+import { CommunityPrivacyChangeModalComponent } from '../community-privacy-change-modal/community-privacy-change-modal.component';
 
 @Component({
   selector: 'qn-community-menu-modal',
@@ -26,14 +24,12 @@ export class CommunityMenuModalComponent implements OnInit {
   isOwner: boolean = false;
   isCommunityPost: boolean = false;
   loggedInUserId: number;
+  communityPrivacyClass = CommunityPrivacy;
 
   constructor(public communityMenuService: CommunityMenuService,
     private authService: AuthService,
     public userInteractionService: UserInteractionService,
-    private feedService: FeedService,
     private commonService: CommonService,
-    private snackBarService: SnackBarService,
-    private communityService: CommunityService,
     public viewContainerRef: ViewContainerRef,
     private modalService: ModalDialogService) { }
 
@@ -57,7 +53,7 @@ export class CommunityMenuModalComponent implements OnInit {
       if (showMenu) {
         page.animate({
           duration: 500,
-          translate: { x: 0, y: platformModule.Screen.mainScreen.heightDIPs - 250 },
+          translate: { x: 0, y: platformModule.Screen.mainScreen.heightDIPs - 300 },
           curve: new CubicBezierAnimationCurve(.04, .84, .84, 1.42)
         });
       } else {
@@ -73,6 +69,21 @@ export class CommunityMenuModalComponent implements OnInit {
   onCommunityEdit(): void {
     this.communityMenuService.onRequestCommunityEdit(this.currentCommunity);
     this.close();
+  }
+
+  onCommunityPrivacyChangeRequest(): void {
+    const options: ModalDialogOptions = {
+      viewContainerRef: this.viewContainerRef,
+      fullscreen: false,
+      context: {
+        community: this.currentCommunity
+      }
+    };
+    this.close();
+    this.modalService.showModal(CommunityPrivacyChangeModalComponent, options).then((community: Community) => {
+      if (community)
+        this.communityMenuService.onRequestCommunityRefresh(community);
+    });
   }
 
   onCommunityShare(): void {
