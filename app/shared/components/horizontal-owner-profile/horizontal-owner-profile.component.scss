@@ -1,0 +1,25 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.owner-profile-wrapper {
+    width: 90%;
+    margin: 1;
+    .header {
+        padding: 4;
+        color: $white;
+        background-color: $heading;
+        border-radius: 10;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+    .content {
+        padding: 3;
+        .profile-icon {
+            margin: 8;
+        }
+        .username {
+            @include make-font-size(0);
+            color: $black;
+        }
+    }
+}

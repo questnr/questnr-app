@@ -41,6 +41,10 @@
                 </GridLayout>
               </FlexboxLayout>
             </GridLayout>
+            <GridLayout class="owner-profile">
+              <qn-horizontal-owner-profile [user]="community?.ownerUserDTO" #ownerProfileComp>
+              </qn-horizontal-owner-profile>
+            </GridLayout>
             <GridLayout class="create-post">
               <qn-create-post [isCommunityPost]="true" [communityId]="community?.communityId"
                 (onPostCreated)="handlePostCreation($event)" (onPostEdited)="handlePostEditing($event)">

@@ -13,6 +13,7 @@ import { PostMenuService } from '~/services/post-menu.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { UserInteractionService } from '~/services/user-interaction.service';
 import { UtilityService } from '~/services/utility.service';
+import { HorizontalOwnerProfileComponent } from '~/shared/components/horizontal-owner-profile/horizontal-owner-profile.component';
 import { GlobalConstants } from '~/shared/constants';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { CommunityMembersComponent } from '~/shared/containers/community-members/community-members.component';
@@ -63,6 +64,11 @@ export class CommunityPageComponent implements OnInit {
     if (this.community) {
       this.communityMemeberCompRef.setCommunity(this.community);
     }
+  }
+  ownerProfileCompRef: HorizontalOwnerProfileComponent;
+  @ViewChild('ownerProfileComp')
+  set ownerProfileComp(ownerProfileCompRef: HorizontalOwnerProfileComponent) {
+    this.ownerProfileCompRef = ownerProfileCompRef;
   }
   relationTypeClass = RelationType;
   // questionListRef: UserQuestionListComponent;
@@ -202,6 +208,7 @@ export class CommunityPageComponent implements OnInit {
     this.relationType = this.community.communityMeta.relationShipType;
     this.restartCommunityFeeds(callFromConstructor);
     this.communityMemeberCompRef?.setCommunity(this.community);
+    this.ownerProfileCompRef.setUser(this.community.ownerUserDTO);
   }
 
   restartCommunityFeeds(callFromConstructor: boolean = false) {
