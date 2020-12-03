@@ -1,4 +1,4 @@
-<CardView class="owner-profile-wrapper" radius="10">
+<CardView class="owner-profile-wrapper" [radius]="qRadius.$cardRadius">
     <GridLayout rows="auto, *">
         <GridLayout class="header" rows="*" row="0" verticalAlignment="top" ripple [rippleColor]="qColors.$primary"
             (tap)="onSlideProfile($event)">

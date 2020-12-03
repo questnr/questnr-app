@@ -3,7 +3,7 @@ import { RouterExtensions } from '@nativescript/angular';
 import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { GlobalConstants } from '~/shared/constants';
 import { User } from '~/shared/models/user.model';
-import { qColors } from '~/_variables';
+import { qColors, qRadius } from '~/_variables';
 
 @Component({
   selector: 'qn-horizontal-owner-profile',
@@ -12,6 +12,7 @@ import { qColors } from '~/_variables';
 })
 export class HorizontalOwnerProfileComponent implements OnInit {
   qColors = qColors;
+  qRadius = qRadius;
   @Input() user: User;
   userPath: string = GlobalConstants.userPath;
   isProfileOpen: boolean = false;

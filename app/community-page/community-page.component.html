@@ -5,7 +5,7 @@
   <GridLayout>
     <PullToRefresh (refresh)="refreshList($event)" [indicatorFillColor]="qColors.$primary"
       [indicatorColor]="qColors.$white">
-      <ScrollView (scroll)="onScroll($event)"
+      <ScrollView (scroll)="onScroll($event)" (loaded)="onScrollViewLoaded($event)"
         [isUserInteractionEnabled]="userInteractionService.isUserInteractionEnabled$ | async">
         <StackLayout class="community-page-wrapper">
           <GridLayout class="community-avatar" rows="*" columns="*">
@@ -44,12 +44,15 @@
               <qn-horizontal-owner-profile [user]="community?.ownerUserDTO" #ownerProfileComp>
               </qn-horizontal-owner-profile>
             </GridLayout>
+            <GridLayout class="community-activity">
+              <qn-community-activity [actAlone]="false" (onScrollToPostEvent)="onScrollToPostEvent($event)" #communityActivityComp></qn-community-activity>
+            </GridLayout>
             <GridLayout class="create-post">
               <qn-create-post [isCommunityPost]="true" [communityId]="community?.communityId"
                 (onPostCreated)="handlePostCreation($event)" (onPostEdited)="handlePostEditing($event)">
               </qn-create-post>
             </GridLayout>
-            <StackLayout #container>
+            <StackLayout id="community-post-feed" #container>
               <StackLayout *ngFor="let feed of communityFeeds;" class="user-feed">
                 <StackLayout *ngIf="feed.postType == postTypeClass.simple">
                   <qn-simple-post [feed]="feed">

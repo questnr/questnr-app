@@ -2,7 +2,7 @@ import { Component, ElementRef, NgZone, OnInit, QueryList, ViewChild, ViewChildr
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { EventData, FinalEventData, Img } from '@nativescript-community/ui-image';
 import { ModalDialogOptions, ModalDialogService, RouterExtensions } from '@nativescript/angular';
-import { ScrollView } from '@nativescript/core';
+import { Page, ScrollView, StackLayout } from '@nativescript/core';
 import { combineLatest, of, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from '~/services/auth.service';
@@ -13,6 +13,7 @@ import { PostMenuService } from '~/services/post-menu.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { UserInteractionService } from '~/services/user-interaction.service';
 import { UtilityService } from '~/services/utility.service';
+import { CommunityActivityComponent } from '~/shared/components/community-activity/community-activity.component';
 import { CommunityRelationActionButtonComponent } from '~/shared/components/community-relation-action-button/community-relation-action-button.component';
 import { HorizontalOwnerProfileComponent } from '~/shared/components/horizontal-owner-profile/horizontal-owner-profile.component';
 import { GlobalConstants } from '~/shared/constants';
@@ -39,7 +40,7 @@ export class CommunityPageComponent implements OnInit {
   isLoading: boolean = false;
   isOwner: boolean = false;
   communityFeeds: Post[] = [];
-  page: number = 0;
+  pageNumber: number = 0;
   endOfPosts: boolean = false;
   @ViewChildren(SimplePostComponent) simplePostComponentList!: QueryList<SimplePostComponent>;
   @ViewChild("container") container: ElementRef;
@@ -82,6 +83,15 @@ export class CommunityPageComponent implements OnInit {
       this.ownerProfileCompRef.setUser(this.community.ownerUserDTO);
     }
   }
+  communityActivityCompRef: CommunityActivityComponent;
+  @ViewChild('communityActivityComp')
+  set communityActivityComp(communityActivityCompRef: CommunityActivityComponent) {
+    this.communityActivityCompRef = communityActivityCompRef;
+    if (this.community && this.communityInfo) {
+      this.communityActivityCompRef.setCommunity(this.community);
+      this.communityActivityCompRef.setCommunityInfo(this.communityInfo);
+    }
+  }
   relationTypeClass = RelationType;
   // questionListRef: UserQuestionListComponent;
   // @ViewChild("questionList")
@@ -93,6 +103,7 @@ export class CommunityPageComponent implements OnInit {
   // set communityActivity(communityActivityRef: CommunityActivityComponent) {
   //   this.communityActivityRef = communityActivityRef;
   // }
+  scrollView: ScrollView;
 
   constructor(public viewContainerRef: ViewContainerRef,
     private postMenuService: PostMenuService,
@@ -106,7 +117,8 @@ export class CommunityPageComponent implements OnInit {
     private routerExtensions: RouterExtensions,
     private communityMenuService: CommunityMenuService,
     private authService: AuthService,
-    private modalService: ModalDialogService) {
+    private modalService: ModalDialogService,
+    public page: Page) {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.communitySlug = params.get('communitySlug');
       // console.log("communitySlug", this.communitySlug);
@@ -222,6 +234,8 @@ export class CommunityPageComponent implements OnInit {
     this.communityMemeberCompRef?.setCommunity(this.community);
     this.ownerProfileCompRef?.setUser(this.community.ownerUserDTO);
     this.relationButtonCompRef?.setData(this.community, this.relationType);
+    this.communityActivityCompRef?.setCommunity(this.community);
+    this.communityActivityCompRef?.setCommunityInfo(this.communityInfo);
   }
 
   restartCommunityFeeds(callFromConstructor: boolean = false) {
@@ -235,7 +249,7 @@ export class CommunityPageComponent implements OnInit {
     if (!callFromConstructor && this.community.communityPrivacy == CommunityPrivacy.pub) return;
 
     this.communityFeeds = [];
-    this.page = 0;
+    this.pageNumber = 0;
 
     if (!this.isAllowedIntoCommunity) return;
 
@@ -252,17 +266,17 @@ export class CommunityPageComponent implements OnInit {
   getCommunityFeed() {
     this.cancelIfAnyCurrentFeedSubscription();
     this.isLoading = true;
-    this.feedSubscriber = this.communityService.getCommunityFeeds(this.community.communityId, this.page, this.pageSize).subscribe(
+    this.feedSubscriber = this.communityService.getCommunityFeeds(this.community.communityId, this.pageNumber, this.pageSize).subscribe(
       (feedPage: QPage<Post>) => {
         // console.log("feedPage", feedPage);
         if (!feedPage.empty && feedPage.content.length) {
-          this.page++;
+          this.pageNumber++;
           feedPage.content.forEach(post => {
             this.communityFeeds.push(post);
           });
 
           // If the page was 0, then feedComponentHelper would have been called
-          // if (this.page - 1 == 0) {
+          // if (this.pageNumber - 1 == 0) {
           //   setTimeout(() => {
           //     this.feedComponentHelper();
           //   }, 1000);
@@ -281,11 +295,11 @@ export class CommunityPageComponent implements OnInit {
 
   refreshUserFeed() {
     this.cancelIfAnyCurrentFeedSubscription();
-    this.feedSubscriber = this.communityService.getCommunityFeeds(this.community.communityId, this.page, this.pageSize).subscribe(
+    this.feedSubscriber = this.communityService.getCommunityFeeds(this.community.communityId, this.pageNumber, this.pageSize).subscribe(
       (feedPage: QPage<Post>) => {
         // console.log("feedPage", feedPage);
         if (!feedPage.empty && feedPage.content.length) {
-          // this.page++;
+          // this.pageNumber++;
 
           let postExists = [];
           feedPage.content.forEach((newPost: Post) => {
@@ -295,7 +309,7 @@ export class CommunityPageComponent implements OnInit {
               }
             });
           });
-          // let newPost = Number(this.pageSize) - postExists.length;
+          // let newPost = Number(this.pageNumberSize) - postExists.length;
           // console.log("postExists.length", postExists.length, newPost);
           if (postExists.length == 0) {
             this.communityFeeds = [];
@@ -402,5 +416,14 @@ export class CommunityPageComponent implements OnInit {
       this.community = newCommunity;
       this.afterReceivingCommunity();
     });
+  }
+
+  onScrollViewLoaded(args){
+    this.scrollView = args.object as ScrollView;
+  }
+
+  onScrollToPostEvent(args){
+    let postTop = this.page.getViewById('community-post-feed') as StackLayout;
+    this.scrollView.scrollToVerticalOffset(postTop.getLocationOnScreen().y, true);
   }
 }

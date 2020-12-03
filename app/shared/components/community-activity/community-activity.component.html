@@ -1,0 +1,28 @@
+<CardView class="community-activity-wrapper" [radius]="qRadius.$cardRadius" elevation="4">
+  <GridLayout>
+    <FlexboxLayout class="activity-items" *ngIf="!isLoading" justifyContent="space-around">
+      <StackLayout class="activity-item trend-item" *ngIf="communityInfo?.inTrend == true" width="100%">
+        <Label class="figure" [text]="'#'+communityInfo?.trendRank" horizontalAlignment="center"></Label>
+        <Label class="caption" text="In Trending" horizontalAlignment="center"></Label>
+      </StackLayout>
+      <StackLayout *ngIf="communityInfo?.inTrend == true" width="20%">
+        <qn-vertical-line [width]="2"></qn-vertical-line>
+      </StackLayout>
+      <StackLayout class="activity-item" ripple [rippleColor]="qColors.$primary" (tap)="openCommunityMembersDialog()" width="100%">
+        <Label class="figure" [text]="communityInfo?.followers" horizontalAlignment="center"></Label>
+        <Label class="caption" text="Members" horizontalAlignment="center"></Label>
+      </StackLayout>
+      <StackLayout width="20%">
+        <qn-vertical-line [width]="2"></qn-vertical-line>
+      </StackLayout>
+      <StackLayout class="activity-item" ripple [rippleColor]="qColors.$primary" (tap)="scrollToPosts($event)" width="100%">
+        <Label class="figure" [text]="communityInfo?.posts" horizontalAlignment="center"></Label>
+        <Label class="caption" text="Total Posts" horizontalAlignment="center"></Label>
+      </StackLayout>
+    </FlexboxLayout>
+    <GridLayout *ngIf="isLoading" class="loader">
+      <qn-loader [radius]="30" [color]="qColors.$heading" verticalAlignment="middle" horizontalAlignment="center">
+      </qn-loader>
+    </GridLayout>
+  </GridLayout>
+</CardView>

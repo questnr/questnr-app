@@ -110,3 +110,7 @@ export const qZIndex = {
     $overlay: "999",
     $modal: "1000"
 }
+
+export const qRadius = {
+    $cardRadius: 10
+}

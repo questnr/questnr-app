@@ -5,11 +5,13 @@ import {
 } from '@nativescript/angular';
 import { AttachedFileModule } from '~/attached-file-list/attached-file.module';
 import { CommentItemComponent } from './components/comment-item/comment-item.component';
+import { CommunityActivityComponent } from './components/community-activity/community-activity.component';
 import { CommunityRelationActionButtonComponent } from './components/community-relation-action-button/community-relation-action-button.component';
 import { CreateCommentComponent } from './components/create-comment/create-comment.component';
 import { HorizontalOwnerProfileComponent } from './components/horizontal-owner-profile/horizontal-owner-profile.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { PostMenuOptionComponent } from './components/post-menu-option/post-menu-option.component';
+import { VerticalLineComponent } from './components/vertical-line/vertical-line.component';
 import { ActionBarComponent } from './containers/action-bar/action-bar.component';
 import { CommentContainerComponent } from './containers/comment-container/comment-container.component';
 import { CommunityMembersComponent } from './containers/community-members/community-members.component';
@@ -61,7 +63,9 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     CommunityMembersComponent,
     CommunityRelationActionButtonComponent,
     HorizontalOwnerProfileComponent,
-    LoaderComponent
+    LoaderComponent,
+    CommunityActivityComponent,
+    VerticalLineComponent
   ],
   providers: [
   ],
@@ -90,7 +94,9 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     CommunityMembersComponent,
     CommunityRelationActionButtonComponent,
     HorizontalOwnerProfileComponent,
-    LoaderComponent
+    LoaderComponent,
+    CommunityActivityComponent,
+    VerticalLineComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

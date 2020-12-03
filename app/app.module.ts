@@ -44,6 +44,7 @@ import { AppModalModule } from './shared/modals/modals.module';
 import { MaterialModule } from './shared/material.module';
 import { SharedModule } from './shared/shared.module';
 import { UserListPageComponent } from './user-list-page/user-list-page.component';
+import { UserFollowersService } from './services/user-followers.service';
 
 Fontawesome.init();
 
@@ -107,7 +108,8 @@ if (applicationModule.android) {
     UserListService,
     UserFollowerService,
     InviteUserService,
-    CommunityMenuService
+    CommunityMenuService,
+    UserFollowersService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
