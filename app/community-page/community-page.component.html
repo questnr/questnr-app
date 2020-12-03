@@ -28,10 +28,9 @@
               <FlexboxLayout justifyContent="space-between">
                 <GridLayout alignSelf="flex-start">
                   <StackLayout orientation="horizontal" horizontalAlignment="left">
-                    <qn-community-relation-action-button *ngIf="relationType !== relationTypeClass.OWNED"
-                      [relation]="relationType" [communityName]="community?.communityName"
-                      [communityId]="community?.communityId" (actionEvent)="onRelationChangeEvent($event)"
-                      [qHeight]="45">
+                    <qn-community-relation-action-button
+                      *ngIf="relationType && relationType !== relationTypeClass.OWNED"
+                      (actionEvent)="onRelationChangeEvent($event)" [qHeight]="45" #relationButtonComp>
                     </qn-community-relation-action-button>
                   </StackLayout>
                 </GridLayout>

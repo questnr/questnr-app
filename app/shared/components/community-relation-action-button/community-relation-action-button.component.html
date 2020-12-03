@@ -1,9 +1,13 @@
-<Button *ngIf="relation === relationTypeClass.FOLLOWED" (tap)="unfollowThisCommunity()" [height]="qHeight"
+<Button *ngIf="!isLoading && relation === relationTypeClass.FOLLOWED" (tap)="unfollowThisCommunity()" [height]="qHeight"
   class="followed" text="Joined">
 </Button>
-<Button class="requested" *ngIf="relation===relationTypeClass.REQUESTED" [disableRipple]="true" [height]="qHeight"
-  (tap)="deleteUsersOwnPendingCommunityJoinRequests()" text="Requested">
+<Button class="requested" *ngIf="!isLoading && relation===relationTypeClass.REQUESTED" [disableRipple]="true"
+  [height]="qHeight" (tap)="deleteUsersOwnPendingCommunityJoinRequests()" text="Requested">
 </Button>
-<Button class="fa none" *ngIf="relation===relationTypeClass.NONE" (tap)="followThisCommunty()" [height]="qHeight"
-  [text]="communityType===communityPrivacyClass.pri ? '&#xf09c;&nbsp;Join': '&#xf023;&nbsp;Join'">
+<Button class="fa none" *ngIf="!isLoading && relation===relationTypeClass.NONE" (tap)="followThisCommunty()"
+  [height]="qHeight" [text]="communityType === communityPrivacyClass.pub ? '&#xf09c;&nbsp;Join': '&#xf023;&nbsp;Join'">
 </Button>
+<GridLayout *ngIf="isLoading" class="loader" [height]="qHeight">
+  <qn-loader [radius]="30" [color]="qColors.$heading" verticalAlignment="middle" horizontalAlignment="center">
+  </qn-loader>
+</GridLayout>

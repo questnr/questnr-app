@@ -13,6 +13,7 @@ import { PostMenuService } from '~/services/post-menu.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { UserInteractionService } from '~/services/user-interaction.service';
 import { UtilityService } from '~/services/utility.service';
+import { CommunityRelationActionButtonComponent } from '~/shared/components/community-relation-action-button/community-relation-action-button.component';
 import { HorizontalOwnerProfileComponent } from '~/shared/components/horizontal-owner-profile/horizontal-owner-profile.component';
 import { GlobalConstants } from '~/shared/constants';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
@@ -65,10 +66,21 @@ export class CommunityPageComponent implements OnInit {
       this.communityMemeberCompRef.setCommunity(this.community);
     }
   }
+  relationButtonCompRef: CommunityRelationActionButtonComponent;
+  @ViewChild('relationButtonComp')
+  set relationButtonComp(relationButtonCompRef: CommunityRelationActionButtonComponent) {
+    this.relationButtonCompRef = relationButtonCompRef;
+    if (this.community) {
+      this.relationButtonCompRef.setData(this.community, this.relationType);
+    }
+  }
   ownerProfileCompRef: HorizontalOwnerProfileComponent;
   @ViewChild('ownerProfileComp')
   set ownerProfileComp(ownerProfileCompRef: HorizontalOwnerProfileComponent) {
     this.ownerProfileCompRef = ownerProfileCompRef;
+    if (this.community) {
+      this.ownerProfileCompRef.setUser(this.community.ownerUserDTO);
+    }
   }
   relationTypeClass = RelationType;
   // questionListRef: UserQuestionListComponent;
@@ -208,7 +220,8 @@ export class CommunityPageComponent implements OnInit {
     this.relationType = this.community.communityMeta.relationShipType;
     this.restartCommunityFeeds(callFromConstructor);
     this.communityMemeberCompRef?.setCommunity(this.community);
-    this.ownerProfileCompRef.setUser(this.community.ownerUserDTO);
+    this.ownerProfileCompRef?.setUser(this.community.ownerUserDTO);
+    this.relationButtonCompRef?.setData(this.community, this.relationType);
   }
 
   restartCommunityFeeds(callFromConstructor: boolean = false) {

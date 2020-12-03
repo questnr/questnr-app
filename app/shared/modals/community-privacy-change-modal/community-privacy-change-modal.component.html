@@ -29,8 +29,8 @@
       <Button *ngIf="!isLoading" class="primary" height="30" (tap)="toggleCommunityPrivacy(community.communityPrivacy === communityPrivacyClass.pri ? 
         communityPrivacyClass.pub : communityPrivacyClass.pri)" ripple [rippleColor]="qColors.$primary"
         text="I understand!" horizontalAlignment="right"></Button>
-      <StackLayout *ngIf="isLoading" orientation="horizontal">
-        <ActivityIndicator width="30" height="30" busy="true" class="loading"></ActivityIndicator>
+      <StackLayout *ngIf="isLoading" class="loader" verticalAlignment="top" height="30">
+        <qn-loader [radius]="30" [color]="qColors.$primary"></qn-loader>
       </StackLayout>
       <Button class="secondary" height="30" (tap)="close()" ripple [rippleColor]="qColors.$primary" text="Cancel"
         horizontalAlignment="right"></Button>

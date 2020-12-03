@@ -8,6 +8,7 @@ import { CommentItemComponent } from './components/comment-item/comment-item.com
 import { CommunityRelationActionButtonComponent } from './components/community-relation-action-button/community-relation-action-button.component';
 import { CreateCommentComponent } from './components/create-comment/create-comment.component';
 import { HorizontalOwnerProfileComponent } from './components/horizontal-owner-profile/horizontal-owner-profile.component';
+import { LoaderComponent } from './components/loader/loader.component';
 import { PostMenuOptionComponent } from './components/post-menu-option/post-menu-option.component';
 import { ActionBarComponent } from './containers/action-bar/action-bar.component';
 import { CommentContainerComponent } from './containers/comment-container/comment-container.component';
@@ -59,7 +60,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     CreateCommentComponent,
     CommunityMembersComponent,
     CommunityRelationActionButtonComponent,
-    HorizontalOwnerProfileComponent
+    HorizontalOwnerProfileComponent,
+    LoaderComponent
   ],
   providers: [
   ],
@@ -87,7 +89,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     CreateCommentComponent,
     CommunityMembersComponent,
     CommunityRelationActionButtonComponent,
-    HorizontalOwnerProfileComponent
+    HorizontalOwnerProfileComponent,
+    LoaderComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

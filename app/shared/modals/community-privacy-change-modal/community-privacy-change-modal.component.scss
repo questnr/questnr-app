@@ -33,9 +33,6 @@
             @include make-font-size(-2);
         }
         .button-row {
-            .loading {
-                color: $primary;
-            }
             Button {
                 @include make-font-size(-1);
                 border-width: 1;
