@@ -16,7 +16,10 @@
               </NSImg>
             </StackLayout>
             <StackLayout class="community-details" row="0" verticalAlignment="bottom">
-              <Label class="community-name" [text]="community?.communityName"></Label>
+              <StackLayout (loaded)="onCommuityDetailsViewLoaded($event)" (tap)="onShowCommunityCard($event)" ripple
+                [rippleColor]="qColors.$whiteTransparent">
+                <Label class="community-name" [text]="community?.communityName"></Label>
+              </StackLayout>
             </StackLayout>
             <StackLayout class="modify" row="0" verticalAlignment="top" horizontalAlignment="right">
               <Button class="fa" text="&#xf040;" (tap)="onCommunityAvatarEdit()" ripple

@@ -4,6 +4,7 @@ import { EventData, FinalEventData, Img } from '@nativescript-community/ui-image
 import { ModalDialogOptions, ModalDialogService, RouterExtensions } from '@nativescript/angular';
 import * as bghttp from '@nativescript/background-http';
 import { ImageSource, Page, ScrollView, StackLayout } from '@nativescript/core';
+import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { ImagePickerOptions, Mediafilepicker } from 'nativescript-mediafilepicker';
 import { combineLatest, of, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -107,6 +108,7 @@ export class CommunityPageComponent implements OnInit {
   questionListTypeClass = UserQuestionListModalType;
   modifiedCommunityImage: ImageSource;
   modifiedCommunityAvatarPath: string;
+  commuityDetailsView;
 
   constructor(public viewContainerRef: ViewContainerRef,
     private postMenuService: PostMenuService,
@@ -195,8 +197,6 @@ export class CommunityPageComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    // this.communityActivityRef.setCommunity(this.communityDTO);
-    // this.questionListRef?.setCommunityData(this.communityDTO, this.communityService.isAllowedIntoCommunity(this.communityDTO));
   }
 
   ngOnDestroy() {
@@ -523,5 +523,22 @@ export class CommunityPageComponent implements OnInit {
 
   onCommunityAvatarChanged(): void {
     this.snackBarService.show({ snackText: "Community avatar has been changed!" });
+  }
+
+  onCommuityDetailsViewLoaded(args): void {
+    this.commuityDetailsView = args.object;
+    this.commuityDetailsView.animate({
+      translate: { x: 0, y: -20 },
+    }).then(() => {
+      this.commuityDetailsView.animate({
+        translate: { x: 0, y: 0 },
+        duration: 1300,
+        curve: new CubicBezierAnimationCurve(.42, .39, .16, 1.5)
+      });
+    });
+  }
+
+  onShowCommunityCard(args): void {
+    //@todo: show community card with community primary imformation: name, description, and avatar
   }
 }
