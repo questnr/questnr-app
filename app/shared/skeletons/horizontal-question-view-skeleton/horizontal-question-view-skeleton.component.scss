@@ -1,0 +1,14 @@
+@import "~/variables";
+
+.horizontal-question-view-skeleton-wrapper {
+    .question {
+        height: 15;
+        color: $link-primary;
+    }
+    .total-answers-badge {
+        margin: 0;
+        background-color: $heading;
+        padding: 1;
+        border-radius: 50;
+    }
+}

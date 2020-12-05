@@ -47,6 +47,9 @@
             <GridLayout class="community-activity">
               <qn-community-activity [actAlone]="false" (onScrollToPostEvent)="onScrollToPostEvent($event)" #communityActivityComp></qn-community-activity>
             </GridLayout>
+            <GridLayout class="community-questions">
+              <qn-question-list-card [type]="questionListTypeClass.community" #questionListCardComp></qn-question-list-card>
+            </GridLayout>
             <GridLayout class="create-post">
               <qn-create-post [isCommunityPost]="true" [communityId]="community?.communityId"
                 (onPostCreated)="handlePostCreation($event)" (onPostEdited)="handlePostEditing($event)">

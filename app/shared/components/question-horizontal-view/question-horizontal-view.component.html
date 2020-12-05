@@ -1,0 +1,5 @@
+<GridLayout class="question-view-wrapper" columns="90*, 10*" (tap)="handleClick($event)"
+    [nsRouterLink]="['/', questionPath, question?.slug]" ripple [rippleColor]="qColors.$primary">
+    <Label class="question" [text]="question?.questionText" col="0"></Label>
+    <Button class="total-answers-badge" [text]="question?.pollQuestionMeta.totalAnswered" col="1"></Button>
+</GridLayout>

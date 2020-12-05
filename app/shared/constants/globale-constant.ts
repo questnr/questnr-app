@@ -33,7 +33,8 @@ export class GlobalConstants {
   public static explorePath = 'explore';
   public static trendingPath = 'trending';
   public static contactPath = 'contact';
-  public static userListPath = 'user-list';
+  public static userListPath = 'users';
+  public static questionListPath = 'questions';
 
   public static supportEmail = 'support@questnr.com';
   public static noReplyEmail = 'noreply@questnr.com';

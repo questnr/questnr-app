@@ -1,0 +1,21 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.question-view-wrapper {
+    border-radius: 5;
+    .question {
+        @include make-font-size(2);
+        font-weight: 300;
+        color: $link-primary;
+    }
+    .total-answers-badge {
+        margin: 0;
+        @include make-font-size(1);
+        color: $white;
+        background-color: $heading;
+        width: 27;
+        height: 27;
+        padding: 1;
+        border-radius: 50;
+    }
+}

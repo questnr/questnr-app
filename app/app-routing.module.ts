@@ -12,6 +12,7 @@ import { ExplorePageComponent } from './home/explore-page/explore-page.component
 import { FeedComponent } from './home/feed/feed.component';
 import { HomeComponent } from './home/home.component';
 import { UserPageComponent } from './home/user-page/user-page.component';
+import { QuestionListPageComponent } from './question-list-page/question-list-page.component';
 import { SearchOverlayComponent } from './search-overlay/search-overlay.component';
 import { GlobalConstants } from './shared/constants';
 import { UserListPageComponent } from './user-list-page/user-list-page.component';
@@ -66,6 +67,12 @@ const routes: Routes = [
       GlobalConstants.userListPath,
       ':type'
     ].join("/"), component: UserListPageComponent
+  },
+  {
+    path: [
+      GlobalConstants.questionListPath,
+      ':type'
+    ].join("/"), component: QuestionListPageComponent
   }
 ];
 

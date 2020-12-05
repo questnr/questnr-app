@@ -16,6 +16,7 @@ import { UtilityService } from '~/services/utility.service';
 import { CommunityActivityComponent } from '~/shared/components/community-activity/community-activity.component';
 import { CommunityRelationActionButtonComponent } from '~/shared/components/community-relation-action-button/community-relation-action-button.component';
 import { HorizontalOwnerProfileComponent } from '~/shared/components/horizontal-owner-profile/horizontal-owner-profile.component';
+import { QuestionListCardComponent } from '~/shared/components/question-list-card/question-list-card.component';
 import { GlobalConstants } from '~/shared/constants';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { CommunityMembersComponent } from '~/shared/containers/community-members/community-members.component';
@@ -26,6 +27,7 @@ import { QPage } from '~/shared/models/page.model';
 import { Post, PostType, QuestionParentType } from '~/shared/models/post-action.model';
 import { RelationType } from '~/shared/models/relation-type';
 import { UserListType } from '~/shared/models/user-list.model';
+import { UserQuestionListModalType } from '~/shared/models/user-question.model';
 import { qColors } from '~/_variables';
 
 @Component({
@@ -93,17 +95,13 @@ export class CommunityPageComponent implements OnInit {
     }
   }
   relationTypeClass = RelationType;
-  // questionListRef: UserQuestionListComponent;
-  // @ViewChild("questionList")
-  // set questionList(questionListRef: UserQuestionListComponent) {
-  //   this.questionListRef = questionListRef;
-  // }
-  // communityActivityRef: CommunityActivityComponent;
-  // @ViewChild("communityActivity")
-  // set communityActivity(communityActivityRef: CommunityActivityComponent) {
-  //   this.communityActivityRef = communityActivityRef;
-  // }
+  questionListCardCompRef: QuestionListCardComponent;
+  @ViewChild("questionListCardComp")
+  set questionListCardComp(questionListCardCompRef: QuestionListCardComponent) {
+    this.questionListCardCompRef = questionListCardCompRef;
+  }
   scrollView: ScrollView;
+  questionListTypeClass = UserQuestionListModalType;
 
   constructor(public viewContainerRef: ViewContainerRef,
     private postMenuService: PostMenuService,
@@ -144,6 +142,7 @@ export class CommunityPageComponent implements OnInit {
           if (!community || !communityProfileMeta) {
             this.snackBarService.show({ snackText: 'Community not found!' });
             this.routerExtensions.backToPreviousPage();
+            return;
           }
           this.community = community;
           this.communityInfo = communityProfileMeta;
@@ -230,19 +229,18 @@ export class CommunityPageComponent implements OnInit {
 
   afterReceivingCommunity(callFromConstructor: boolean = false): void {
     this.relationType = this.community.communityMeta.relationShipType;
+    this.isAllowedIntoCommunity = this.communityService.isAllowedIntoCommunity(this.community);
     this.restartCommunityFeeds(callFromConstructor);
     this.communityMemeberCompRef?.setCommunity(this.community);
     this.ownerProfileCompRef?.setUser(this.community.ownerUserDTO);
     this.relationButtonCompRef?.setData(this.community, this.relationType);
     this.communityActivityCompRef?.setCommunity(this.community);
     this.communityActivityCompRef?.setCommunityInfo(this.communityInfo);
+    this.questionListCardCompRef.setCommunityData(this.community, this.isAllowedIntoCommunity);
+    this.questionListCardCompRef.setTotalQuestion(this.communityInfo.totalQuestions);
   }
 
   restartCommunityFeeds(callFromConstructor: boolean = false) {
-    // this.ngOnInit();
-    // this.getCommunityDetailsById();
-    this.isAllowedIntoCommunity = this.communityService.isAllowedIntoCommunity(this.community);
-
     this.isOwner = this.communityService.isOwner(this.community);
 
     // No need to re-fetch feeds again if the community is not private.

@@ -1,0 +1,25 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.question-list-card-wrapper {
+    width: 90%;
+    margin: 1;
+    .question-list-card-container {
+        .title {
+            padding: 10;
+            @include make-font-size(2);
+        }
+        .badge {
+            margin: 1;
+            margin-right: 10 ;
+            @include make-font-size(2);
+            font-weight: 600;
+            background-color: $heading;
+            color: $white;
+            padding: 3;
+            width: 28;
+            height: 28;
+            border-radius: 50;
+        }
+    }
+}

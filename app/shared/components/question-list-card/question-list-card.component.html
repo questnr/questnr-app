@@ -1,0 +1,7 @@
+<CardView class="question-list-card-wrapper" [radius]="qRadius.$cardRadius" ripple [rippleColor]="qColors.$primary"
+(tap)="onOpenQuestionList($event)">
+    <GridLayout rows="*" columns="*" class="question-list-card-container">
+        <Label row="0" class="title" horizontalAlignment="left" verticalAlignment="middle" [text]="title"></Label>
+        <Button row="0" class="badge" horizontalAlignment="right" verticalAlignment="middle" [text]="totalQuestions"></Button>
+    </GridLayout>
+</CardView>

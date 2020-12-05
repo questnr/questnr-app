@@ -1,0 +1,20 @@
+<Page xmlns="http://www.nativescript.org/tns.xsd">
+    <Page.actionBar>
+        <qn-action-bar [pageViewContainerRef]="viewContainerRef" [isChildPage]="true" [title]="title">
+        </qn-action-bar>
+    </Page.actionBar>
+    <GridLayout class="question-list-page-wrapper" *ngIf="questionList?.length">
+        <RadListView row="0" [items]="questionList" orientation="vertical" [itemTemplateSelector]="templateSelector"
+            loadOnDemandMode="Auto" (loadMoreDataRequested)="onLoadMoreItemsRequested($event)">
+            <ListViewLinearLayout scrollDirection="Vertical" dynamicItemSize="false" itemHeight="45">
+            </ListViewLinearLayout>
+            <ng-template tkListItemTemplate let-question="item" let-index="index" tkTemplateKey="userView">
+                <GridLayout class="question-horizontal-view-container" rows="*">
+                    <qn-question-horizontal-view [question]="question"></qn-question-horizontal-view>
+                </GridLayout>
+            </ng-template>
+        </RadListView>
+    </GridLayout>
+    <!-- <app-no-user-question *ngIf="!loading && !questionList?.length" [isOwner]="isOwner" [type]="type">
+            </app-no-user-question> -->
+</Page>

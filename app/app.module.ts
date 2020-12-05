@@ -45,6 +45,8 @@ import { MaterialModule } from './shared/material.module';
 import { SharedModule } from './shared/shared.module';
 import { UserListPageComponent } from './user-list-page/user-list-page.component';
 import { UserFollowersService } from './services/user-followers.service';
+import { UserQuestionService } from './services/user-question.service';
+import { QuestionListPageComponent } from './question-list-page/question-list-page.component';
 
 Fontawesome.init();
 
@@ -65,7 +67,8 @@ if (applicationModule.android) {
     SearchOverlayComponent,
     CommentPageComponent,
     CommunityPageComponent,
-    UserListPageComponent
+    UserListPageComponent,
+    QuestionListPageComponent
   ],
   imports: [
     NativeScriptModule,
@@ -109,7 +112,8 @@ if (applicationModule.android) {
     UserFollowerService,
     InviteUserService,
     CommunityMenuService,
-    UserFollowersService
+    UserFollowersService,
+    UserQuestionService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

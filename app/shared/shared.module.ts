@@ -11,6 +11,8 @@ import { CreateCommentComponent } from './components/create-comment/create-comme
 import { HorizontalOwnerProfileComponent } from './components/horizontal-owner-profile/horizontal-owner-profile.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { PostMenuOptionComponent } from './components/post-menu-option/post-menu-option.component';
+import { QuestionHorizontalViewComponent } from './components/question-horizontal-view/question-horizontal-view.component';
+import { QuestionListCardComponent } from './components/question-list-card/question-list-card.component';
 import { VerticalLineComponent } from './components/vertical-line/vertical-line.component';
 import { ActionBarComponent } from './containers/action-bar/action-bar.component';
 import { CommentContainerComponent } from './containers/comment-container/comment-container.component';
@@ -65,7 +67,9 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     HorizontalOwnerProfileComponent,
     LoaderComponent,
     CommunityActivityComponent,
-    VerticalLineComponent
+    VerticalLineComponent,
+    QuestionListCardComponent,
+    QuestionHorizontalViewComponent
   ],
   providers: [
   ],
@@ -96,7 +100,9 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     HorizontalOwnerProfileComponent,
     LoaderComponent,
     CommunityActivityComponent,
-    VerticalLineComponent
+    VerticalLineComponent,
+    QuestionListCardComponent,
+    QuestionHorizontalViewComponent,
   ],
   schemas: [
     NO_ERRORS_SCHEMA

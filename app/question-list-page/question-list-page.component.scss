@@ -1,0 +1,9 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.question-list-page-wrapper {
+    .question-horizontal-view-container {
+        margin: 0;
+        padding: 5;
+    }
+}
