@@ -387,7 +387,7 @@ export class CommunityPageComponent implements OnInit {
     this.relationType = $event;
     this.community.communityMeta.relationShipType = $event;
     // console.log("actionEvent", $event);
-    // this.communityUsersComponentRef.ngOnInit();
+    this.communityMemeberCompRef.ngOnInit();
     this.restartCommunityFeeds();
   }
 
@@ -416,11 +416,11 @@ export class CommunityPageComponent implements OnInit {
     });
   }
 
-  onScrollViewLoaded(args){
+  onScrollViewLoaded(args) {
     this.scrollView = args.object as ScrollView;
   }
 
-  onScrollToPostEvent(args){
+  onScrollToPostEvent(args) {
     let postTop = this.page.getViewById('community-post-feed') as StackLayout;
     this.scrollView.scrollToVerticalOffset(postTop.getLocationOnScreen().y, true);
   }
