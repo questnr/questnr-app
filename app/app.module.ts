@@ -12,6 +12,7 @@ import { CommentPageComponent } from './comment-page/comment-page.component';
 import { CommunityPageComponent } from './community-page/community-page.component';
 import { HomeModule } from './home/home.module';
 import { InterceptorService } from './interceptor.service';
+import { QuestionListPageComponent } from './question-list-page/question-list-page.component';
 import { SearchOverlayComponent } from './search-overlay/search-overlay.component';
 import { ApiService } from './services/api.service';
 import { AskQuestionService } from './services/ask-question.service';
@@ -25,6 +26,7 @@ import { CommunityService } from './services/community.service';
 import { CreateCommunityService } from './services/create-community.service';
 import { ExploreService } from './services/explore.service';
 import { FeedService } from './services/feed.service';
+import { ImageCropService } from './services/image-crop.service';
 import { InviteUserService } from './services/invite-user.service';
 import { JWTService } from './services/jwt.service';
 import { LoaderService } from './services/loader.service';
@@ -34,20 +36,20 @@ import { PostMenuService } from './services/post-menu.service';
 import { PostReportService } from './services/post-report.service';
 import { QFileService } from './services/q-file.service';
 import { SnackBarService } from './services/snackbar.service';
+import { UserActivityService } from './services/user-activity.service';
 import { UserFollowerService } from './services/user-follower.service';
+import { UserFollowersService } from './services/user-followers.service';
 import { UserInteractionService } from './services/user-interaction.service';
 import { UserListService } from './services/user-list.service';
+import { UserProfilePageService } from './services/user-profile-page.service';
 import { UserProfileService } from './services/user-profile.service';
+import { UserQuestionService } from './services/user-question.service';
 import { UtilityService } from './services/utility.service';
 import { VideoService } from './services/video.service';
-import { AppModalModule } from './shared/modals/modals.module';
 import { MaterialModule } from './shared/material.module';
+import { AppModalModule } from './shared/modals/modals.module';
 import { SharedModule } from './shared/shared.module';
 import { UserListPageComponent } from './user-list-page/user-list-page.component';
-import { UserFollowersService } from './services/user-followers.service';
-import { UserQuestionService } from './services/user-question.service';
-import { QuestionListPageComponent } from './question-list-page/question-list-page.component';
-import { ImageCropService } from './services/image-crop.service';
 
 Fontawesome.init();
 
@@ -115,7 +117,9 @@ if (applicationModule.android) {
     CommunityMenuService,
     UserFollowersService,
     UserQuestionService,
-    ImageCropService
+    ImageCropService,
+    UserProfilePageService,
+    UserActivityService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

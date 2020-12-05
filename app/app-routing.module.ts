@@ -38,7 +38,8 @@ const routes: Routes = [
       {
         path: GlobalConstants.userPath,
         component: UserPageComponent,
-        outlet: 'userPageTab'
+        outlet: 'userPageTab',
+        data: { isOwner: true }
       },
       {
         path: GlobalConstants.explorePath,
