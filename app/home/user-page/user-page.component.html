@@ -33,6 +33,9 @@
                         </StackLayout>
                     </GridLayout>
                     <StackLayout class="user-body">
+                        <GridLayout class="user-description">
+                            <qn-user-description-card [bio]="user?.bio"></qn-user-description-card>
+                        </GridLayout>
                         <GridLayout class="create-post">
                             <qn-create-post [isCommunityPost]="false" (onPostCreated)="handlePostCreation($event)"
                                 (onPostEdited)="handlePostEditing($event)">

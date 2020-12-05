@@ -1,0 +1,18 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.user-description-card-wrapper {
+    width: 95%;
+    margin: 1;
+    .user-description-card-container {
+        padding: 5;
+        .title {
+            font-weight: 500;
+            color: $heading;
+        }
+        .user-description {
+            margin-top: 5;
+            @include make-font-size(0);
+        }
+    }
+}

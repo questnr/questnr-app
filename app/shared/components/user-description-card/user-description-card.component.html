@@ -1,0 +1,27 @@
+<CardView class="user-description-card-wrapper" [radius]="qRadius.$cardRadius">
+  <GridLayout rows="auto, *" class="user-description-card-container">
+    <Label row="0" class="title h3" text="Description"></Label>
+    <StackLayout class="user-description" *ngIf="!isLoading" row="1">
+      <StackLayout>
+        <qn-hr></qn-hr>
+      </StackLayout>
+      <Label [text]="bio" *ngIf="bio" class="description"></Label>
+      <Label *ngIf="!bio && relation === relationTypeClass.OWNED">
+        <FormattedString>
+          <Span text="You haven't set a description of yourself yet"></Span>
+          <Span text="Please describe yourself by going to Edit Profile Section"></Span>
+        </FormattedString>
+      </Label>
+      <Label *ngIf="!bio && relation !== relationTypeClass.OWNED">
+        <FormattedString>
+          <Span *ngIf="username" [text]="username + 'hasn\'t set the description yet.'"></Span>
+          <Span *ngIf="!username" text="User hasn't set the description yet."></Span>
+        </FormattedString>
+      </Label>
+    </StackLayout>
+    <GridLayout *ngIf="isLoading" class="loader">
+      <qn-loader [radius]="30" [color]="qColors.$heading" verticalAlignment="middle" horizontalAlignment="center">
+      </qn-loader>
+    </GridLayout>
+  </GridLayout>
+</CardView>
