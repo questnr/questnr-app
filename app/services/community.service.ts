@@ -1,19 +1,22 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import * as bghttp from '@nativescript/background-http';
 import { Observable, of } from 'rxjs';
 import { environment } from '~/environments/environment';
 import { MetaTagCard } from '~/shared/models/common.model';
+import { Community, CommunityPrivacy, CommunityProfileMeta, CommunityPublic, CommunityRequestActionType } from '~/shared/models/community.model';
 import { QPage } from '~/shared/models/page.model';
 import { RelationType } from '~/shared/models/relation-type';
 import { User } from '~/shared/models/user.model';
-import { Community, CommunityPrivacy, CommunityProfileMeta, CommunityPublic, CommunityRequestActionType } from '~/shared/models/community.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommunityService {
   baseUrl = environment.baseUrl;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private authService: AuthService) {
   }
 
   isAllowedIntoCommunity(community: Community): boolean {
@@ -53,11 +56,19 @@ export class CommunityService {
     return this.http.get(this.baseUrl + 'user/community/' + id + '/posts', { params: { page: page, size: size } });
   }
 
-  updateCommunityAvatar(formData, comId) {
-    if (!comId) {
-      return of();
-    }
-    return this.http.post(this.baseUrl + 'user/community/' + comId + '/avatar', formData);
+  updateCommunityAvatar(formData, communityId) {
+    let communityAvatarRequestId = Math.floor(Math.random() * 100);
+    let request: bghttp.Request = {
+      url: this.baseUrl + `user/community/${communityId}/avatar`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/octet-stream",
+        "Authorization": 'Bearer ' + this.authService.getAccessToken()
+      },
+      description: `Uploading ${communityAvatarRequestId}`
+    };
+    let session = bghttp.session(`modify-community-avatar ${communityAvatarRequestId}`);
+    return session.multipartUpload(formData, request);
   }
 
   followCommunity(id) {

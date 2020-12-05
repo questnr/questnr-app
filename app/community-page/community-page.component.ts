@@ -2,13 +2,16 @@ import { Component, ElementRef, NgZone, OnInit, QueryList, ViewChild, ViewChildr
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { EventData, FinalEventData, Img } from '@nativescript-community/ui-image';
 import { ModalDialogOptions, ModalDialogService, RouterExtensions } from '@nativescript/angular';
-import { Page, ScrollView, StackLayout } from '@nativescript/core';
+import * as bghttp from '@nativescript/background-http';
+import { ImageSource, Page, ScrollView, StackLayout } from '@nativescript/core';
+import { ImagePickerOptions, Mediafilepicker } from 'nativescript-mediafilepicker';
 import { combineLatest, of, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from '~/services/auth.service';
 import { CommunityActivityService } from '~/services/community-activity.service';
 import { CommunityMenuService } from '~/services/community-menu.service';
 import { CommunityService } from '~/services/community.service';
+import { ImageCropService } from '~/services/image-crop.service';
 import { PostMenuService } from '~/services/post-menu.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { UserInteractionService } from '~/services/user-interaction.service';
@@ -102,6 +105,8 @@ export class CommunityPageComponent implements OnInit {
   }
   scrollView: ScrollView;
   questionListTypeClass = UserQuestionListModalType;
+  modifiedCommunityImage: ImageSource;
+  modifiedCommunityAvatarPath: string;
 
   constructor(public viewContainerRef: ViewContainerRef,
     private postMenuService: PostMenuService,
@@ -116,7 +121,8 @@ export class CommunityPageComponent implements OnInit {
     private communityMenuService: CommunityMenuService,
     private authService: AuthService,
     private modalService: ModalDialogService,
-    public page: Page) {
+    public page: Page,
+    private imageCropService: ImageCropService) {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.communitySlug = params.get('communitySlug');
       // console.log("communitySlug", this.communitySlug);
@@ -423,5 +429,99 @@ export class CommunityPageComponent implements OnInit {
   onScrollToPostEvent(args) {
     let postTop = this.page.getViewById('community-post-feed') as StackLayout;
     this.scrollView.scrollToVerticalOffset(postTop.getLocationOnScreen().y, true);
+  }
+
+  onCommunityAvatarEdit() {
+    let pictureOptions: ImagePickerOptions = {
+      android: {
+        isCaptureMood: false,
+        isNeedCamera: true,
+        maxNumberFiles: 1,
+        isNeedFolderList: true
+      }, ios: {
+        isCaptureMood: false,
+        isNeedCamera: true,
+        maxNumberFiles: 1,
+      }
+    };
+
+    let mediafilepicker = new Mediafilepicker();
+    mediafilepicker.openImagePicker(pictureOptions);
+
+    mediafilepicker.on("getFiles", (res) => {
+      let results = res.object.get('results');
+
+      let keys = Object.keys(results);
+
+      keys.forEach((key) => {
+        if (results[key].type === 'image') {
+          if (results[key].file) {
+            ImageSource.fromFile(results[key].file).then((imageSource) => {
+              this.imageCropService.openCommunityAvatarImageCropper(imageSource).then((croppedImg) => {
+                this.modifiedCommunityImage = croppedImg.image;
+                this.modifiedCommunityAvatarPath = croppedImg.path;
+                this.changeCommunityAvatar();
+              });
+            })
+          }
+        }
+      });
+    });
+
+    // for iOS iCloud downloading status
+    mediafilepicker.on("exportStatus", function (res) {
+      let msg = res.object.get('msg');
+      console.log(msg);
+    });
+
+    mediafilepicker.on("error", function (res) {
+      let msg = res.object.get('msg');
+      console.log(msg);
+    });
+
+    mediafilepicker.on("cancel", function (res) {
+      let msg = res.object.get('msg');
+      console.log(msg);
+    });
+  }
+
+  changeCommunityAvatar() {
+    if (this.modifiedCommunityAvatarPath) {
+      const formData = [];
+      formData.push({ name: 'file', filename: this.modifiedCommunityAvatarPath });
+      let task: bghttp.Task = this.communityService.updateCommunityAvatar(formData, this.community.communityId);
+      task.on("progress", (e) => {
+        // this.uploading = true;
+        // this.uploadProgress = Math.round(e.currentBytes / e.totalBytes * 100);
+        // console.log("uploadProgress", this.uploadProgress, e.currentBytes, e.totalBytes);
+      });
+
+      task.on("error", (error) => {
+        this.communityAvatarErrorHandler(error);
+      });
+
+      task.on("complete", (e: any) => {
+        // console.log("completed", e);
+      });
+
+      task.on("responded", (e) => {
+        // console.log("responded", JSON.parse(e.data));
+        try {
+          this.onCommunityAvatarChanged();
+        } catch (e) {
+          this.snackBarService.showSomethingWentWrong();
+        }
+      });
+    }
+  }
+
+  communityAvatarErrorHandler(error): void {
+    // console.log("error", error);
+    this.modifiedCommunityAvatarPath = null;
+    this.snackBarService.show({ snackText: "Failed to upload the community avatar." });
+  }
+
+  onCommunityAvatarChanged(): void {
+    this.snackBarService.show({ snackText: "Community avatar has been changed!" });
   }
 }

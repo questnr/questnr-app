@@ -47,6 +47,7 @@ import { UserListPageComponent } from './user-list-page/user-list-page.component
 import { UserFollowersService } from './services/user-followers.service';
 import { UserQuestionService } from './services/user-question.service';
 import { QuestionListPageComponent } from './question-list-page/question-list-page.component';
+import { ImageCropService } from './services/image-crop.service';
 
 Fontawesome.init();
 
@@ -113,7 +114,8 @@ if (applicationModule.android) {
     InviteUserService,
     CommunityMenuService,
     UserFollowersService,
-    UserQuestionService
+    UserQuestionService,
+    ImageCropService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

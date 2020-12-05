@@ -11,12 +11,16 @@
           <GridLayout class="community-avatar" rows="*" columns="*">
             <StackLayout row="0">
               <NSImg [placeholderImageUri]="defaultSrc" [failureImageUri]="defaultSrc" verticalAlignment="center"
-                [src]="community?.avatarDTO?.avatarLink" loadMode="async" stretch="aspectFill"
-                (failure)="onFailure($event)">
+                [src]="modifiedCommunityAvatarPath ? modifiedCommunityAvatarPath : community?.avatarDTO?.avatarLink ? community?.avatarDTO?.avatarLink : defaultSrc"
+                loadMode="async" stretch="aspectFill" (failure)="onFailure($event)">
               </NSImg>
             </StackLayout>
             <StackLayout class="community-details" row="0" verticalAlignment="bottom">
               <Label class="community-name" [text]="community?.communityName"></Label>
+            </StackLayout>
+            <StackLayout class="modify" row="0" verticalAlignment="top" horizontalAlignment="right">
+              <Button class="fa" text="&#xf040;" (tap)="onCommunityAvatarEdit()" ripple
+                [rippleColor]="qColors.$heading"></Button>
             </StackLayout>
           </GridLayout>
 
@@ -45,10 +49,12 @@
               </qn-horizontal-owner-profile>
             </GridLayout>
             <GridLayout class="community-activity">
-              <qn-community-activity [actAlone]="false" (onScrollToPostEvent)="onScrollToPostEvent($event)" #communityActivityComp></qn-community-activity>
+              <qn-community-activity [actAlone]="false" (onScrollToPostEvent)="onScrollToPostEvent($event)"
+                #communityActivityComp></qn-community-activity>
             </GridLayout>
             <GridLayout class="community-questions">
-              <qn-question-list-card [type]="questionListTypeClass.community" #questionListCardComp></qn-question-list-card>
+              <qn-question-list-card [type]="questionListTypeClass.community" #questionListCardComp>
+              </qn-question-list-card>
             </GridLayout>
             <GridLayout class="create-post">
               <qn-create-post [isCommunityPost]="true" [communityId]="community?.communityId"

@@ -16,7 +16,10 @@ export const qColors = {
     $mobileNavColor: "#eeeeee",
     $xlightPrimary: '#f8cfcf',
 
-    $primaryTransparent: "#f8919183",
+    $primaryTransparent: "rgba(248, 145, 145, 0.514)",
+    $headingTransparent: 'rgba(146, 21, 12, 0.475)',
+    $whiteTransparent: 'rgba(255, 255, 255, 0.342)',
+    $blackTransparent: 'rgba(0, 0, 0, 0.342)',
     $dataPrimary: "hsla(344, 100%, 44%, 1)",  // #e0003c
 
     $lightPrimary: "#ffb8b8",

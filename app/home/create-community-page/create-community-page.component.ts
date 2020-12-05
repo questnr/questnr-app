@@ -6,12 +6,11 @@ import { GridLayout, ImageSource, Page, StackLayout } from '@nativescript/core';
 import * as platformModule from '@nativescript/core/platform';
 import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { Point } from '@nativescript/core/ui/core/view';
-import { ImageCropper } from 'nativescript-imagecropper';
 import { ImagePickerOptions, Mediafilepicker } from 'nativescript-mediafilepicker';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CommunitySuggestionGuideService } from '~/services/community-suggestion-guide.service';
 import { CreateCommunityService } from '~/services/create-community.service';
-import { QFileService } from '~/services/q-file.service';
+import { ImageCropService } from '~/services/image-crop.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { Tag } from '~/shared/models/common.model';
@@ -113,12 +112,10 @@ export class CreateCommunityPageComponent implements OnInit, AfterViewInit {
   communityDescriptionField: any;
   communityTagField: any;
 
-  static FILE_EXTENSION = "jpeg";
-
   constructor(public fb: FormBuilder,
     public createCommunityService: CreateCommunityService,
     public snackBarService: SnackBarService,
-    private qFileService: QFileService,
+    private imageCropService: ImageCropService,
     private _communitySuggestionGuideService: CommunitySuggestionGuideService,
     public page: Page) {
   }
@@ -456,7 +453,10 @@ export class CreateCommunityPageComponent implements OnInit, AfterViewInit {
           console.log("Image found!");
           if (results[key].file) {
             ImageSource.fromFile(results[key].file).then((imageSource) => {
-              this.openImageCropper(imageSource);
+              this.imageCropService.openCommunityAvatarImageCropper(imageSource).then((croppedImg) => {
+                this.communityImage = croppedImg.image;
+                this.communityAvatarPath = croppedImg.path;
+              });
             })
           }
         }
@@ -477,36 +477,6 @@ export class CreateCommunityPageComponent implements OnInit, AfterViewInit {
     mediafilepicker.on("cancel", function (res) {
       let msg = res.object.get('msg');
       console.log(msg);
-    });
-  }
-
-  openImageCropper(imageSource: ImageSource): void {
-    var imageCropper = new ImageCropper();
-    imageCropper.show(imageSource, {}, {
-      setAspectRatioOptions: {
-        defaultIndex: 0,
-        aspectRatios: [
-          {
-            aspectRatioTitle: 'Community Avatar',
-            aspectRatioX: 12,
-            aspectRatioY: 4
-          },
-        ]
-      }
-    }).then((args) => {
-      console.dir(args);
-      if (args.image !== null) {
-        this.communityImage = args.image;
-        let timeStamp = Math.floor(new Date().getTime());
-        this.communityAvatarPath = this.qFileService.createPostFile(String(timeStamp) + `.${CreateCommunityPageComponent.FILE_EXTENSION}`);
-        if (CreateCommunityPageComponent.FILE_EXTENSION === 'jpeg') {
-          imageSource.saveToFile(this.communityAvatarPath, "jpeg");
-        } else {
-          imageSource.saveToFile(this.communityAvatarPath, "png");
-        }
-      }
-    }).catch(function (e) {
-      console.dir(e);
     });
   }
 
