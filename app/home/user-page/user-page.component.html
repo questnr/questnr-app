@@ -37,7 +37,8 @@
                             <qn-user-description-card [bio]="user?.bio"></qn-user-description-card>
                         </GridLayout>
                         <GridLayout class="user-activity">
-                            <qn-user-activity #userActivityComp></qn-user-activity>
+                            <qn-user-activity (onScrollToPostEvent)="onScrollToPostEvent()" #userActivityComp>
+                            </qn-user-activity>
                         </GridLayout>
                         <GridLayout class="user-questions">
                             <qn-question-list-card #questionListCardComp></qn-question-list-card>

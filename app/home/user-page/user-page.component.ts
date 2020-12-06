@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, NgZone, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventData, FinalEventData, Img } from '@nativescript-community/ui-image';
-import { ScrollView } from '@nativescript/core';
+import { Page, ScrollView, StackLayout } from '@nativescript/core';
 import { combineLatest, of, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiService } from '~/services/api.service';
@@ -66,6 +66,7 @@ export class UserPageComponent implements OnInit {
   }
 
   constructor(
+    public page: Page,
     public viewContainerRef: ViewContainerRef,
     private userProfilePageService: UserProfilePageService,
     private route: ActivatedRoute,
@@ -336,5 +337,10 @@ export class UserPageComponent implements OnInit {
 
   onUserDetailsEdit(args): void {
 
+  }
+
+  onScrollToPostEvent(): void {
+    let postTop = this.page.getViewById('user-post-feed') as StackLayout;
+    this.scrollView.scrollToVerticalOffset(postTop.getLocationOnScreen().y, true);
   }
 }
