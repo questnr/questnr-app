@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from '~/environments/environment';
 import { QPage } from '~/shared/models/page.model';
 import { Post } from '~/shared/models/post-action.model';
+import { User } from '~/shared/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,9 @@ export class UserProfilePageService {
     if (!userId) return of();
     return this.http.get(this.baseUrl + 'user/' + userId + '/posts', { params: { page: page, size: size } });
   }
-  getUserProfile(slug) {
+  getUserProfile(slug): Observable<User> {
     if (!slug) return of();
-    return this.http.get(this.baseUrl + 'user/profile/' + slug);
+    return this.http.get<User>(this.baseUrl + 'user/profile/' + slug);
   }
   updateProfilePicture(file) {
     return this.http.post(this.baseUrl + 'user/avatar', file);

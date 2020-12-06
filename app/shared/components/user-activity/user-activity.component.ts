@@ -21,6 +21,7 @@ export class UserActivityComponent implements OnInit {
   qColors = qColors;
   @Input() userInfo: UserInfo;
   @Input() user: User;
+  @Input() actAlone: boolean = false;
   @Output() onScrollToPostEvent = new EventEmitter();
   isLoading: boolean = true;
   communityListTypeClass = CommunityListType;
@@ -41,8 +42,8 @@ export class UserActivityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.user) {
-      this.setUser(this.user);
+    if (this.actAlone && this.user) {
+      this.getUserInfo();
     }
   }
 
@@ -56,14 +57,15 @@ export class UserActivityComponent implements OnInit {
     });
   }
 
-  setUser(user: User) {
+  setData(user: User, userInfo: UserInfo) {
     this.user = user;
-    if (!this.userInfo)
-      this.getUserInfo();
+    this.userInfo = userInfo;
+    this.isLoading = false;
   }
 
   setUserInfo(userInfo: UserInfo): void {
     this.userInfo = userInfo;
+    this.isLoading = false;
   }
 
   openUserListPage(type: UserListType): void {

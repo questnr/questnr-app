@@ -39,6 +39,9 @@
                         <GridLayout class="user-activity">
                             <qn-user-activity #userActivityComp></qn-user-activity>
                         </GridLayout>
+                        <GridLayout class="user-questions">
+                            <qn-question-list-card #questionListCardComp></qn-question-list-card>
+                        </GridLayout>
                         <GridLayout class="create-post">
                             <qn-create-post [isCommunityPost]="false" (onPostCreated)="handlePostCreation($event)"
                                 (onPostEdited)="handlePostEditing($event)">

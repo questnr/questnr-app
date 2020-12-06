@@ -25,7 +25,7 @@ export class QuestionListCardComponent implements OnInit {
   title: string = "Questions";
   totalQuestions: number;
   @Input() type: UserQuestionListModalType = UserQuestionListModalType.user;
-  loading: boolean = true;
+  isLoading: boolean = true;
   isOwner: boolean = false;
   mobileView: boolean = false;
   questionList: Post[] = [];
@@ -79,7 +79,7 @@ export class QuestionListCardComponent implements OnInit {
         this.title = "Your Community's Questions";
       }
     } else {
-      this.loading = false;
+      this.isLoading = false;
       this.notAllowed = true;
     }
   }
@@ -93,6 +93,7 @@ export class QuestionListCardComponent implements OnInit {
         {
           queryParams: {
             community: JSON.stringify(this.community),
+            user: JSON.stringify(this.user),
             type: this.type,
             isOwner: this.isOwner,
             totalCounts: this.totalQuestions,

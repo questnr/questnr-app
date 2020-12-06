@@ -2,7 +2,8 @@ import { Component, ElementRef, Input, NgZone, OnInit, QueryList, ViewChild, Vie
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventData, FinalEventData, Img } from '@nativescript-community/ui-image';
 import { ScrollView } from '@nativescript/core';
-import { Subscription } from 'rxjs';
+import { combineLatest, of, Subscription } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { ApiService } from '~/services/api.service';
 import { AuthService } from '~/services/auth.service';
 import { SnackBarService } from '~/services/snackbar.service';
@@ -11,12 +12,13 @@ import { UserInteractionService } from '~/services/user-interaction.service';
 import { UserProfilePageService } from '~/services/user-profile-page.service';
 import { UserProfileService } from '~/services/user-profile.service';
 import { UtilityService } from '~/services/utility.service';
+import { QuestionListCardComponent } from '~/shared/components/question-list-card/question-list-card.component';
 import { UserActivityComponent } from '~/shared/components/user-activity/user-activity.component';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { SimplePostComponent } from '~/shared/containers/simple-post/simple-post.component';
 import { QPage } from '~/shared/models/page.model';
 import { Post, PostType, QuestionParentType } from '~/shared/models/post-action.model';
-import { User } from '~/shared/models/user.model';
+import { User, UserInfo } from '~/shared/models/user.model';
 import { qColors } from '~/_variables';
 
 @Component({
@@ -41,6 +43,7 @@ export class UserPageComponent implements OnInit {
   questionParentTypeClass = QuestionParentType;
   postTypeClass = PostType;
   pageSize = "4";
+  userInfo: UserInfo;
   qColors = qColors;
   scrollView: ScrollView;
   feedSubscriber: Subscription;
@@ -56,6 +59,11 @@ export class UserPageComponent implements OnInit {
   set userActivityComp(userActivityCompRef: UserActivityComponent) {
     this.userActivityCompRef = userActivityCompRef;
   }
+  questionListCardCompRef: QuestionListCardComponent;
+  @ViewChild('questionListCardComp')
+  set questionListCardComp(questionListCardCompRef: QuestionListCardComponent) {
+    this.questionListCardCompRef = questionListCardCompRef;
+  }
 
   constructor(
     public viewContainerRef: ViewContainerRef,
@@ -65,7 +73,7 @@ export class UserPageComponent implements OnInit {
     private authService: AuthService,
     private api: ApiService,
     private router: Router,
-    private userActivitySerice: UserActivityService,
+    private userActivityService: UserActivityService,
     private utilityService: UtilityService,
     public userInteractionService: UserInteractionService,
     private ngZone: NgZone,
@@ -77,7 +85,7 @@ export class UserPageComponent implements OnInit {
       // this.afterReceivingUser(true);
       // } else if (this.userSlug) {
       this.userSlug = this.authService.getStoredUserProfile().slug;
-      this.getUserProfileDetails();
+      this.getUserProfileDetails(true);
       // }
     });
   }
@@ -119,9 +127,38 @@ export class UserPageComponent implements OnInit {
     this.scrollCached = event;
   }
 
+  getUserProfileDetails(fetchUser: boolean = false) {
+    let subscriberList = [];
+    const userInforSubscriber = this.userActivityService.getUserInfo(this.userSlug).pipe(catchError((error: any) => {
+      // console.log(error.error.errorMessage);
+      return of(null);
+    }));
+    if (fetchUser) {
+      const userSubscriber = this.userProfilePageService.getUserProfile(this.userSlug).pipe(catchError((error: any) => {
+        // console.log(error.error.errorMessage);
+        return of(null);
+      }));
+      subscriberList.push(userSubscriber);
+    }
+    subscriberList.push(userInforSubscriber);
+
+    combineLatest(subscriberList).subscribe(
+      (responseList) => {
+        if (fetchUser) {
+          this.user = responseList[0] as User;
+          this.userInfo = responseList[1] as UserInfo;
+        } else {
+          this.userInfo = responseList[0] as UserInfo;
+        }
+        this.afterReceivingUser(true);
+      });
+  }
+
   afterReceivingUser(callFromConstructor: boolean = false): void {
-    this.userActivityCompRef.setUser(this.user);
     this.restartUserFeeds(callFromConstructor);
+    this.userActivityCompRef.setData(this.user, this.userInfo);
+    this.questionListCardCompRef.setUserData(this.user);
+    this.questionListCardCompRef.setTotalQuestion(this.userInfo.totalQuestions);
   }
 
   restartUserFeeds(callFromConstructor: boolean = false) {
@@ -268,15 +305,6 @@ export class UserPageComponent implements OnInit {
           }
         });
       }
-    });
-  }
-
-  getUserProfileDetails() {
-    this.userProfilePageService.getUserProfile(this.userSlug).subscribe((user: User) => {
-      this.user = user;
-      this.afterReceivingUser(true);
-    }, (error) => {
-      this.snackBarService.showHTTPError(error);
     });
   }
 

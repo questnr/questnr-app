@@ -6,7 +6,7 @@
     <GridLayout class="question-list-page-wrapper" *ngIf="questionList?.length">
         <RadListView row="0" [items]="questionList" orientation="vertical" [itemTemplateSelector]="templateSelector"
             loadOnDemandMode="Auto" (loadMoreDataRequested)="onLoadMoreItemsRequested($event)">
-            <ListViewLinearLayout scrollDirection="Vertical" dynamicItemSize="false" itemHeight="45">
+            <ListViewLinearLayout scrollDirection="Vertical" dynamicItemSize="false" itemHeight="55">
             </ListViewLinearLayout>
             <ng-template tkListItemTemplate let-question="item" let-index="index" tkTemplateKey="userView">
                 <GridLayout class="question-horizontal-view-container" rows="*">

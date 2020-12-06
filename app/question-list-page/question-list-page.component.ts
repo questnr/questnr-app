@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ObservableArray } from '@nativescript/core';
 import { LoadOnDemandListViewEventData, RadListView } from 'nativescript-ui-listview';
 import { Subscription } from 'rxjs';
 import { UserQuestionService } from '~/services/user-question.service';
@@ -18,8 +19,8 @@ export class QuestionListPageComponent implements OnInit {
   community: Community;
   title: string;
   type: UserQuestionListModalType = UserQuestionListModalType.user;
-  loading: boolean = true;
-  questionList: Post[] = [];
+  isLoading: boolean = true;
+  questionList: ObservableArray<Post> = new ObservableArray<Post>();
   totalCounts: number;
   isOwner: boolean = false;
   mobileView: boolean = false;
@@ -86,24 +87,23 @@ export class QuestionListPageComponent implements OnInit {
   }
 
   fetchData() {
-    this.loading = true;
+    this.isLoading = true;
     if (!this.fetchingFunc) return;
     this.userQuestionSubscriber = this.fetchingFunc(
       this.uniqueId, String(this.page)).subscribe((questionPage: QPage<Post>) => {
         if (questionPage.content.length) {
           this.hasTotalPage = questionPage.totalPages;
           this.page++;
-          this.endOfResult = questionPage.last;
-          this.loading = false;
+          this.isLoading = false;
           questionPage.content.forEach(question => {
             this.questionList.push(question);
           });
         } else {
-          this.loading = false;
+          this.isLoading = false;
           this.endOfResult = true;
         }
       }, error => {
-        this.loading = false;
+        this.isLoading = false;
       });
   }
 
