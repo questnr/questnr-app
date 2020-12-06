@@ -6,6 +6,8 @@ import {
 import { AttachedFileModule } from '~/attached-file-list/attached-file.module';
 import { CommentItemComponent } from './components/comment-item/comment-item.component';
 import { CommunityActivityComponent } from './components/community-activity/community-activity.component';
+import { CommunityCardViewComponent } from './components/community-card-view/community-card-view.component';
+import { CommunityHorizontalListViewComponent } from './components/community-horizontal-list-view/community-horizontal-list-view.component';
 import { CommunityRelationActionButtonComponent } from './components/community-relation-action-button/community-relation-action-button.component';
 import { CreateCommentComponent } from './components/create-comment/create-comment.component';
 import { HorizontalOwnerProfileComponent } from './components/horizontal-owner-profile/horizontal-owner-profile.component';
@@ -23,7 +25,9 @@ import { CommunityMembersComponent } from './containers/community-members/commun
 import { CreatePostComponent } from './containers/create-post/create-post.component';
 import { FeedTextComponent } from './containers/feed-text/feed-text.component';
 import { HorizontalProfileComponent } from './containers/horizontal-profile/horizontal-profile.component';
+import { JoinedCommunityComponent } from './containers/joined-community/joined-community.component';
 import { MediaContainerComponent } from './containers/media-container/media-container.component';
+import { OwnedCommunityComponent } from './containers/owned-community/owned-community.component';
 import { PostInteractionPanelComponent } from './containers/post-interaction-panel/post-interaction-panel.component';
 import { ProfileIconComponent } from './containers/profile-icon/profile-icon.component';
 import { SimplePostComponent } from './containers/simple-post/simple-post.component';
@@ -75,7 +79,11 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     QuestionHorizontalViewComponent,
     UserDescriptionCardComponent,
     UserActivityComponent,
-    UserActivityBarComponent
+    UserActivityBarComponent,
+    CommunityCardViewComponent,
+    CommunityHorizontalListViewComponent,
+    JoinedCommunityComponent,
+    OwnedCommunityComponent
   ],
   providers: [
   ],
@@ -111,7 +119,11 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     QuestionHorizontalViewComponent,
     UserDescriptionCardComponent,
     UserActivityComponent,
-    UserActivityBarComponent
+    UserActivityBarComponent,
+    CommunityCardViewComponent,
+    CommunityHorizontalListViewComponent,
+    JoinedCommunityComponent,
+    OwnedCommunityComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

@@ -5,7 +5,7 @@
   [height]="qHeight" (tap)="deleteUsersOwnPendingCommunityJoinRequests()" text="Requested">
 </Button>
 <Button class="fa none" *ngIf="!isLoading && relation===relationTypeClass.NONE" (tap)="followThisCommunty()"
-  [height]="qHeight" [text]="communityType === communityPrivacyClass.pub ? '&#xf09c;&nbsp;Join': '&#xf023;&nbsp;Join'">
+  [height]="qHeight" [text]="communityType === communityPrivacyClass.pub ? '&#xf067;&nbsp;Join': '&#xf023;&nbsp;Join'">
 </Button>
 <GridLayout *ngIf="isLoading" class="loader" [height]="qHeight">
   <qn-loader [radius]="30" [color]="qColors.$heading" verticalAlignment="middle" horizontalAlignment="center">

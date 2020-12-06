@@ -15,6 +15,8 @@ import { UtilityService } from '~/services/utility.service';
 import { QuestionListCardComponent } from '~/shared/components/question-list-card/question-list-card.component';
 import { UserActivityComponent } from '~/shared/components/user-activity/user-activity.component';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
+import { JoinedCommunityComponent } from '~/shared/containers/joined-community/joined-community.component';
+import { OwnedCommunityComponent } from '~/shared/containers/owned-community/owned-community.component';
 import { SimplePostComponent } from '~/shared/containers/simple-post/simple-post.component';
 import { QPage } from '~/shared/models/page.model';
 import { Post, PostType, QuestionParentType } from '~/shared/models/post-action.model';
@@ -63,6 +65,16 @@ export class UserPageComponent implements OnInit {
   @ViewChild('questionListCardComp')
   set questionListCardComp(questionListCardCompRef: QuestionListCardComponent) {
     this.questionListCardCompRef = questionListCardCompRef;
+  }
+  joinedCommunityCompRef: JoinedCommunityComponent;
+  @ViewChild('joinedCommunityComp')
+  set joinedCommunityComp(joinedCommunityCompRef: JoinedCommunityComponent) {
+    this.joinedCommunityCompRef = joinedCommunityCompRef;
+  }
+  ownedCommunityCompRef: OwnedCommunityComponent;
+  @ViewChild('ownedCommunityComp')
+  set ownedCommunityComp(ownedCommunityCompRef: OwnedCommunityComponent) {
+    this.ownedCommunityCompRef = ownedCommunityCompRef;
   }
 
   constructor(
@@ -160,6 +172,10 @@ export class UserPageComponent implements OnInit {
     this.userActivityCompRef.setData(this.user, this.userInfo);
     this.questionListCardCompRef.setUserData(this.user);
     this.questionListCardCompRef.setTotalQuestion(this.userInfo.totalQuestions);
+    this.joinedCommunityCompRef.setUser(this.user);
+    this.joinedCommunityCompRef.setCommunityCount(this.userInfo.followsCommunities);
+    this.ownedCommunityCompRef.setUser(this.user);
+    this.ownedCommunityCompRef.setCommunityCount(this.userInfo.ownsCommunities);
   }
 
   restartUserFeeds(callFromConstructor: boolean = false) {

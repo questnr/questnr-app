@@ -1,0 +1,20 @@
+<CardView class="community-card-view-wrapper" [radius]="qRadius.$communityCardRadius" elevation="10"
+  (tap)="onCommunityPageOpen($event)">
+  <GridLayout [rows]="showJoinButton ? '*, auto, auto': '*, auto'">
+    <GridLayout [height]="height" class="community-avatar" row="0">
+      <NSImg [placeholderImageUri]="defaultSrc" [failureImageUri]="defaultSrc"
+        [src]="community?.avatarDTO?.avatarLink ? community?.avatarDTO?.avatarLink : defaultSrc" loadMode="async"
+        stretch="aspectFill" (failure)="onFailure($event)">
+      </NSImg>
+    </GridLayout>
+    <StackLayout row="1" class="community-details">
+      <Label class="name" [text]="community.communityName" horizontalAlignment="center"></Label>
+      <Label class="description" [text]="community.description" horizontalAlignment="center"></Label>
+    </StackLayout>
+    <StackLayout row="2" class="community-join-action" *ngIf="showJoinButton && relation != relationTypeClass.OWNED">
+      <qn-community-relation-action-button [community]="community" [relation]="relation" [qHeight]="30"
+        (actionEvent)="onActionEvent($event)" horizontalAlignment="center">
+      </qn-community-relation-action-button>
+    </StackLayout>
+  </GridLayout>
+</CardView>

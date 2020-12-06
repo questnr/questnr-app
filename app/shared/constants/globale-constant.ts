@@ -35,6 +35,7 @@ export class GlobalConstants {
   public static contactPath = 'contact';
   public static userListPath = 'users';
   public static questionListPath = 'questions';
+  public static communityListPath = 'communities';
 
   public static supportEmail = 'support@questnr.com';
   public static noReplyEmail = 'noreply@questnr.com';

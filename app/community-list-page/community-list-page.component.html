@@ -1,0 +1,37 @@
+<Page xmlns="http://www.nativescript.org/tns.xsd">
+  <Page.actionBar>
+    <qn-action-bar [pageViewContainerRef]="viewContainerRef" [isChildPage]="true" [title]="listTitle"></qn-action-bar>
+  </Page.actionBar>
+  <GridLayout class="community-list-page-wrapper" *ngIf="communityList?.length">
+    <RadListView row="0" [items]="communityList" orientation="vertical" [itemTemplateSelector]="templateSelector"
+      (loaded)="onUserListViewLoaded($event)" loadOnDemandMode="Auto"
+      (loadMoreDataRequested)="onLoadMoreItemsRequested($event)">
+      <ListViewGridLayout tkListViewLayout scrollDirection="Vertical" dynamicItemSize="false" spanCount="2">
+      </ListViewGridLayout>
+      <ng-template tkListItemTemplate let-community="item" let-index="index" tkTemplateKey="userView">
+        <GridLayout class="community-card-view-container" rows="*">
+          <qn-community-card-view [community]="community"></qn-community-card-view>
+        </GridLayout>
+      </ng-template>
+      <!-- <GridLayout *tkListLoadOnDemandTemplate backgroundColor="black" height="100" width="100"
+        (loaded)="onLoadOnDemandLoaded($event)">
+      </GridLayout> -->
+    </RadListView>
+  </GridLayout>
+</Page>
+
+<!-- <ng-template>
+  <StackLayout *ngIf="isLoading" orientation="vertical">
+    <qn-horizontal-profile-skeleton [items]="4" [height]="30"></qn-horizontal-profile-skeleton>
+  </StackLayout>
+
+  <StackLayout *ngIf="endOfResult" orientation="horizontal" horizontalAlignment="center">
+    <Label text="You have reached the end!"></Label>
+  </StackLayout>
+
+  <StackLayout orientation="horizontal">
+    <Label class="no-data" textWrap="true" *ngIf="isEmpty" horizontalAlignment="center"
+      text="Sorry, we don't have any data matching with given input">
+    </Label>
+  </StackLayout>
+</ng-template> -->

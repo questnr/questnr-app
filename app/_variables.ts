@@ -115,5 +115,6 @@ export const qZIndex = {
 }
 
 export const qRadius = {
-    $cardRadius: 10
+    $cardRadius: 10,
+    $communityCardRadius: 20
 }

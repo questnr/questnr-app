@@ -43,6 +43,14 @@
                         <GridLayout class="user-questions">
                             <qn-question-list-card #questionListCardComp></qn-question-list-card>
                         </GridLayout>
+                    </StackLayout>
+                    <GridLayout class="user-joined-communities">
+                        <qn-joined-community #joinedCommunityComp></qn-joined-community>
+                    </GridLayout>
+                    <GridLayout class="user-owned-communities">
+                        <qn-owned-community #ownedCommunityComp></qn-owned-community>
+                    </GridLayout>
+                    <StackLayout class="user-body">
                         <GridLayout class="create-post">
                             <qn-create-post [isCommunityPost]="false" (onPostCreated)="handlePostCreation($event)"
                                 (onPostEdited)="handlePostEditing($event)">

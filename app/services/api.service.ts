@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from '~/environments/environment';
 import { Community } from '~/shared/models/community.model';
 import { HashTag } from '~/shared/models/hashtag.model';
@@ -23,6 +23,10 @@ export class ApiService {
   }
   getTopUsers() {
     return this.http.get(this.baseUrl + 'users-with-highest-rank');
+  }
+  getUserOwnedCommunity(userId, page): Observable<QPage<Community>> {
+    if (!userId) return of();
+    return this.http.get<QPage<Community>>(this.baseUrl + 'user/' + userId + '/community', { params: { page } });
   }
   getJoinedCommunities(userId, page) {
     if (!userId) return of();

@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { CommentPageComponent } from './comment-page/comment-page.component';
+import { CommunityListPageComponent } from './community-list-page/community-list-page.component';
 import { CommunityPageComponent } from './community-page/community-page.component';
 import { HomeModule } from './home/home.module';
 import { InterceptorService } from './interceptor.service';
@@ -71,7 +72,8 @@ if (applicationModule.android) {
     CommentPageComponent,
     CommunityPageComponent,
     UserListPageComponent,
-    QuestionListPageComponent
+    QuestionListPageComponent,
+    CommunityListPageComponent
   ],
   imports: [
     NativeScriptModule,
