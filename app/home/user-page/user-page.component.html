@@ -36,6 +36,9 @@
                         <GridLayout class="user-description">
                             <qn-user-description-card [bio]="user?.bio"></qn-user-description-card>
                         </GridLayout>
+                        <GridLayout class="user-activity">
+                            <qn-user-activity #userActivityComp></qn-user-activity>
+                        </GridLayout>
                         <GridLayout class="create-post">
                             <qn-create-post [isCommunityPost]="false" (onPostCreated)="handlePostCreation($event)"
                                 (onPostEdited)="handlePostEditing($event)">

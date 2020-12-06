@@ -13,6 +13,8 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { PostMenuOptionComponent } from './components/post-menu-option/post-menu-option.component';
 import { QuestionHorizontalViewComponent } from './components/question-horizontal-view/question-horizontal-view.component';
 import { QuestionListCardComponent } from './components/question-list-card/question-list-card.component';
+import { UserActivityBarComponent } from './components/user-activity/user-activity-bar/user-activity-bar.component';
+import { UserActivityComponent } from './components/user-activity/user-activity.component';
 import { UserDescriptionCardComponent } from './components/user-description-card/user-description-card.component';
 import { VerticalLineComponent } from './components/vertical-line/vertical-line.component';
 import { ActionBarComponent } from './containers/action-bar/action-bar.component';
@@ -71,7 +73,9 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     VerticalLineComponent,
     QuestionListCardComponent,
     QuestionHorizontalViewComponent,
-    UserDescriptionCardComponent
+    UserDescriptionCardComponent,
+    UserActivityComponent,
+    UserActivityBarComponent
   ],
   providers: [
   ],
@@ -105,7 +109,9 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     VerticalLineComponent,
     QuestionListCardComponent,
     QuestionHorizontalViewComponent,
-    UserDescriptionCardComponent
+    UserDescriptionCardComponent,
+    UserActivityComponent,
+    UserActivityBarComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

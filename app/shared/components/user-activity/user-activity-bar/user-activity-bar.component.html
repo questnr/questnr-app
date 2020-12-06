@@ -1,0 +1,10 @@
+<GridLayout class="user-activity-bar-wrapper" (loaded)="onActivityBarViewLoaded($event)">
+    <GridLayout class="panes">
+        <GridLayout id="left-pane">
+            <ng-content select="[leftPane]"></ng-content>
+        </GridLayout>
+        <GridLayout id="right-pane">
+            <ng-content select="[rightPane]"></ng-content>
+        </GridLayout>
+    </GridLayout>
+</GridLayout>

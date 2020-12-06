@@ -11,6 +11,7 @@ import { UserInteractionService } from '~/services/user-interaction.service';
 import { UserProfilePageService } from '~/services/user-profile-page.service';
 import { UserProfileService } from '~/services/user-profile.service';
 import { UtilityService } from '~/services/utility.service';
+import { UserActivityComponent } from '~/shared/components/user-activity/user-activity.component';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { SimplePostComponent } from '~/shared/containers/simple-post/simple-post.component';
 import { QPage } from '~/shared/models/page.model';
@@ -49,6 +50,12 @@ export class UserPageComponent implements OnInit {
   userAvatarView: any;
   userBannerView: any;
   showAvatar: boolean = true;
+
+  userActivityCompRef: UserActivityComponent;
+  @ViewChild("userActivityComp")
+  set userActivityComp(userActivityCompRef: UserActivityComponent) {
+    this.userActivityCompRef = userActivityCompRef;
+  }
 
   constructor(
     public viewContainerRef: ViewContainerRef,
@@ -113,6 +120,7 @@ export class UserPageComponent implements OnInit {
   }
 
   afterReceivingUser(callFromConstructor: boolean = false): void {
+    this.userActivityCompRef.setUser(this.user);
     this.restartUserFeeds(callFromConstructor);
   }
 

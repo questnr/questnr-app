@@ -1,0 +1,54 @@
+<qn-activity-bar *ngIf="!isLoading" #activityBarComp>
+  <GridLayout leftPane>
+    <CardView class="user-activity-wrapper" [radius]="qRadius.$cardRadius" elevation="4">
+      <GridLayout>
+        <FlexboxLayout class="activity-items" justifyContent="space-around">
+          <StackLayout class="activity-item" ripple [rippleColor]="qColors.$primary" (tap)="openCommunityListPage()">
+            <Label class="figure" [text]="userInfo?.ownsCommunities" horizontalAlignment="center"></Label>
+            <Label class="caption" text="Owns communities" horizontalAlignment="center" textWrap="true"></Label>
+          </StackLayout>
+          <StackLayout class="activity-item" ripple [rippleColor]="qColors.$primary" (tap)="openCommunityListPage()">
+            <Label class="figure" [text]="userInfo?.followsCommunities" horizontalAlignment="center"></Label>
+            <Label class="caption" text="Joined communities" horizontalAlignment="center" textWrap="true"></Label>
+          </StackLayout>
+          <StackLayout class="toggle-btn" verticalAlignment="middle" ripple [rippleColor]="qColors.$heading"
+            orientation="horizontal" (tap)="onArrowTap(false)">
+            <Label class="left fa" text="&#xf101;" verticalAlignment="middle" horizontalAlignment="right"></Label>
+          </StackLayout>
+        </FlexboxLayout>
+      </GridLayout>
+    </CardView>
+  </GridLayout>
+  <GridLayout rightPane>
+    <CardView class="user-activity-wrapper" [radius]="qRadius.$cardRadius" elevation="4">
+      <GridLayout>
+        <FlexboxLayout class="activity-items" justifyContent="space-around">
+          <StackLayout class="toggle-btn" verticalAlignment="middle" ripple [rippleColor]="qColors.$heading"
+            orientation="horizontal" (tap)="onArrowTap(true)">
+            <Label class="right fa" text="&#xf100;" verticalAlignment="middle" horizontalAlignment="left"></Label>
+          </StackLayout>
+          <StackLayout class="activity-item" ripple [rippleColor]="qColors.$primary"
+            (tap)="openUserListPage(userListTypeClass.followers)">
+            <Label class="figure" [text]="userInfo?.followers" horizontalAlignment="center"></Label>
+            <Label class="caption" text="Followers" horizontalAlignment="center"></Label>
+          </StackLayout>
+          <StackLayout class="activity-item" ripple [rippleColor]="qColors.$primary"
+            (tap)="openUserListPage(userListTypeClass.following)">
+            <Label class="figure" [text]="userInfo?.followingTo" horizontalAlignment="center"></Label>
+            <Label class="caption" text="Following" horizontalAlignment="center"></Label>
+          </StackLayout>
+          <StackLayout class="activity-item" ripple [rippleColor]="qColors.$primary" (tap)="scrollToPosts($event)">
+            <Label class="figure" [text]="userInfo?.posts" horizontalAlignment="center"></Label>
+            <Label class="caption" text="Total posts" horizontalAlignment="center"></Label>
+          </StackLayout>
+        </FlexboxLayout>
+      </GridLayout>
+    </CardView>
+  </GridLayout>
+</qn-activity-bar>
+<CardView class="user-activity-wrapper" [radius]="qRadius.$cardRadius" elevation="4" *ngIf="isLoading">
+  <GridLayout class="loader">
+    <qn-loader [radius]="30" [color]="qColors.$heading" verticalAlignment="middle" horizontalAlignment="center">
+    </qn-loader>
+  </GridLayout>
+</CardView>

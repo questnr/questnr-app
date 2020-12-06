@@ -1,7 +1,7 @@
 @import "~/variables";
 @import "scss/mixins/index";
 
-.community-activity-wrapper {
+.user-activity-wrapper {
   width: 90%;
   margin: 3;
   border-width: 3;
@@ -15,20 +15,17 @@
     }
     .caption {
       color: $black;
+      text-align: center;
       @include make-font-size(1);
-    }
-  }
-  .trend-item {
-    .figure {
-      @include make-font-size(4);
-      color: $primary;
-    }
-    .caption {
-      @include make-font-size(2);
-      color: $heading;
     }
   }
   .loader {
     margin: 10;
+  }
+  .toggle-btn {
+    @include make-font-size(2);
+    padding: 5;
+    margin: 0;
+    color: $primary;
   }
 }
