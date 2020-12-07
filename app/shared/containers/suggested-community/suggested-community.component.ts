@@ -8,49 +8,43 @@ import { QPage } from '~/shared/models/page.model';
 import { User } from '~/shared/models/user.model';
 
 @Component({
-  selector: 'qn-joined-community',
-  templateUrl: './joined-community.component.html',
-  styleUrls: ['./joined-community.component.scss']
+  selector: 'qn-suggested-community',
+  templateUrl: './suggested-community.component.html',
+  styleUrls: ['./suggested-community.component.scss']
 })
-export class JoinedCommunityComponent implements OnInit {
-  followsCommunities: number;
+export class SuggestedCommunityComponent implements OnInit {
   user: User;
   userId: number;
-  isOwner: boolean = false;
   CommunityListTypeClass = CommunityListType;
   CommunityListMatCardTypeClass = CommunityListMatCardType;
-  @ViewChild("joinedCommunityBox") joinedCommunityBox: CommunityHorizontalListViewComponent;
+  suggestedCommunityBoxRef: CommunityHorizontalListViewComponent;
+  @ViewChild("suggestedCommunityBox")
+  set suggestedCommunityBox(suggestedCommunityBoxRef: CommunityHorizontalListViewComponent) {
+    this.suggestedCommunityBoxRef = suggestedCommunityBoxRef;
+    this.suggestedCommunityBoxRef.startLoading(0);
+  }
+  hasBeenDestroyed: boolean = false;
 
   constructor(public apiService: ApiService,
     public authService: AuthService) {
+    this.user = this.authService.getUser();
   }
 
   ngOnInit(): void {
+    this.fetchSuggestedCommunityList();
   }
 
-  setCommunityCount(followsCommunities: number) {
-    this.followsCommunities = followsCommunities;
-    this.joinedCommunityBox.startLoading(this.followsCommunities);
-  }
-
-  setUser(user: User) {
-    this.user = user;
-    this.fetchJoinedCommunityList();
-  }
-
-  fetchJoinedCommunityList(): void {
-    this.userId = this.user?.userId;
-    if (this.authService.isThisLoggedInUser(this.userId)) {
-      this.isOwner = true;
-    }
-    this.apiService.getJoinedCommunities(this.userId, 0).subscribe(
+  fetchSuggestedCommunityList(): void {
+    this.apiService.getSuggestedCommunities().subscribe(
       (res: QPage<Community>) => {
         if (res.content.length) {
-          this.joinedCommunityBox.setData(res.content, this.isOwner);
+          this.suggestedCommunityBoxRef.setData(res.content);
         } else {
-          this.joinedCommunityBox.setData([], this.isOwner);
+          this.hasBeenDestroyed = true;
+          this.suggestedCommunityBoxRef.setData([]);
         }
       }, err => {
+        this.hasBeenDestroyed = true;
       }
     );
   }

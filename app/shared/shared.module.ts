@@ -32,6 +32,7 @@ import { PostInteractionPanelComponent } from './containers/post-interaction-pan
 import { ProfileIconComponent } from './containers/profile-icon/profile-icon.component';
 import { SimplePostComponent } from './containers/simple-post/simple-post.component';
 import { SimpleQuestionComponent } from './containers/simple-question/simple-question.component';
+import { SuggestedCommunityComponent } from './containers/suggested-community/suggested-community.component';
 import { TimeStringComponent } from './containers/time-string/time-string.component';
 import { UsernameComponent } from './containers/username/username.component';
 import { MaterialModule } from './material.module';
@@ -83,7 +84,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     CommunityCardViewComponent,
     CommunityHorizontalListViewComponent,
     JoinedCommunityComponent,
-    OwnedCommunityComponent
+    OwnedCommunityComponent,
+    SuggestedCommunityComponent
   ],
   providers: [
   ],
@@ -123,7 +125,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     CommunityCardViewComponent,
     CommunityHorizontalListViewComponent,
     JoinedCommunityComponent,
-    OwnedCommunityComponent
+    OwnedCommunityComponent,
+    SuggestedCommunityComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

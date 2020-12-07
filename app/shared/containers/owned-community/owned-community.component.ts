@@ -46,12 +46,11 @@ export class OwnedCommunityComponent implements OnInit {
     this.apiService.getUserOwnedCommunity(this.userId, 0).subscribe((res: QPage<Community>) => {
       // console.log("OWNED COMMUNITES", res);
       if (res.content.length) {
-        this.ownedCommunityBox.setData(this.isOwner, res.content);
+        this.ownedCommunityBox.setData(res.content, this.isOwner);
       } else {
-        this.ownedCommunityBox.setData(this.isOwner, []);
+        this.ownedCommunityBox.setData([], this.isOwner);
       }
     }, err => {
-      this.ownedCommunityBox.stopLoading();
     });
   }
 }

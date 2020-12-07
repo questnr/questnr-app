@@ -20,7 +20,7 @@ export class CommunityHorizontalListViewSkeletonComponent implements OnInit {
     this.setListItems(this.rows && this.rows < 6 ? this.rows : 5);
   }
 
-  setListItems(rows: number) {
+  setListItems(rows: number = 5) {
     this.rows = rows < 6 ? rows : 5;
     this.listItems = Array(this.rows);
   }

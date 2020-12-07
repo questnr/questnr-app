@@ -26,7 +26,7 @@ export class CommunityHorizontalListViewComponent implements OnInit {
   isOwner: boolean = false;
   communityBoxTitle: string;
   CommunityListMatCardTypeClass = CommunityListMatCardType;
-  loadingCommunities = true;
+  loadingCommunities: boolean = true;
   communityPath: string = GlobalConstants.communityPath;
   communityListViewLoaderCompRef: CommunityHorizontalListViewSkeletonComponent;
   @ViewChild("communityListViewLoaderComp")
@@ -48,16 +48,19 @@ export class CommunityHorizontalListViewComponent implements OnInit {
       this.communityBoxTitle = "Joined Communities";
     } else if (this.communityListType == CommunityListType.owned) {
       this.communityBoxTitle = "Owned Communities";
+    } else if (this.communityListType == CommunityListType.suggested) {
+      this.communityBoxTitle = "Communities You Might Like";
+      this.showJoinButton = false;
     }
   }
 
-  startLoading(totalCommunityCount: number = 5) {
+  startLoading(totalCommunityCount) {
     this.totalCommunityCount = totalCommunityCount;
     this.communityListViewLoaderCompRef?.setListItems(this.totalCommunityCount);
     this.loadingCommunities = true;
   }
 
-  setData(isOwner: boolean, communityList: Community[]) {
+  setData(communityList: Community[], isOwner: boolean = false) {
     this.isOwner = isOwner;
     this.communityList = communityList;
     this.loadingCommunities = false;

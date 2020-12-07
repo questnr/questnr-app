@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FinalEventData, Img } from '@nativescript-community/ui-image';
+import { RouterExtensions } from '@nativescript/angular';
+import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
+import { GlobalConstants } from '~/shared/constants';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { Community } from '~/shared/models/community.model';
 import { RelationType } from '~/shared/models/relation-type';
@@ -20,7 +23,7 @@ export class CommunityCardViewComponent implements OnInit {
   relationTypeClass = RelationType;
   relation: RelationType;
 
-  constructor() { }
+  constructor(private routerExtensions: RouterExtensions) { }
 
   ngOnInit() {
     this.relation = this.community?.communityMeta?.relationShipType;
@@ -38,6 +41,13 @@ export class CommunityCardViewComponent implements OnInit {
   }
 
   onCommunityPageOpen(args): void {
-
+    this.routerExtensions.navigate(['/', GlobalConstants.communityPath, this.community.slug], {
+      animated: true,
+      transition: {
+        name: "slideLeft",
+        duration: 400,
+        curve: new CubicBezierAnimationCurve(.08, .47, .19, .97)
+      }
+    })
   }
 }
