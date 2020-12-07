@@ -1,0 +1,20 @@
+@import "~/variables";
+
+.community-card-view-skeleton {
+    background-color: $gray-font;
+    .community-avatar {
+        border-bottom-width: 2;
+        border-color: $primary;
+        background-color: $gray;
+    }
+    .community-details {
+        .name {
+            height: 16;
+        }
+        .description {
+            height: 14;
+        }
+    }
+    .community-join-action {
+    }
+}

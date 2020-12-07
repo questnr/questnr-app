@@ -1,0 +1,16 @@
+<CardView [radius]="qRadius.$communityCardRadius" elevation="10" class="community-card-view-skeleton"
+  [width]="height * 3">
+  <GridLayout [rows]="showJoinButton ? '*, auto, auto': '*, auto'" horizontalAlignment="stretch">
+    <GridLayout [height]="height" class="community-avatar" row="0">
+
+    </GridLayout>
+    <StackLayout row="1" class="community-details" horizontalAlignment="stretch" width="100%">
+      <Label class="name skeleton" text=" " horizontalAlignment="center" width="50%"></Label>
+      <Label class="description skeleton" text=" " horizontalAlignment="center" width="60%"></Label>
+    </StackLayout>
+    <StackLayout row="2" class="community-join-action" *ngIf="showJoinButton" horizontalAlignment="stretch"
+      width="100%">
+      <Label class="description skeleton" text=" " horizontalAlignment="center" width="90" height="30"></Label>
+    </StackLayout>
+  </GridLayout>
+</CardView>

@@ -1,0 +1,11 @@
+<GridLayout class="community-horizontal-list-view-skeleton">
+  <RadListView row="1" [items]="listItems" orientation="horizontal" [itemTemplateSelector]="templateSelector">
+    <ListViewLinearLayout tkListViewLayout scrollDirection="Horizontal" itemDeleteAnimation="Slide">
+    </ListViewLinearLayout>
+    <ng-template let-item="item" let-index="index" tkTemplateKey="communityView">
+      <GridLayout class="community-card-view-container">
+        <qn-community-card-view-skeleton></qn-community-card-view-skeleton>
+      </GridLayout>
+    </ng-template>
+  </RadListView>
+</GridLayout>

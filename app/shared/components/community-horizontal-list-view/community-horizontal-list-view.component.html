@@ -4,13 +4,18 @@
     <Label class="count fa" [text]="totalCommunityCount+'&nbsp;&nbsp;&#xf061;'" *ngIf="totalCommunityCount"
       (tap)="onOpenCommunityListPage($event)" ripple [rippleColor]="qColors.$gray"></Label>
   </FlexboxLayout>
-  <RadListView row="1" [items]="communityList" orientation="horizontal" [itemTemplateSelector]="templateSelector">
+  <RadListView row="1" [items]="communityList" orientation="horizontal" [itemTemplateSelector]="templateSelector"
+    *ngIf="!loadingCommunities">
     <ListViewLinearLayout tkListViewLayout scrollDirection="Horizontal" itemDeleteAnimation="Slide">
     </ListViewLinearLayout>
     <ng-template let-community="item" let-index="index" tkTemplateKey="communityView">
       <GridLayout class="community-card-view-container">
-        <qn-community-card-view [community]="community"></qn-community-card-view>
+        <qn-community-card-view [community]="community" [showJoinButton]="showJoinButton"></qn-community-card-view>
       </GridLayout>
     </ng-template>
   </RadListView>
+  <GridLayout row="1" *ngIf="loadingCommunities">
+    <qn-community-horizontal-list-view-skeleton [showJoinButton]="showJoinButton">
+    </qn-community-horizontal-list-view-skeleton>
+  </GridLayout>
 </GridLayout>

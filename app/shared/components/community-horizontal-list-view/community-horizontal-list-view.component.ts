@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { ApiService } from '~/services/api.service';
@@ -7,6 +7,7 @@ import { GlobalConstants } from '~/shared/constants';
 import { CommunityListMatCardType } from '~/shared/models/community-list.model';
 import { Community, CommunityListType } from '~/shared/models/community.model';
 import { User } from '~/shared/models/user.model';
+import { CommunityHorizontalListViewSkeletonComponent } from '~/shared/skeletons/community-horizontal-list-view-skeleton/community-horizontal-list-view-skeleton.component';
 import { qColors } from '~/_variables';
 
 @Component({
@@ -21,16 +22,17 @@ export class CommunityHorizontalListViewComponent implements OnInit {
   @Input() totalCommunityCount: number = 0;
   @Input() user: User;
   @Input() communityListType: CommunityListType;
+  @Input() showJoinButton: boolean = true;
   isOwner: boolean = false;
   communityBoxTitle: string;
   CommunityListMatCardTypeClass = CommunityListMatCardType;
   loadingCommunities = true;
   communityPath: string = GlobalConstants.communityPath;
-  // communityLoaderRef: CommunityLoaderComponent;
-  // @ViewChild("communityLoader")
-  // set communityLoader(communityLoaderRef: CommunityLoaderComponent) {
-  //   this.communityLoaderRef = communityLoaderRef;
-  // }
+  communityListViewLoaderCompRef: CommunityHorizontalListViewSkeletonComponent;
+  @ViewChild("communityListViewLoaderComp")
+  set communityListViewLoaderComp(communityListViewLoaderCompRef: CommunityHorizontalListViewSkeletonComponent) {
+    this.communityListViewLoaderCompRef = communityListViewLoaderCompRef;
+  }
 
   constructor(public apiService: ApiService,
     public authService: AuthService,
@@ -51,7 +53,7 @@ export class CommunityHorizontalListViewComponent implements OnInit {
 
   startLoading(totalCommunityCount: number = 5) {
     this.totalCommunityCount = totalCommunityCount;
-    // this.communityLoaderRef?.setListItems(this.totalCommunityCount);
+    this.communityListViewLoaderCompRef?.setListItems(this.totalCommunityCount);
     this.loadingCommunities = true;
   }
 
