@@ -146,7 +146,7 @@ export class CreateCommunityPageComponent implements OnInit, AfterViewInit {
         }
       });
     if (!this.page) {
-      this.isEditing = false;
+      this.isEditing = true;
     }
     if (!this.isEditing) {
       this.header = this.page.getViewById('header');

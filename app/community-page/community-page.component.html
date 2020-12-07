@@ -47,8 +47,8 @@
                 </GridLayout>
               </FlexboxLayout>
             </GridLayout>
-            <GridLayout class="owner-profile">
-              <qn-horizontal-owner-profile [user]="community?.ownerUserDTO" #ownerProfileComp>
+            <GridLayout class="owner-profile" *ngIf="!isCommunityLoading && isAllowedIntoCommunity">
+              <qn-horizontal-owner-profile #ownerProfileComp>
               </qn-horizontal-owner-profile>
             </GridLayout>
             <GridLayout class="community-activity">
@@ -59,12 +59,18 @@
               <qn-question-list-card [type]="questionListTypeClass.community" #questionListCardComp>
               </qn-question-list-card>
             </GridLayout>
-            <GridLayout class="create-post">
+            <GridLayout class="create-post"
+              *ngIf="relationType === relationTypeClass.FOLLOWED || relationType === relationTypeClass.OWNED">
               <qn-create-post [isCommunityPost]="true" [communityId]="community?.communityId"
                 (onPostCreated)="handlePostCreation($event)" (onPostEdited)="handlePostEditing($event)">
               </qn-create-post>
             </GridLayout>
-            <StackLayout id="community-post-feed" #container>
+            <StackLayout id="community-post-feed" *ngIf="isAllowedIntoCommunity" #container>
+              <StackLayout class="no-posts-found" *ngIf="!communityFeeds?.length">
+                <Label text="No posts found!" class="main-text h3" textWrap="true" horizontalAlignment="center"></Label>
+                <Label text="explore trending posts" class="explore-text h4" textWrap="true"
+                  horizontalAlignment="center" (tap)="onOpenExplorePage($event)"></Label>
+              </StackLayout>
               <StackLayout *ngFor="let feed of communityFeeds;" class="user-feed">
                 <StackLayout *ngIf="feed.postType == postTypeClass.simple">
                   <qn-simple-post [feed]="feed">
@@ -78,6 +84,13 @@
               <StackLayout *ngIf="isLoading">
                 <qn-post-skeleton></qn-post-skeleton>
               </StackLayout>
+            </StackLayout>
+            <StackLayout class="not-allowed-into-community" *ngIf="!isCommunityLoading && !isAllowedIntoCommunity">
+              <Label text="&#xf06a;" class="fa icon-text h2" horizontalAlignment="center"></Label>
+              <Label text="To view community posts, please join the community" class="text h3" textWrap="true"
+                horizontalAlignment="center"></Label>
+              <Label text="explore trending posts" class="explore-text h4" textWrap="true"
+                horizontalAlignment="center"></Label>
             </StackLayout>
           </StackLayout>
         </StackLayout>

@@ -1,16 +1,13 @@
 import { Component, ElementRef, Input, NgZone, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { EventData, FinalEventData, Img } from '@nativescript-community/ui-image';
 import { Page, ScrollView, StackLayout } from '@nativescript/core';
 import { combineLatest, of, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ApiService } from '~/services/api.service';
 import { AuthService } from '~/services/auth.service';
-import { SnackBarService } from '~/services/snackbar.service';
 import { UserActivityService } from '~/services/user-activity.service';
 import { UserInteractionService } from '~/services/user-interaction.service';
 import { UserProfilePageService } from '~/services/user-profile-page.service';
-import { UserProfileService } from '~/services/user-profile.service';
 import { UtilityService } from '~/services/utility.service';
 import { QuestionListCardComponent } from '~/shared/components/question-list-card/question-list-card.component';
 import { UserActivityComponent } from '~/shared/components/user-activity/user-activity.component';
@@ -33,6 +30,7 @@ export class UserPageComponent implements OnInit {
   user: User;
   defaultSrc: string = StaticMediaSrc.userFile;
   defaultBanner: string = StaticMediaSrc.communityFile;
+  isUserPageLoading: boolean = true;
   isLoading: boolean = false;
   isOwner: boolean = false;
   userFeeds: Post[] = [];
@@ -82,24 +80,22 @@ export class UserPageComponent implements OnInit {
     public viewContainerRef: ViewContainerRef,
     private userProfilePageService: UserProfilePageService,
     private route: ActivatedRoute,
-    private userFollowersService: UserProfileService,
     private authService: AuthService,
-    private api: ApiService,
-    private router: Router,
     private userActivityService: UserActivityService,
     private utilityService: UtilityService,
     public userInteractionService: UserInteractionService,
-    private ngZone: NgZone,
-    private snackBarService: SnackBarService) {
+    private ngZone: NgZone) {
+    this.isLoading = true;
+    this.isUserPageLoading = true;
     this.route.data.subscribe((data) => {
-      // if (data.isOwner) {
-      this.isOwner = true;
-      // this.user = this.authService.getUser();
-      // this.afterReceivingUser(true);
-      // } else if (this.userSlug) {
-      this.userSlug = this.authService.getStoredUserProfile().slug;
-      this.getUserProfileDetails(true);
-      // }
+      if (data.isOwner) {
+        this.isOwner = true;
+        this.user = this.authService.getUser();
+        this.getUserProfileDetails();
+      } else if (this.userSlug) {
+        this.userSlug = this.authService.getStoredUserProfile().slug;
+        this.getUserProfileDetails(true);
+      }
     });
   }
 
@@ -141,6 +137,7 @@ export class UserPageComponent implements OnInit {
   }
 
   getUserProfileDetails(fetchUser: boolean = false) {
+    this.isUserPageLoading = true;
     let subscriberList = [];
     const userInforSubscriber = this.userActivityService.getUserInfo(this.userSlug).pipe(catchError((error: any) => {
       // console.log(error.error.errorMessage);
@@ -168,6 +165,7 @@ export class UserPageComponent implements OnInit {
   }
 
   afterReceivingUser(callFromConstructor: boolean = false): void {
+    this.isUserPageLoading = false;
     this.restartUserFeeds(callFromConstructor);
     this.userActivityCompRef.setData(this.user, this.userInfo);
     this.questionListCardCompRef.setUserData(this.user);

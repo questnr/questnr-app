@@ -36,6 +36,7 @@ import { OverlayService } from './services/overlay.service';
 import { PostMenuService } from './services/post-menu.service';
 import { PostReportService } from './services/post-report.service';
 import { QFileService } from './services/q-file.service';
+import { QRouterService } from './services/q-router.service';
 import { SnackBarService } from './services/snackbar.service';
 import { UserActivityService } from './services/user-activity.service';
 import { UserFollowerService } from './services/user-follower.service';
@@ -121,7 +122,8 @@ if (applicationModule.android) {
     UserQuestionService,
     ImageCropService,
     UserProfilePageService,
-    UserActivityService
+    UserActivityService,
+    QRouterService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

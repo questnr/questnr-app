@@ -21,7 +21,8 @@ export class SuggestedCommunityComponent implements OnInit {
   @ViewChild("suggestedCommunityBox")
   set suggestedCommunityBox(suggestedCommunityBoxRef: CommunityHorizontalListViewComponent) {
     this.suggestedCommunityBoxRef = suggestedCommunityBoxRef;
-    this.suggestedCommunityBoxRef.startLoading(0);
+    if (this.suggestedCommunityBoxRef)
+      this.suggestedCommunityBoxRef.startLoading(0);
   }
   hasBeenDestroyed: boolean = false;
 

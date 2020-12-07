@@ -31,9 +31,6 @@ export class AuthService {
       this.accessToken = staticLoginReponse.accessToken;
       this.user = JSON.stringify(staticLoginReponse.accessToken);
     }
-    // this.getLoggedInUserDetails().subscribe((user) => {
-    //   console.log("getLoggedInUserDetails", user);
-    // });
   }
   checkUsernameExists(val: string) {
     return this.http.post(this.baseUrl + 'check-username', { username: val });

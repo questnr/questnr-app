@@ -14,6 +14,7 @@ import { CommunityMenuService } from '~/services/community-menu.service';
 import { CommunityService } from '~/services/community.service';
 import { ImageCropService } from '~/services/image-crop.service';
 import { PostMenuService } from '~/services/post-menu.service';
+import { QRouterService } from '~/services/q-router.service';
 import { SnackBarService } from '~/services/snackbar.service';
 import { UserInteractionService } from '~/services/user-interaction.service';
 import { UtilityService } from '~/services/utility.service';
@@ -43,13 +44,18 @@ export class CommunityPageComponent implements OnInit {
   communitySlug: string;
   community: Community;
   defaultSrc: string = StaticMediaSrc.communityFile;
+  isCommunityLoading: boolean = true;
   isLoading: boolean = false;
   isOwner: boolean = false;
   communityFeeds: Post[] = [];
   pageNumber: number = 0;
   endOfPosts: boolean = false;
   @ViewChildren(SimplePostComponent) simplePostComponentList!: QueryList<SimplePostComponent>;
-  @ViewChild("container") container: ElementRef;
+  containerRef: ElementRef;
+  @ViewChild("container")
+  set container(containerRef: ElementRef) {
+    this.containerRef = containerRef;
+  }
   scrollCached: any;
   feedComponentHelperTimeout: any;
   questionParentTypeClass = QuestionParentType;
@@ -124,7 +130,9 @@ export class CommunityPageComponent implements OnInit {
     private authService: AuthService,
     private modalService: ModalDialogService,
     public page: Page,
-    private imageCropService: ImageCropService) {
+    private imageCropService: ImageCropService,
+    private qRouterService: QRouterService) {
+    this.isCommunityLoading = true;
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.communitySlug = params.get('communitySlug');
       // console.log("communitySlug", this.communitySlug);
@@ -234,6 +242,7 @@ export class CommunityPageComponent implements OnInit {
   }
 
   afterReceivingCommunity(callFromConstructor: boolean = false): void {
+    this.isCommunityLoading = false;
     this.relationType = this.community.communityMeta.relationShipType;
     this.isAllowedIntoCommunity = this.communityService.isAllowedIntoCommunity(this.community);
     this.restartCommunityFeeds(callFromConstructor);
@@ -540,5 +549,9 @@ export class CommunityPageComponent implements OnInit {
 
   onShowCommunityCard(args): void {
     //@todo: show community card with community primary imformation: name, description, and avatar
+  }
+
+  onOpenExplorePage(): void {
+    this.qRouterService.goToExploreTab();
   }
 }

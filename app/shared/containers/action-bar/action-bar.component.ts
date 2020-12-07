@@ -3,6 +3,7 @@ import { RouterExtensions } from '@nativescript/angular';
 import { SearchBar } from '@nativescript/core';
 import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { AuthService } from '~/services/auth.service';
+import { QRouterService } from '~/services/q-router.service';
 import { GlobalConstants } from '~/shared/constants';
 
 declare var android: any;
@@ -19,13 +20,14 @@ export class ActionBarComponent implements OnInit {
   searchBar: SearchBar;
 
   constructor(private authSerivce: AuthService,
-    private routerExtenstions: RouterExtensions) { }
+    private routerExtenstions: RouterExtensions,
+    private qRouterService: QRouterService) { }
 
   ngOnInit(): void {
   }
 
   onLogoTap(args): void {
-    this.routerExtenstions.navigate(['/', GlobalConstants.homePath], { clearHistory: true });
+    this.qRouterService.goToHome();
   }
 
   onNavBtnTap(args): void {

@@ -6,6 +6,7 @@ import * as app from "@nativescript/core/application";
 import { Device, isAndroid } from "@nativescript/core/platform";
 import { alert } from "@nativescript/core/ui/dialogs";
 import { Page } from "@nativescript/core/ui/page";
+import { QRouterService } from "~/services/q-router.service";
 import { GlobalConstants } from "~/shared/constants";
 import { LoginResponse } from "~/shared/models/login.model";
 import { AuthService } from "../../services/auth.service";
@@ -46,7 +47,8 @@ export class LoginComponent implements OnInit {
     private utilityService: UtilityService,
     private page: Page,
     private routerExtensions: RouterExtensions,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private qRouterService: QRouterService
   ) {
     this.group = this.fb.group({
       emailId: this.email,
@@ -180,17 +182,7 @@ export class LoginComponent implements OnInit {
         this.isAuthenticating = false;
         console.log("res", loginResponse);
         if (loginResponse.accessToken && loginResponse.loginSuccess) {
-          this.routerExtensions.navigate(
-            ["/",
-              GlobalConstants.homePath,
-              {
-                outlets: {
-                  feedTab: [GlobalConstants.feedPath],
-                  userPageTab: [GlobalConstants.userPath],
-                  explorePageTab: [GlobalConstants.explorePath],
-                  createCommunityPageTab: [GlobalConstants.createCommunityPath]
-                }
-              }], { clearHistory: true });
+          this.qRouterService.goToHome();
         } else {
           this.loginError = loginResponse.errorMessage;
         }

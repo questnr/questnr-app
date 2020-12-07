@@ -18,6 +18,7 @@ export class UserActivityBarComponent implements AfterViewInit {
   }
 
   setActivePane(activePane: PaneType): void {
+    if (!this.activityBarView) return;
     this.activePane = activePane;
     if (this.activePane === 'left') {
       let leftPane: any = this.activityBarView.getViewById('left-pane');

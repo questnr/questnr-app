@@ -63,9 +63,33 @@
             margin-top: 5;
             margin-bottom: 5;
         }
+        .no-posts-found {
+            margin: 20;
+            color: $gray-font-2;
+            text-align: center;
+            .explore-text {
+                color: $link-primary;
+                text-decoration: underline;
+            }
+        }
         .user-feed {
             margin-top: 3;
             margin-bottom: 3;
+        }
+        .not-allowed-into-community {
+            margin: 20;
+            background-color: $dark-gray;
+            border-color: $gray;
+            border-width: 1;
+            border-radius: 10;
+            text-align: center;
+            .icon-text {
+                color: $primary;
+            }
+            .explore-text {
+                color: $link-primary;
+                text-decoration: underline;
+            }
         }
     }
 }

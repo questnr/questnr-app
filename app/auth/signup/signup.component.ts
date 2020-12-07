@@ -9,6 +9,7 @@ import { alert } from "@nativescript/core/ui/dialogs";
 import { Page } from "@nativescript/core/ui/page";
 import { CommonService } from "~/services/common.service";
 import { OTPVerificationService } from "~/services/otp-verification.service";
+import { QRouterService } from "~/services/q-router.service";
 import { SnackBarService } from "~/services/snackbar.service";
 import { GlobalConstants, REGEX } from "~/shared/constants";
 import { LoginResponse } from "~/shared/models/login.model";
@@ -108,7 +109,8 @@ export class SignupComponent implements OnInit {
     private fb: FormBuilder,
     private otpVerificationService: OTPVerificationService,
     private snackbarService: SnackBarService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private qRouterService: QRouterService
   ) {
     this.group = this.fb.group({
       emailId: this.email,
@@ -500,17 +502,7 @@ export class SignupComponent implements OnInit {
 
   signUpSuccess(res: LoginResponse) {
     this.snackbarService.show({ snackText: "Your account has been created successfully" });
-    this.routerExtensions.navigate(
-      ["/",
-        GlobalConstants.homePath,
-        {
-          outlets: {
-            feedTab: [GlobalConstants.feedPath],
-            userPageTab: [GlobalConstants.userPath],
-            explorePageTab: [GlobalConstants.explorePath],
-            createCommunityPageTab: [GlobalConstants.createCommunityPath]
-          }
-        }], { clearHistory: true });
+    this.qRouterService.goToHome();
     // { state: { communitySuggestion: res.communitySuggestion ? true : false } });
   }
 

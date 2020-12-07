@@ -40,7 +40,7 @@ export class QuestionListCardComponent implements OnInit {
   pageSize: number = 4;
   fetchingFunc: Function;
   uniqueId: number;
-  notAllowed: boolean = false;
+  isAllowedIntoCommunity: boolean = false;
 
   constructor(private loginService: AuthService,
     private routerExtensions: RouterExtensions,
@@ -74,40 +74,44 @@ export class QuestionListCardComponent implements OnInit {
     this.type = UserQuestionListModalType.community;
     this.title = "Community's Questions";
     if (isAllowedIntoCommunity) {
+      this.isAllowedIntoCommunity = isAllowedIntoCommunity;
       this.isOwner = this.loginService.isThisLoggedInUser(this.community?.ownerUserDTO?.userId);
       if (this.isOwner) {
         this.title = "Your Community's Questions";
       }
     } else {
       this.isLoading = false;
-      this.notAllowed = true;
     }
   }
 
   onOpenQuestionList(args) {
-    if (this.totalQuestions > 0) {
-      this.routerExtensions.navigate(['/',
-        GlobalConstants.questionListPath,
-        this.type
-      ],
-        {
-          queryParams: {
-            community: JSON.stringify(this.community),
-            user: JSON.stringify(this.user),
-            type: this.type,
-            isOwner: this.isOwner,
-            totalCounts: this.totalQuestions,
-            title: this.title
-          },
-          animated: true,
-          transition: {
-            name: "slideLeft",
-            duration: 400,
-            curve: new CubicBezierAnimationCurve(.08, .47, .19, .97)
-          }
-        });
+    if (this.isAllowedIntoCommunity) {
+      if (this.totalQuestions > 0) {
+        this.routerExtensions.navigate(['/',
+          GlobalConstants.questionListPath,
+          this.type
+        ],
+          {
+            queryParams: {
+              community: JSON.stringify(this.community),
+              user: JSON.stringify(this.user),
+              type: this.type,
+              isOwner: this.isOwner,
+              totalCounts: this.totalQuestions,
+              title: this.title
+            },
+            animated: true,
+            transition: {
+              name: "slideLeft",
+              duration: 400,
+              curve: new CubicBezierAnimationCurve(.08, .47, .19, .97)
+            }
+          });
+      } else {
+        this.snackBarService.show({ snackText: "Community has not asked any questions." });
+      }
     } else {
-      this.snackBarService.show({ snackText: "No questions found!" });
+      this.snackBarService.show({ snackText: "Community Questions are only available for its members." });
     }
   }
 }

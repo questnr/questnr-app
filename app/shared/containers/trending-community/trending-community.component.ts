@@ -14,14 +14,14 @@ import { User } from '~/shared/models/user.model';
 })
 export class TrendingCommunityComponent implements OnInit {
   user: User;
-  userId: number;
   CommunityListTypeClass = CommunityListType;
   CommunityListMatCardTypeClass = CommunityListMatCardType;
   trendingCommunityBoxRef: CommunityHorizontalListViewComponent;
   @ViewChild("trendingCommunityBox")
   set trendingCommunityBox(trendingCommunityBoxRef: CommunityHorizontalListViewComponent) {
     this.trendingCommunityBoxRef = trendingCommunityBoxRef;
-    this.trendingCommunityBoxRef.startLoading(0);
+    if (this.trendingCommunityBoxRef)
+      this.trendingCommunityBoxRef.startLoading(0);
   }
   hasBeenDestroyed: boolean = false;
 

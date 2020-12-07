@@ -1,6 +1,6 @@
 <GridLayout class="community-members-wrapper" rows="*" height="50">
   <RadListView row="0" [items]="communityMemberList" orientation="horizontal" [itemTemplateSelector]="templateSelector"
-    selectionBehavior="LongPress" (loaded)="onMemberListViewLoaded($event)">
+    selectionBehavior="LongPress" (loaded)="onMemberListViewLoaded($event)" *ngIf="isAllowedIntoCommunity">
     <ListViewLinearLayout tkListViewLayout scrollDirection="Horizontal">
     </ListViewLinearLayout>
     <ng-template let-user="item" let-index="index" tkTemplateKey="member">
