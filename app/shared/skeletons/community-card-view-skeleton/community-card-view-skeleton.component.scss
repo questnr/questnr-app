@@ -1,15 +1,16 @@
 @import "~/variables";
 
 .community-card-view-skeleton {
-    background-color: $gray-font;
+    background-color: $gray;
     .community-avatar {
         border-bottom-width: 2;
         border-color: $primary;
-        background-color: $gray;
+        background-color: $dark-gray-2;
     }
     .community-details {
         .name {
             height: 16;
+            margin-bottom: 10;
         }
         .description {
             height: 14;

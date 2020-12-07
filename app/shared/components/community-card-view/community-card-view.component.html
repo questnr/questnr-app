@@ -1,5 +1,5 @@
 <CardView class="community-card-view-wrapper" [radius]="qRadius.$communityCardRadius" elevation="10"
-  (tap)="onCommunityPageOpen($event)">
+  (tap)="onCommunityPageOpen($event)" [width]="height * 3">
   <GridLayout [rows]="showJoinButton ? '*, auto, auto': '*, auto'">
     <GridLayout [height]="height" class="community-avatar" row="0">
       <NSImg [placeholderImageUri]="defaultSrc" [failureImageUri]="defaultSrc"
