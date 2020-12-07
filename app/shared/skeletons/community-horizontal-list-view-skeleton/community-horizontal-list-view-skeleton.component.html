@@ -4,7 +4,7 @@
     </ListViewLinearLayout>
     <ng-template let-item="item" let-index="index" tkTemplateKey="communityView">
       <GridLayout class="community-card-view-container">
-        <qn-community-card-view-skeleton></qn-community-card-view-skeleton>
+        <qn-community-card-view-skeleton [showJoinButton]="showJoinButton"></qn-community-card-view-skeleton>
       </GridLayout>
     </ng-template>
   </RadListView>

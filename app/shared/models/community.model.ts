@@ -59,7 +59,8 @@ export class CommunityProfileMeta {
 export enum CommunityListType {
   owned = 'owned',
   joined = 'joined',
-  suggested = 'suggested'
+  suggested = 'suggested',
+  trending = 'trending'
 }
 
 export enum CommunityPrivacy {

@@ -8,6 +8,9 @@
           (loaded)="onPostCreationBoxLoaded($event)">
         </qn-create-post>
       </GridLayout>
+      <GridLayout class="trending-communities">
+        <qn-trending-community #trendingCommunityComp></qn-trending-community>
+      </GridLayout>
       <StackLayout #container>
         <StackLayout *ngFor="let feed of userFeeds;" class="user-feed">
           <StackLayout *ngIf="feed.postType == postTypeClass.simple">

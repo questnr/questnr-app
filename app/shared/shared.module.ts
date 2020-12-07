@@ -34,6 +34,7 @@ import { SimplePostComponent } from './containers/simple-post/simple-post.compon
 import { SimpleQuestionComponent } from './containers/simple-question/simple-question.component';
 import { SuggestedCommunityComponent } from './containers/suggested-community/suggested-community.component';
 import { TimeStringComponent } from './containers/time-string/time-string.component';
+import { TrendingCommunityComponent } from './containers/trending-community/trending-community.component';
 import { UsernameComponent } from './containers/username/username.component';
 import { MaterialModule } from './material.module';
 import { SkeletonModule } from './skeletons/skeletons.module';
@@ -85,7 +86,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     CommunityHorizontalListViewComponent,
     JoinedCommunityComponent,
     OwnedCommunityComponent,
-    SuggestedCommunityComponent
+    SuggestedCommunityComponent,
+    TrendingCommunityComponent
   ],
   providers: [
   ],
@@ -126,7 +128,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     CommunityHorizontalListViewComponent,
     JoinedCommunityComponent,
     OwnedCommunityComponent,
-    SuggestedCommunityComponent
+    SuggestedCommunityComponent,
+    TrendingCommunityComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

@@ -23,6 +23,7 @@ export class CommunityHorizontalListViewComponent implements OnInit {
   @Input() user: User;
   @Input() communityListType: CommunityListType;
   @Input() showJoinButton: boolean = true;
+  communityListTypeClass = CommunityListType;
   isOwner: boolean = false;
   communityBoxTitle: string;
   CommunityListMatCardTypeClass = CommunityListMatCardType;
@@ -50,6 +51,9 @@ export class CommunityHorizontalListViewComponent implements OnInit {
       this.communityBoxTitle = "Owned Communities";
     } else if (this.communityListType == CommunityListType.suggested) {
       this.communityBoxTitle = "Communities You Might Like";
+      this.showJoinButton = false;
+    } else if (this.communityListType == CommunityListType.trending) {
+      this.communityBoxTitle = "Trending Communities";
       this.showJoinButton = false;
     }
   }
