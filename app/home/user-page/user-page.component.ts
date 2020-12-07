@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, NgZone, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { EventData, FinalEventData, Img } from '@nativescript-community/ui-image';
 import { Page, ScrollView, StackLayout } from '@nativescript/core';
 import { combineLatest, of, Subscription } from 'rxjs';
@@ -91,11 +91,20 @@ export class UserPageComponent implements OnInit {
       if (data.isOwner) {
         this.isOwner = true;
         this.user = this.authService.getUser();
-        this.getUserProfileDetails();
-      } else if (this.userSlug) {
-        this.userSlug = this.authService.getStoredUserProfile().slug;
-        this.getUserProfileDetails(true);
+        if (this.user) {
+          this.userSlug = this.user.slug;
+          this.getUserProfileDetails();
+        } else {
+          this.userSlug = this.authService.getStoredUserProfile().slug;
+          this.getUserProfileDetails(true);
+        }
+      } else {
+        // @todo: can be redirect to home?
       }
+    });
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.userSlug = params.get('userSlug');
+      this.getUserProfileDetails(true);
     });
   }
 
@@ -156,6 +165,11 @@ export class UserPageComponent implements OnInit {
       (responseList) => {
         if (fetchUser) {
           this.user = responseList[0] as User;
+          this.isOwner = this.authService.isThisLoggedInUser(this.user.userId);
+          if (this.isOwner) {
+            // to avoid fetching the remote user again at the next click on profile user tab
+            this.authService.setUser(this.user);
+          }
           this.userInfo = responseList[1] as UserInfo;
         } else {
           this.userInfo = responseList[0] as UserInfo;

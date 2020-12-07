@@ -64,6 +64,7 @@ const routes: Routes = [
     component: CommentPageComponent
   },
   { path: GlobalConstants.communityPath + "/:communitySlug", component: CommunityPageComponent },
+  { path: GlobalConstants.userPath + "/:userSlug", component: UserPageComponent },
   {
     path: [
       GlobalConstants.userListPath,

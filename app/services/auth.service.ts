@@ -26,11 +26,11 @@ export class AuthService {
     private loaderService: LoaderService,
     private routerExtension: RouterExtensions) {
 
-    if (!environment.production) {
-      // @todo: only for testing purpose
-      this.accessToken = staticLoginReponse.accessToken;
-      this.user = JSON.stringify(staticLoginReponse.accessToken);
-    }
+    // if (!environment.production) {
+    //   // @todo: only for testing purpose
+    //   this.accessToken = staticLoginReponse.accessToken;
+    //   this.user = JSON.stringify(staticLoginReponse.accessToken);
+    // }
   }
   checkUsernameExists(val: string) {
     return this.http.post(this.baseUrl + 'check-username', { username: val });
@@ -101,6 +101,12 @@ export class AuthService {
       this.logout();
       return of(null);
     }));
+  }
+
+  public setUser(user: User) {
+    if (!this.remoteUser || this.remoteUser.userId === user.userId) {
+      this.remoteUser = user;
+    }
   }
 
   public getUser(): User {

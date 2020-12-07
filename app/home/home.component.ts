@@ -1,6 +1,5 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CreateCommunityPageComponent } from './create-community-page/create-community-page.component';
 
 @Component({
   selector: 'qn-home',
