@@ -1,5 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { RouterExtensions } from '@nativescript/angular';
+import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { AuthService } from '~/services/auth.service';
 import { CommonService } from '~/services/common.service';
 import { FeedService } from '~/services/feed.service';
@@ -59,7 +61,8 @@ export class SimplePostComponent implements OnInit {
     private commonService: CommonService,
     private _sanitizer: DomSanitizer,
     private feedService: FeedService,
-    private postMenuService: PostMenuService) {
+    private postMenuService: PostMenuService,
+    private routerExtensions: RouterExtensions) {
   }
 
   ngOnInit(): void {
@@ -132,5 +135,16 @@ export class SimplePostComponent implements OnInit {
     // } else {
     //   this.mediaContainer?.pauseVideoIfAny();
     // }
+  }
+
+  onOpenCommunityPage(args): void {
+    this.routerExtensions.navigate(['/', GlobalConstants.communityPath, this.feed?.communityDTO.slug], {
+      animated: true,
+      transition: {
+        name: "fade",
+        duration: 400,
+        curve: new CubicBezierAnimationCurve(.08, .47, .19, .97)
+      }
+    });
   }
 }

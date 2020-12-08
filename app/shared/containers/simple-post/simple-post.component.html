@@ -12,9 +12,8 @@
         <qn-time-string class="time-string" [metaData]="feed.metaData"></qn-time-string>
       </StackLayout>
       <StackLayout col="1">
-        <Label class="subhead" ripple [rippleColor]="qColors.$heading"
-          [nsRouterLink]="['/', communityPath, feed?.communityDTO.slug]" horizontalAlignment="right"
-          [text]="'Posted in '+feed?.communityDTO?.communityName">
+        <Label class="subhead" ripple [rippleColor]="qColors.$heading" (tap)="onOpenCommunityPage($event)"
+          horizontalAlignment="right" [text]="'Posted in '+feed?.communityDTO?.communityName">
         </Label>
       </StackLayout>
     </GridLayout>

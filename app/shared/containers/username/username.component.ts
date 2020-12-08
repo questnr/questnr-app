@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { RouterExtensions } from '@nativescript/angular';
+import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { GlobalConstants } from '~/shared/constants';
 
 @Component({
@@ -18,7 +20,8 @@ export class UsernameComponent implements OnInit {
   }
   defaultPath: string = GlobalConstants.userPath;
 
-  constructor(private renderer2: Renderer2) { }
+  constructor(private renderer2: Renderer2,
+    private routerExtensions: RouterExtensions) { }
 
   ngOnInit(): void {
     if (this.isCommunity) {
@@ -30,5 +33,16 @@ export class UsernameComponent implements OnInit {
     if (this.fontSize) {
       this.renderer2.setStyle(this.usernameComponentRef.nativeElement, "font-size", this.fontSize);
     }
+  }
+
+  onOpenEntityPage(args): void {
+    this.routerExtensions.navigate(['/', this.defaultPath, this.slug], {
+      animated: true,
+      transition: {
+        name: "fade",
+        duration: 400,
+        curve: new CubicBezierAnimationCurve(.08, .47, .19, .97)
+      }
+    });
   }
 }

@@ -1,6 +1,6 @@
 <GridLayout class="icon" rows="*">
     <StackLayout row="0" *ngIf="slug" orientation="horizontal" verticalAlignment="top" [height]="height"
-        [width]="height" [nsRouterLink]="['/', defaultPath, slug]">
+        [width]="height" (tap)="onOpenEntityPage($event)">
         <NSImg [placeholderImageUri]="defaultSrc" [failureImageUri]="defaultSrc" verticalAlignment="middle"
             [src]="getAvatarLink()" [height]="height" [width]="height" loadMode="async" roundAsCircle="true"
             stretch="aspectFill" (failure)="onFailure($event)">

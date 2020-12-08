@@ -1,8 +1,10 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { FinalEventData, Img } from '@nativescript-community/ui-image';
+import { RouterExtensions } from '@nativescript/angular';
+import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { GlobalConstants } from '~/shared/constants';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { AvatarDTO, ProfileIconTemplateType } from '~/shared/models/common.model';
-import { FinalEventData, Img } from '@nativescript-community/ui-image'
 
 @Component({
   selector: 'qn-profile-icon',
@@ -23,7 +25,8 @@ export class ProfileIconComponent implements OnInit {
   defaultPath: string = GlobalConstants.userPath;
   aspectRatio: number = 1;
 
-  constructor(private renderer: Renderer2, private cd: ChangeDetectorRef) {
+  constructor(private routerExtensions: RouterExtensions,
+    private cd: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -78,4 +81,15 @@ export class ProfileIconComponent implements OnInit {
   //     return this.defaultSrc;
   //   }
   // }
+
+  onOpenEntityPage(args): void {
+    this.routerExtensions.navigate(['/', this.defaultPath, this.slug], {
+      animated: true,
+      transition: {
+        name: "fade",
+        duration: 400,
+        curve: new CubicBezierAnimationCurve(.08, .47, .19, .97)
+      }
+    });
+  }
 }

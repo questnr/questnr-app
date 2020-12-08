@@ -1,5 +1,5 @@
 <StackLayout orientation="horizontal">
-    <Label *ngIf="slug" textWrap="true" [text]="username" [nsRouterLink]="['/', defaultPath, slug]" #usernameComponent>
+    <Label *ngIf="slug" textWrap="true" [text]="username" (tap)="onOpenEntityPage($event)" #usernameComponent>
     </Label>
     <Label *ngIf="!slug" textWrap="true" [text]="username" #usernameComponent>
     </Label>

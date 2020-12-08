@@ -44,7 +44,7 @@ export class CommunityCardViewComponent implements OnInit {
     this.routerExtensions.navigate(['/', GlobalConstants.communityPath, this.community.slug], {
       animated: true,
       transition: {
-        name: "slideLeft",
+        name: "fade",
         duration: 400,
         curve: new CubicBezierAnimationCurve(.08, .47, .19, .97)
       }
