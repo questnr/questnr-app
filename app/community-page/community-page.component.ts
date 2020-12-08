@@ -83,7 +83,7 @@ export class CommunityPageComponent implements OnInit {
   @ViewChild('relationButtonComp')
   set relationButtonComp(relationButtonCompRef: CommunityRelationActionButtonComponent) {
     this.relationButtonCompRef = relationButtonCompRef;
-    if (this.community) {
+    if (this.community && this.relationButtonCompRef) {
       this.relationButtonCompRef.setData(this.community, this.relationType);
     }
   }
