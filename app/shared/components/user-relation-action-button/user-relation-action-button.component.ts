@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Dialogs } from '@nativescript/core';
 import { SnackBar } from '@nstudio/nativescript-snackbar';
 import { AuthService } from '~/services/auth.service';
 import { SnackBarService } from '~/services/snackbar.service';
@@ -42,26 +43,29 @@ export class UserRelationActionButtonComponent implements OnInit {
   }
 
   onFollow(): void {
-    this.userProfileService.followMe(this.user.userId).subscribe((res: any) => {
-      console.log(res);
-      this.relation = RelationType.FOLLOWED;
+    this.userProfileService.followMe(this.user.userId).subscribe((user: User) => {
+      this.relation = user.userMeta.relationShipType;
     }, error => {
       // console.log(error.error.errorMessage);
     });
   }
   onUnfollow(): void {
     let title = "Do you want to unfollow " + this.user.username + "?";
-    let result;
-    if (result?.data == true) {
-      const snackBarRef = this.snackBarService.show({ snackText: 'Unfollowing...' });
-      const ownerId = this.authService.getStoredUserProfile().id;
-      this.userProfileService.unfollowMe(ownerId, this.user.userId).subscribe((res: any) => {
-        // console.log(res);
-        this.relation = RelationType.NONE;
-        this.snackBarService.show({ snackText: "Unfollowed " + this.user.username });
-      }, error => {
-        this.snackBarService.showHTTPError(error);
-      });
-    }
+    Dialogs.confirm({
+      title: title,
+      okButtonText: "Unfollow",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result) {
+        this.snackBarService.show({ snackText: 'Unfollowing...' });
+        const ownerId = this.authService.getStoredUserProfile().id;
+        this.userProfileService.unfollowMe(ownerId, this.user.userId).subscribe((res: any) => {
+          this.relation = RelationType.NONE;
+          this.snackBarService.show({ snackText: "Unfollowed " + this.user.username });
+        }, error => {
+          this.snackBarService.showHTTPError(error);
+        });
+      }
+    });
   }
 }
