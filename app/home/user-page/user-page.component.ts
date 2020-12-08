@@ -11,12 +11,14 @@ import { UserProfilePageService } from '~/services/user-profile-page.service';
 import { UtilityService } from '~/services/utility.service';
 import { QuestionListCardComponent } from '~/shared/components/question-list-card/question-list-card.component';
 import { UserActivityComponent } from '~/shared/components/user-activity/user-activity.component';
+import { UserRelationActionButtonComponent } from '~/shared/components/user-relation-action-button/user-relation-action-button.component';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { JoinedCommunityComponent } from '~/shared/containers/joined-community/joined-community.component';
 import { OwnedCommunityComponent } from '~/shared/containers/owned-community/owned-community.component';
 import { SimplePostComponent } from '~/shared/containers/simple-post/simple-post.component';
 import { QPage } from '~/shared/models/page.model';
 import { Post, PostType, QuestionParentType } from '~/shared/models/post-action.model';
+import { RelationType } from '~/shared/models/relation-type';
 import { User, UserInfo } from '~/shared/models/user.model';
 import { qColors } from '~/_variables';
 
@@ -28,6 +30,8 @@ import { qColors } from '~/_variables';
 export class UserPageComponent implements OnInit {
   @Input() userSlug: string;
   user: User;
+  relationType: RelationType;
+  relationTypeClass = RelationType;
   defaultSrc: string = StaticMediaSrc.userFile;
   defaultBanner: string = StaticMediaSrc.communityFile;
   isUserPageLoading: boolean = true;
@@ -73,6 +77,11 @@ export class UserPageComponent implements OnInit {
   @ViewChild('ownedCommunityComp')
   set ownedCommunityComp(ownedCommunityCompRef: OwnedCommunityComponent) {
     this.ownedCommunityCompRef = ownedCommunityCompRef;
+  }
+  userRelationButonCompRef: UserRelationActionButtonComponent;
+  @ViewChild('userRelationButonComp')
+  set userRelationButonComp(userRelationButonCompRef: UserRelationActionButtonComponent) {
+    this.userRelationButonCompRef = userRelationButonCompRef;
   }
 
   constructor(
@@ -180,6 +189,7 @@ export class UserPageComponent implements OnInit {
 
   afterReceivingUser(callFromConstructor: boolean = false): void {
     this.isUserPageLoading = false;
+    this.relationType = this.user?.userMeta?.relationShipType;
     this.restartUserFeeds(callFromConstructor);
     this.userActivityCompRef.setData(this.user, this.userInfo);
     this.questionListCardCompRef.setUserData(this.user);
@@ -188,6 +198,8 @@ export class UserPageComponent implements OnInit {
     this.joinedCommunityCompRef.setCommunityCount(this.userInfo.followsCommunities);
     this.ownedCommunityCompRef.setUser(this.user);
     this.ownedCommunityCompRef.setCommunityCount(this.userInfo.ownsCommunities);
+    if (!this.isOwner)
+      this.userRelationButonCompRef?.setData(this.user, this.relationType);
   }
 
   restartUserFeeds(callFromConstructor: boolean = false) {

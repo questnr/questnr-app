@@ -1,0 +1,12 @@
+<Button (tap)="onFollow()"
+    [ngClass]="[size =='small' ? 'small' : '', size =='medium' ? 'medium' : '', size =='large' ? 'large' : '']"
+    *ngIf="!isLoading && relation === relationTypeClass.NONE" class="none" text="Follow" [height]="qHeight">
+</Button>
+<Button (tap)="onUnfollow()"
+    [ngClass]="[size =='small' ? 'small' : '', size =='medium' ? 'medium' : '', size =='large' ? 'large' : '']"
+    *ngIf="!isLoading && relation === relationTypeClass.FOLLOWED" class="followed" text="Following" [height]="qHeight">
+</Button>
+<GridLayout *ngIf="isLoading" class="loader" [height]="qHeight">
+    <qn-loader [radius]="30" [color]="qColors.$heading" verticalAlignment="middle" horizontalAlignment="center">
+    </qn-loader>
+</GridLayout>

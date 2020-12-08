@@ -33,8 +33,15 @@
                         </StackLayout>
                     </GridLayout>
                     <StackLayout class="user-body">
-                        <GridLayout class="user-description">
-                            <qn-user-description-card [bio]="user?.bio"></qn-user-description-card>
+                        <GridLayout class="user-description" columns="*, auto">
+                            <GridLayout col="0">
+                                <qn-user-description-card [bio]="user?.bio" col="0"></qn-user-description-card>
+                            </GridLayout>
+                            <GridLayout col="1">
+                                <qn-user-relation-action-button [user]="user" *ngIf="!isOwner" [size]="'medium'"
+                                    verticalAlignment="middle" #userRelationButonComp>
+                                </qn-user-relation-action-button>
+                            </GridLayout>
                         </GridLayout>
                         <GridLayout class="user-activity">
                             <qn-user-activity (onScrollToPostEvent)="onScrollToPostEvent()" #userActivityComp>

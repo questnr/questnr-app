@@ -18,6 +18,7 @@ import { QuestionListCardComponent } from './components/question-list-card/quest
 import { UserActivityBarComponent } from './components/user-activity/user-activity-bar/user-activity-bar.component';
 import { UserActivityComponent } from './components/user-activity/user-activity.component';
 import { UserDescriptionCardComponent } from './components/user-description-card/user-description-card.component';
+import { UserRelationActionButtonComponent } from './components/user-relation-action-button/user-relation-action-button.component';
 import { VerticalLineComponent } from './components/vertical-line/vertical-line.component';
 import { ActionBarComponent } from './containers/action-bar/action-bar.component';
 import { CommentContainerComponent } from './containers/comment-container/comment-container.component';
@@ -87,7 +88,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     JoinedCommunityComponent,
     OwnedCommunityComponent,
     SuggestedCommunityComponent,
-    TrendingCommunityComponent
+    TrendingCommunityComponent,
+    UserRelationActionButtonComponent
   ],
   providers: [
   ],
@@ -129,7 +131,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     JoinedCommunityComponent,
     OwnedCommunityComponent,
     SuggestedCommunityComponent,
-    TrendingCommunityComponent
+    TrendingCommunityComponent,
+    UserRelationActionButtonComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA
