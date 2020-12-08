@@ -41,6 +41,7 @@ export class QuestionListCardComponent implements OnInit {
   fetchingFunc: Function;
   uniqueId: number;
   isAllowedIntoCommunity: boolean = false;
+  forCommunityComp: boolean = false;
 
   constructor(private loginService: AuthService,
     private routerExtensions: RouterExtensions,
@@ -61,6 +62,7 @@ export class QuestionListCardComponent implements OnInit {
 
   setUserData(user: User): void {
     this.user = user;
+    this.forCommunityComp = false;
     this.type = UserQuestionListModalType.user;
     this.isOwner = this.loginService.isThisLoggedInUser(this.user.userId);
     this.title = "User's Questions";
@@ -71,6 +73,7 @@ export class QuestionListCardComponent implements OnInit {
 
   setCommunityData(community: Community, isAllowedIntoCommunity: boolean): void {
     this.community = community;
+    this.forCommunityComp = true;
     this.type = UserQuestionListModalType.community;
     this.title = "Community's Questions";
     if (isAllowedIntoCommunity) {
@@ -85,7 +88,7 @@ export class QuestionListCardComponent implements OnInit {
   }
 
   onOpenQuestionList(args) {
-    if (this.isAllowedIntoCommunity) {
+    if (this.isAllowedIntoCommunity || !this.forCommunityComp) {
       if (this.totalQuestions > 0) {
         this.routerExtensions.navigate(['/',
           GlobalConstants.questionListPath,
@@ -108,7 +111,11 @@ export class QuestionListCardComponent implements OnInit {
             }
           });
       } else {
-        this.snackBarService.show({ snackText: "Community has not asked any questions." });
+        if (this.forCommunityComp) {
+          this.snackBarService.show({ snackText: "Community has not asked any questions." });
+        } else {
+          this.snackBarService.show({ snackText: "User has not asked any questions." });
+        }
       }
     } else {
       this.snackBarService.show({ snackText: "Community Questions are only available for its members." });
