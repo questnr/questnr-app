@@ -52,7 +52,7 @@ export class CommunityMembersComponent implements OnInit {
     }
   }
 
-  setCommunity(community): void {
+  setCommunity(community: Community): void {
     this.community = community;
     this.isAllowedIntoCommunity = this.communityService.isAllowedIntoCommunity(this.community);
     if (this.isAllowedIntoCommunity) {

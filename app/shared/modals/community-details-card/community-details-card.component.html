@@ -1,0 +1,29 @@
+<StackLayout class="community-details-card-wrapper" [width]="height * 3">
+  <StackLayout *ngIf="community">
+    <GridLayout [height]="height" class="community-avatar">
+      <NSImg [placeholderImageUri]="defaultSrc" [failureImageUri]="defaultSrc"
+        [src]="community?.avatarDTO?.avatarLink ? community?.avatarDTO?.avatarLink : defaultSrc" loadMode="async"
+        stretch="aspectFill" (failure)="onFailure($event)">
+      </NSImg>
+    </GridLayout>
+    <GridLayout class="community-details" [rows]="community.description?.length ? 'auto, 100' : '*'">
+      <StackLayout row="0">
+        <Label class="name" [text]="community.communityName" horizontalAlignment="center"></Label>
+      </StackLayout>
+      <ScrollView orientation="vertical" row="1" col="0" height="100" class="description"
+        *ngIf="community.description?.length">
+        <StackLayout orientation="vertical">
+          <TextView [text]="community.description" editable="false"></TextView>
+        </StackLayout>
+      </ScrollView>
+    </GridLayout>
+    <StackLayout class="community-join-action" *ngIf="showJoinButton && relation != relationTypeClass.OWNED">
+      <qn-community-relation-action-button [community]="community" [relation]="relation" [qHeight]="35"
+        (actionEvent)="onActionEvent($event)" horizontalAlignment="center">
+      </qn-community-relation-action-button>
+    </StackLayout>
+  </StackLayout>
+  <StackLayout *ngIf="!community">
+    <qn-loader [color]="qColors.$primary" class="loader"></qn-loader>
+  </StackLayout>
+</StackLayout>

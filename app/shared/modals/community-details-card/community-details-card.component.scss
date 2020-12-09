@@ -1,0 +1,28 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.community-details-card-wrapper {
+    border-radius: 10;
+    background-color: $gray;
+    .community-avatar {
+        border-bottom-width: 2;
+        border-color: $primary;
+    }
+    .community-details {
+        .name {
+            @include make-font-size(3);
+            font-weight: 500;
+        }
+        .description {
+            margin-left: 8;
+            margin-right: 8;
+            @include make-font-size(1);
+        }
+    }
+    .community-join-action {
+        margin-bottom: 5;
+    }
+    .loader {
+        margin: 20;
+    }
+}

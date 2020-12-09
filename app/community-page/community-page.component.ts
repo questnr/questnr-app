@@ -26,6 +26,7 @@ import { GlobalConstants } from '~/shared/constants';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { CommunityMembersComponent } from '~/shared/containers/community-members/community-members.component';
 import { SimplePostComponent } from '~/shared/containers/simple-post/simple-post.component';
+import { CommunityDetailsCardComponent } from '~/shared/modals/community-details-card/community-details-card.component';
 import { ModifyCommunityModalComponent } from '~/shared/modals/modify-community-modal/modify-community-modal.component';
 import { Community, CommunityPrivacy, CommunityProfileMeta } from '~/shared/models/community.model';
 import { QPage } from '~/shared/models/page.model';
@@ -75,9 +76,6 @@ export class CommunityPageComponent implements OnInit {
   @ViewChild('communityMemeberComp')
   set communityMemeberComp(communityMemeberCompRef: CommunityMembersComponent) {
     this.communityMemeberCompRef = communityMemeberCompRef;
-    if (this.community) {
-      this.communityMemeberCompRef.setCommunity(this.community);
-    }
   }
   relationButtonCompRef: CommunityRelationActionButtonComponent;
   @ViewChild('relationButtonComp')
@@ -194,7 +192,7 @@ export class CommunityPageComponent implements OnInit {
 
     this.communityMenuService.communityEditRequest$.subscribe((communityToBeEdited: Community) => {
       if (communityToBeEdited && communityToBeEdited.communityId
-        && this.authService.isThisLoggedInUser(communityToBeEdited.ownerUserDTO.userId)) {
+        && this.authService.isThisLoggedInUser(communityToBeEdited?.ownerUserDTO?.userId)) {
         this.onEdit(communityToBeEdited);
       }
     });
@@ -549,6 +547,15 @@ export class CommunityPageComponent implements OnInit {
 
   onShowCommunityCard(args): void {
     //@todo: show community card with community primary imformation: name, description, and avatar
+    const options: ModalDialogOptions = {
+      viewContainerRef: this.viewContainerRef,
+      fullscreen: false,
+      context: {
+        community: this.community
+      }
+    };
+    this.modalService.showModal(CommunityDetailsCardComponent, options).then(() => {
+    });
   }
 
   onOpenExplorePage(): void {

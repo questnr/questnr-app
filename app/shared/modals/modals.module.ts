@@ -6,6 +6,7 @@ import {
 import { HomeModule } from '~/home/home.module';
 import { MaterialModule } from '../material.module';
 import { SharedModule } from '../shared.module';
+import { CommunityDetailsCardComponent } from './community-details-card/community-details-card.component';
 import { CommunityMenuModalComponent } from './community-menu-modal/community-menu-modal.component';
 import { CommunityPrivacyChangeModalComponent } from './community-privacy-change-modal/community-privacy-change-modal.component';
 import { CreatePostModalComponent } from './create-post-modal/create-post-modal.component';
@@ -31,7 +32,8 @@ import { ReportPostModalComponent } from './report-post-modal/report-post-modal.
     CommunityMenuModalComponent,
     ModifyCommunityModalComponent,
     CommunityPrivacyChangeModalComponent,
-    ModifyUserModalComponent
+    ModifyUserModalComponent,
+    CommunityDetailsCardComponent
   ],
   providers: [
   ],
@@ -43,7 +45,8 @@ import { ReportPostModalComponent } from './report-post-modal/report-post-modal.
     CommunityMenuModalComponent,
     ModifyCommunityModalComponent,
     CommunityPrivacyChangeModalComponent,
-    ModifyUserModalComponent
+    ModifyUserModalComponent,
+    CommunityDetailsCardComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

@@ -15,12 +15,14 @@
                 loadMode="async" stretch="aspectFill" (failure)="onFailure($event)">
               </NSImg>
             </StackLayout>
-            <StackLayout class="community-details" row="0" verticalAlignment="bottom">
-              <StackLayout (loaded)="onCommuityDetailsViewLoaded($event)" (tap)="onShowCommunityCard($event)" ripple
-                [rippleColor]="qColors.$whiteTransparent">
+            <GridLayout class="community-details" row="0" verticalAlignment="bottom" orientation="horizontal"
+              columns="*, 30">
+              <StackLayout col="0" (loaded)="onCommuityDetailsViewLoaded($event)">
                 <Label class="community-name" [text]="community?.communityName"></Label>
               </StackLayout>
-            </StackLayout>
+              <Button col="1" class="fa view-details" verticalAlignment="bottom" text="&#xf009;" ripple
+                [rippleColor]="qColors.$heading" (tap)="onShowCommunityCard($event)"></Button>
+            </GridLayout>
             <StackLayout class="modify" row="0" verticalAlignment="top" horizontalAlignment="right">
               <Button class="fa" text="&#xf040;" (tap)="onCommunityAvatarEdit()" ripple
                 [rippleColor]="qColors.$heading"></Button>

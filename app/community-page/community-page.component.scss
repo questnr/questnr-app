@@ -16,6 +16,15 @@
                 border-left-color: $primary;
                 font-weight: 500;
             }
+            .view-details {
+                width: 27;
+                height: 27;
+                padding: 1;
+                @include make-font-size(4);
+                color: $primary;
+                border-radius: 30;
+                background-color: $white-transparent;
+            }
         }
         .modify {
             Button {

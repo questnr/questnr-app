@@ -39,7 +39,7 @@ export class AuthService {
   checkEmailExists(val: string) {
     return this.http.post(this.baseUrl + 'check-email', { email: val });
   }
-  
+
   public setUserLoginData(loginResponse: LoginResponse): void {
     this.accessToken = loginResponse.accessToken;
     this.user = JSON.stringify(this.getLocalUserProfile(loginResponse.accessToken));
@@ -108,7 +108,7 @@ export class AuthService {
   }
 
   public setUser(user: User) {
-    if (!this.remoteUser || this.remoteUser.userId === user.userId) {
+    if (!this.remoteUser || this.remoteUser?.userId === user.userId) {
       this.remoteUser = user;
     }
   }
