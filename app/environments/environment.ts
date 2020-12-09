@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   //Special alias to your host loopback interface (i.e., 127.0.0.1 on your development machine)
   // baseUrl: 'https://internal.questnr.com/api/v1/',
-  baseUrl: 'https://967a0474d417.ngrok.io/api/v1/',
+  baseUrl: 'https://6c1c032f7b79.ngrok.io/api/v1/',
   allowTracking: false,
   googleKey: '836632017511-na1k4gagi79qlvdp644q1shd0rjffoc9.apps.googleusercontent.com',
   fbKey: '1336590906533811',

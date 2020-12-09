@@ -5,7 +5,8 @@ import { map } from "rxjs/operators";
 export enum OverlayReasonType {
     unset,
     postMenu,
-    communityMenu
+    communityMenu,
+    userMenu
 }
 
 @Injectable({

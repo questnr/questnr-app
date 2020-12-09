@@ -1,12 +1,15 @@
 import { Component, ElementRef, Input, NgZone, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { EventData, FinalEventData, Img } from '@nativescript-community/ui-image';
+import { ModalDialogOptions, ModalDialogService } from '@nativescript/angular';
 import { Page, ScrollView, StackLayout } from '@nativescript/core';
 import { combineLatest, of, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from '~/services/auth.service';
+import { SnackBarService } from '~/services/snackbar.service';
 import { UserActivityService } from '~/services/user-activity.service';
 import { UserInteractionService } from '~/services/user-interaction.service';
+import { UserMenuService } from '~/services/user-menu.service';
 import { UserProfilePageService } from '~/services/user-profile-page.service';
 import { UtilityService } from '~/services/utility.service';
 import { QuestionListCardComponent } from '~/shared/components/question-list-card/question-list-card.component';
@@ -16,6 +19,8 @@ import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { JoinedCommunityComponent } from '~/shared/containers/joined-community/joined-community.component';
 import { OwnedCommunityComponent } from '~/shared/containers/owned-community/owned-community.component';
 import { SimplePostComponent } from '~/shared/containers/simple-post/simple-post.component';
+import { ModifyUserModalComponent } from '~/shared/modals/modify-user-modal/modify-user-modal.component';
+import { AvatarDTO } from '~/shared/models/common.model';
 import { QPage } from '~/shared/models/page.model';
 import { Post, PostType, QuestionParentType } from '~/shared/models/post-action.model';
 import { RelationType } from '~/shared/models/relation-type';
@@ -93,9 +98,11 @@ export class UserPageComponent implements OnInit {
     private userActivityService: UserActivityService,
     private utilityService: UtilityService,
     public userInteractionService: UserInteractionService,
-    private ngZone: NgZone) {
+    private ngZone: NgZone,
+    private modalService: ModalDialogService,
+    private userMenuService: UserMenuService,
+    private snackBarService: SnackBarService) {
     this.isLoading = true;
-    this.isUserPageLoading = true;
     this.route.data.subscribe((data) => {
       if (data.isOwner) {
         this.isOwner = true;
@@ -122,6 +129,22 @@ export class UserPageComponent implements OnInit {
 
   ngOnDestroy() {
     this.cancelIfAnyCurrentFeedSubscription();
+  }
+
+  userAssetChangeListener(): void {
+    this.userMenuService.userAvatarRefreshRequest$.subscribe((newAvatar: AvatarDTO) => {
+      if (this.isOwner && newAvatar) {
+        this.snackBarService.show({ snackText: "Your avatar has been changed!" })
+        this.user.avatarDTO = newAvatar;
+      }
+    });
+
+    this.userMenuService.userBannerRefreshRequest$.subscribe((newBanner: AvatarDTO) => {
+      if (this.isOwner && newBanner) {
+        this.snackBarService.show({ snackText: "Background image has been changed!" })
+        this.user.banner = newBanner;
+      }
+    });
   }
 
   refreshList(args) {
@@ -174,13 +197,17 @@ export class UserPageComponent implements OnInit {
       (responseList) => {
         if (fetchUser) {
           this.user = responseList[0] as User;
-          this.isOwner = this.authService.isThisLoggedInUser(this.user.userId);
+          this.isOwner = this.authService.isThisLoggedInUser(this.user?.userId);
           if (this.isOwner) {
+            this.userAssetChangeListener();
             // to avoid fetching the remote user again at the next click on profile user tab
             this.authService.setUser(this.user);
           }
           this.userInfo = responseList[1] as UserInfo;
         } else {
+          if (this.isOwner) {
+            this.userAssetChangeListener();
+          }
           this.userInfo = responseList[0] as UserInfo;
         }
         this.afterReceivingUser(true);
@@ -217,6 +244,7 @@ export class UserPageComponent implements OnInit {
 
   getUserFeed() {
     this.cancelIfAnyCurrentFeedSubscription();
+    if (!this?.user?.userId) return;
     this.isLoading = true;
     this.feedSubscriber = this.userProfilePageService.getUserFeeds(this.user.userId, this.pageNumber, this.pageSize).subscribe(
       (feedPage: QPage<Post>) => {
@@ -376,7 +404,36 @@ export class UserPageComponent implements OnInit {
   }
 
   onUserDetailsEdit(args): void {
-
+    const options: ModalDialogOptions = {
+      viewContainerRef: this.viewContainerRef,
+      fullscreen: true,
+      context: {
+        user: this.user
+      }
+    };
+    this.modalService.showModal(ModifyUserModalComponent, options).then((modifiedUser) => {
+      // console.log("onEdit: modifiedUser", modifiedUser);
+      if (modifiedUser?.userProfileData) {
+        let newUser: User = modifiedUser?.userProfileData as User;
+        if (newUser.username)
+          this.user.username = newUser.username;
+        if (newUser.firstName)
+          this.user.firstName = newUser.firstName;
+        if (newUser.lastName)
+          this.user.lastName = newUser.lastName;
+        if (newUser.bio)
+          this.user.bio = newUser.bio;
+        if (newUser.dob)
+          this.user.dob = newUser.dob;
+        this.afterReceivingUser();
+      }
+      if (modifiedUser?.avatar) {
+        this.user.avatarDTO = modifiedUser?.avatar;
+      }
+      if (modifiedUser?.banner) {
+        this.user.banner = modifiedUser?.banner;
+      }
+    });
   }
 
   onScrollToPostEvent(): void {

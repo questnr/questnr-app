@@ -64,3 +64,9 @@ export class MediaSrc {
         this.src = src;
     }
 }
+
+export enum QSize {
+    small = 'small',
+    medium = 'medium',
+    large = 'large'
+}

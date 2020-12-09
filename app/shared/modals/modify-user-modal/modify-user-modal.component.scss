@@ -1,0 +1,112 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.user-modification-page-wrapper {
+    .user-modification-wrapper {
+        margin-top: 10;
+        background-color: $primary;
+        border-top-right-radius: 20;
+        border-top-left-radius: 20;
+        padding-bottom: 5;
+        color: $white;
+        .header {
+            margin: 10;
+            font-weight: 300;
+            @include make-font-size(9);
+            .close-modal {
+                @include make-font-size(2);
+                height: 30;
+                width: 30;
+            }
+        }
+        .user-form-wrapper {
+            margin-top: 15;
+            margin-left: 15;
+            margin-right: 15;
+            .input-control-wrapper {
+                .head-wrapper {
+                    .menu-btn {
+                        padding: 5;
+                    }
+                }
+                .input-field-wrapper {
+                    .input-field-container {
+                        border-width: 2;
+                        border-color: $heading;
+                        border-radius: 10;
+                        background-color: $white;
+                        .input-field {
+                            @include make-font-size(2);
+                            color: $gray-font-2;
+                            placeholder-color: $colors-placeholder;
+                            padding-left: 5;
+                            margin-top: -1;
+                            margin-bottom: 0;
+                            border-width: 0;
+                            width: 100%;
+                            padding-top: 5;
+                            padding-bottom: 5;
+                        }
+                        .date-picker {
+                            border-color: $heading;
+                            border-width: 2;
+                            border-radius: 10;
+                        }
+                        .vertical-border {
+                            // margin: 1;
+                            width: 1;
+                            background-color: $gray;
+                            padding-top: 5;
+                            padding-bottom: 5;
+                        }
+                        .submit {
+                            @include make-font-size(2);
+                            padding: 10;
+                            height: 100%;
+                            // margin-left: 8;
+                            // margin-right: 3;
+                            border-top-right-radius: 10;
+                            border-bottom-right-radius: 10;
+                            color: $black;
+                        }
+                    }
+                    .field-label {
+                        @include make-font-size(-1);
+                        font-weight: bold;
+                    }
+
+                    .input-field-error {
+                        border-width: 2;
+                        border-color: $red;
+                    }
+                }
+                .image-selector-container {
+                    .image-selector {
+                    }
+                    .user-banner {
+                        border-width: 2;
+                        border-color: $gray;
+                        border-radius: 2;
+                    }
+                    .user-avatar {
+                        border-width: 2;
+                        border-color: $gray;
+                        border-radius: 50;
+                    }
+                }
+            }
+            .submit-button-container {
+                margin-top: 10;
+                Button {
+                    @include make-font-size(2);
+                    border-radius: 5;
+                    margin: 0;
+                }
+                Button.submit {
+                    background-color: $heading;
+                    color: $white;
+                }
+            }
+        }
+    }
+}

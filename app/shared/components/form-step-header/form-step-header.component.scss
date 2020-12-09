@@ -1,0 +1,20 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.step-details {
+    .step-title {
+        font-weight: 600;
+        &.small {
+            @include make-font-size(3);
+        }
+        &.medium {
+            @include make-font-size(4);
+        }
+        &.large {
+            @include make-font-size(5);
+        }
+    }
+    .step-description {
+        @include make-font-size(1);
+    }
+}

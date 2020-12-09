@@ -16,18 +16,19 @@
                                 (tap)="onUserBannerTap($event)">
                             </NSImg>
                         </StackLayout>
-                        <StackLayout row="0" class="user-avatar" verticalAlignment="middle" height="100" width="100"
+                        <GridLayout row="0" class="user-avatar" verticalAlignment="middle" height="100" width="100"
                             (loaded)="onUserAvatarViewLoaded($event)">
                             <NSImg roundAsCircle="true" [placeholderImageUri]="defaultSrc"
-                                [failureImageUri]="defaultSrc" verticalAlignment="middle" horizontalAlignment="center"
+                                [failureImageUri]="defaultSrc"
                                 [src]="modifiedUserAvatarPath ? modifiedUserAvatarPath : user?.avatarDTO?.avatarLink ? user?.avatarDTO?.avatarLink : defaultSrc"
                                 loadMode="async" stretch="aspectFill" (failure)="onUserAvatarFailure($event)">
                             </NSImg>
-                        </StackLayout>
+                        </GridLayout>
                     </GridLayout>
                     <GridLayout class="user-details" ripple [rippleColor]="qColors.$whiteTransparent" rows="*">
                         <Label class="username" row="0" [text]="user?.username"></Label>
-                        <StackLayout class="modify" row="0" verticalAlignment="top" horizontalAlignment="right">
+                        <StackLayout class="modify" row="0" verticalAlignment="top" horizontalAlignment="right"
+                            *ngIf="!isUserPageLoading && isOwner">
                             <Button class="fa" text="&#xf040;" (tap)="onUserDetailsEdit($event)" ripple
                                 [rippleColor]="qColors.$heading"></Button>
                         </StackLayout>

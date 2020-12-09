@@ -25,6 +25,36 @@ export class ImageCropService {
         });
     }
 
+    openUserAvatarImageCropper(imageSource: ImageSource): Promise<any> {
+        return this.openImageCropper(imageSource, {
+            setAspectRatioOptions: {
+                defaultIndex: 0,
+                aspectRatios: [
+                    {
+                        aspectRatioTitle: 'User Avatar',
+                        aspectRatioX: 4,
+                        aspectRatioY: 4
+                    },
+                ]
+            }
+        });
+    }
+
+    openUserBannerImageCropper(imageSource: ImageSource): Promise<any> {
+        return this.openImageCropper(imageSource, {
+            setAspectRatioOptions: {
+                defaultIndex: 0,
+                aspectRatios: [
+                    {
+                        aspectRatioTitle: 'User Background Image',
+                        aspectRatioX: 12,
+                        aspectRatioY: 4
+                    },
+                ]
+            }
+        });
+    }
+
     openImageCropper(imageSource: ImageSource, options): Promise<any> {
         return new Promise((resolve, reject) => {
             var imageCropper = new ImageCropper();

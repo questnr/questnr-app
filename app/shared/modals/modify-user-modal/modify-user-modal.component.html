@@ -1,0 +1,154 @@
+<Page xmlns="http://www.nativescript.org/tns.xsd" class="user-modification-page-wrapper"
+  (loaded)="onPageLoaded($event)">
+  <GridLayout class="user-modification-wrapper" rows="auto, *" (loaded)="onContainerLoaded($event)">
+    <StackLayout class="header" row="0" id="header">
+      <GridLayout rows="*">
+        <Label row="0" text="Edit Details"></Label>
+        <Label class="close-modal fa" row="0" verticalAlignment="center" horizontalAlignment="right" text="&#xf00d;"
+          (tap)="onClose()"></Label>
+      </GridLayout>
+      <StackLayout>
+        <qn-hr [color]="qColors.$white"></qn-hr>
+      </StackLayout>
+    </StackLayout>
+    <GridLayout row="1">
+      <ScrollView>
+        <GridLayout class="user-form-wrapper" id="form-container" rows="*, *, *, *, *, *, *, auto">
+          <GridLayout class="input-control-wrapper" row="0" rows="auto, *">
+            <FlexboxLayout class="head-wrapper" justifyContent="space-between" row="0">
+              <qn-form-step-header [title]="'Background Image'"></qn-form-step-header>
+              <Label id="user-banner-menu" class="fa menu-btn" text="&#xf0ca;" ripple [rippleColor]="qColors.$primary"
+                (tap)="onOpenUserImageMenu($event, false)"></Label>
+            </FlexboxLayout>
+            <StackLayout class="image-selector-container" row="1">
+              <GridLayout class="image-selector">
+                <NSImg class="user-banner" (tap)="onTapUserBanner($event)" [placeholderImageUri]="defaultBanner"
+                  [failureImageUri]="defaultBanner" [src]="userBannerPath ? userBannerPath : defaultBanner"
+                  loadMode="async" stretch="aspectFill" (failure)="onUserBannerFailure($event)">
+                </NSImg>
+              </GridLayout>
+            </StackLayout>
+          </GridLayout>
+          <GridLayout class="input-control-wrapper" row="1" rows="auto, *">
+            <FlexboxLayout class="head-wrapper" justifyContent="space-between" row="0">
+              <StackLayout orientation="horizontal">
+                <qn-form-step-header [title]="'Avatar'"></qn-form-step-header>
+              </StackLayout>
+              <StackLayout orientation="horizontal">
+                <Label id="user-avatar-menu" class="fa menu-btn" text="&#xf0ca;" ripple [rippleColor]="qColors.$primary"
+                  (tap)="onOpenUserImageMenu($event, true)"></Label>
+              </StackLayout>
+            </FlexboxLayout>
+            <StackLayout class="image-selector-container" row="1">
+              <StackLayout class="image-selector user-avatar" height="100" width="100">
+                <NSImg (tap)="onTapUserAvatar($event)" roundAsCircle="true" [placeholderImageUri]="defaultSrc"
+                  [failureImageUri]="defaultSrc" horizontalAlignment="center"
+                  [src]="userAvatarPath ? userAvatarPath : defaultSrc" loadMode="async" stretch="aspectFill"
+                  (failure)="onUserAvatarFailure($event)">
+                </NSImg>
+              </StackLayout>
+            </StackLayout>
+          </GridLayout>
+          <GridLayout class="input-control-wrapper" row="2" rows="auto, *">
+            <qn-form-step-header [title]="'Username'" row="0"></qn-form-step-header>
+            <StackLayout class="input-field-wrapper" row="1">
+              <StackLayout class="input-field-container"
+                [ngClass]="{'input-field-error': hasInputErrors(inputFieldsClass.username)}"
+                (loaded)="onInputFieldLoaded($event, inputFieldsClass.username)">
+                <TextField class="input-field" hint="Enter your username" [formControl]="username" autocorrect="false"
+                  verticalAlignment="middle" (focus)="onInputFocus(inputFieldsClass.username)">
+                </TextField>
+              </StackLayout>
+              <StackLayout *ngIf="hasInputErrors(inputFieldsClass.username)" class="m-t-2 field-label">
+                <Label *ngIf="username.hasError('required')" text="Username is required"></Label>
+                <Label *ngIf="username.hasError('pattern')"
+                  text="Only upper case, lower case, numbers and underscore (_) are allowed">
+                </Label>
+                <Label *ngIf="username.hasError('minlength')" text="Field should contain at least 3 characters">
+                </Label>
+                <Label *ngIf="username.hasError('maxlength')" text="Field can have max 32 characters">
+                </Label>
+              </StackLayout>
+            </StackLayout>
+          </GridLayout>
+          <GridLayout class="input-control-wrapper" row="3" rows="auto, *">
+            <qn-form-step-header [title]="'First name'" row="0"></qn-form-step-header>
+            <StackLayout class="input-field-wrapper" row="1">
+              <StackLayout class="input-field-container"
+                [ngClass]="{'input-field-error': hasInputErrors(inputFieldsClass.firstName)}"
+                (loaded)="onInputFieldLoaded($event, inputFieldsClass.firstName)">
+                <TextField class="input-field" hint="Enter your first name" [formControl]="firstName"
+                  autocorrect="false" verticalAlignment="middle" (focus)="onInputFocus(inputFieldsClass.firstName)">
+                </TextField>
+              </StackLayout>
+              <StackLayout *ngIf="hasInputErrors(inputFieldsClass.firstName)" class="m-t-2 field-label">
+                <Label *ngIf="firstName.hasError('required')" text="First Name is required"></Label>
+                <Label *ngIf="firstName.hasError('pattern')" text="Spaces are not allowed">
+                </Label>
+                <Label *ngIf="firstName.hasError('minlength')" text="Field should contain at least 3 characters">
+                </Label>
+                <Label *ngIf="firstName.hasError('maxlength')" text="Field can have max 25 characters">
+                </Label>
+              </StackLayout>
+            </StackLayout>
+          </GridLayout>
+          <GridLayout class="input-control-wrapper" row="4" rows="auto, *">
+            <qn-form-step-header [title]="'Last name'" row="0"></qn-form-step-header>
+            <StackLayout class="input-field-wrapper" row="1">
+              <StackLayout class="input-field-container"
+                [ngClass]="{'input-field-error': hasInputErrors(inputFieldsClass.lastName)}"
+                (loaded)="onInputFieldLoaded($event, inputFieldsClass.lastName)">
+                <TextField class="input-field" hint="Enter your last name" [formControl]="lastName" autocorrect="false"
+                  verticalAlignment="middle" (focus)="onInputFocus(inputFieldsClass.lastName)">
+                </TextField>
+              </StackLayout>
+              <StackLayout *ngIf="hasInputErrors(inputFieldsClass.lastName)" class="m-t-2 field-label">
+                <Label *ngIf="lastName.hasError('required')" text="Last Name is required"></Label>
+                <Label *ngIf="lastName.hasError('pattern')" text="Spaces are not allowed">
+                </Label>
+                <Label *ngIf="lastName.hasError('minlength')" text="Field should contain at least 3 characters">
+                </Label>
+                <Label *ngIf="lastName.hasError('maxlength')" text="Field can have max 25 characters">
+                </Label>
+              </StackLayout>
+            </StackLayout>
+          </GridLayout>
+          <GridLayout class="input-control-wrapper" row="5" rows="auto, *">
+            <qn-form-step-header [title]="'Describe yourself'" row="0"></qn-form-step-header>
+            <StackLayout class="input-field-wrapper" row="1">
+              <StackLayout class="input-field-container"
+                [ngClass]="{'input-field-error': hasInputErrors(inputFieldsClass.bio)}"
+                (loaded)="onInputFieldLoaded($event, inputFieldsClass.bio)">
+                <TextView class="input-field" hint="Describe yourself" [formControl]="bio">
+                </TextView>
+              </StackLayout>
+              <StackLayout *ngIf="hasInputErrors(inputFieldsClass.bio)" class="m-t-2 field-label">
+                <Label *ngIf="bio.hasError('maxlength')" text="Field can have max 400 characters">
+                </Label>
+              </StackLayout>
+            </StackLayout>
+          </GridLayout>
+          <GridLayout class="input-control-wrapper" row="6" rows="auto, *">
+            <qn-form-step-header [title]="'Date of Birth'" row="0"></qn-form-step-header>
+            <StackLayout class="input-field-wrapper" row="1">
+              <StackLayout class="input-field-container"
+                [ngClass]="{'input-field-error': hasInputErrors(inputFieldsClass.dob)}"
+                (loaded)="onInputFieldLoaded($event, inputFieldsClass.dob)">
+                <DatePicker class="date-picker" [day]="day" [year]="year" [month]="month" [minDate]="minDate"
+                  [maxDate]="maxDate" [formControl]="dob" verticalAlignment="center">
+                </DatePicker>
+              </StackLayout>
+              <StackLayout *ngIf="hasInputErrors(inputFieldsClass.dob)" class="m-t-2 field-label">
+                <Label *ngIf="dob.hasError('required')" text="Date of Birth is required"></Label>
+              </StackLayout>
+            </StackLayout>
+          </GridLayout>
+          <FlexboxLayout row="7" class="submit-button-container" justifyContent="space-around">
+            <Button class="fa submit" [ngClass]="hasFormErrors ? 'error' : ''" ripple [rippleColor]="qColors.$primary"
+              text="Modify" (tap)="onUpdate($event)"></Button>
+          </FlexboxLayout>
+        </GridLayout>
+      </ScrollView>
+    </GridLayout>
+  </GridLayout>
+</Page>

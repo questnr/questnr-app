@@ -11,6 +11,7 @@ import { CommunityPrivacyChangeModalComponent } from './community-privacy-change
 import { CreatePostModalComponent } from './create-post-modal/create-post-modal.component';
 import { CreateQuestionModalComponent } from './create-question-modal/create-question-modal.component';
 import { ModifyCommunityModalComponent } from './modify-community-modal/modify-community-modal.component';
+import { ModifyUserModalComponent } from './modify-user-modal/modify-user-modal.component';
 import { PostMenuModalComponent } from './post-menu-modal/post-menu-modal.component';
 import { ReportPostModalComponent } from './report-post-modal/report-post-modal.component';
 
@@ -29,7 +30,8 @@ import { ReportPostModalComponent } from './report-post-modal/report-post-modal.
     ReportPostModalComponent,
     CommunityMenuModalComponent,
     ModifyCommunityModalComponent,
-    CommunityPrivacyChangeModalComponent
+    CommunityPrivacyChangeModalComponent,
+    ModifyUserModalComponent
   ],
   providers: [
   ],
@@ -40,7 +42,8 @@ import { ReportPostModalComponent } from './report-post-modal/report-post-modal.
     ReportPostModalComponent,
     CommunityMenuModalComponent,
     ModifyCommunityModalComponent,
-    CommunityPrivacyChangeModalComponent
+    CommunityPrivacyChangeModalComponent,
+    ModifyUserModalComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

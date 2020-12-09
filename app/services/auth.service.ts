@@ -39,13 +39,17 @@ export class AuthService {
   checkEmailExists(val: string) {
     return this.http.post(this.baseUrl + 'check-email', { email: val });
   }
+  
+  public setUserLoginData(loginResponse: LoginResponse): void {
+    this.accessToken = loginResponse.accessToken;
+    this.user = JSON.stringify(this.getLocalUserProfile(loginResponse.accessToken));
+  }
 
   public login(user: LoginUser) {
     return this.http.post<LoginResponse>(this.baseUrl + 'login', user)
       .pipe(map((loginResponse: LoginResponse) => {
         if (loginResponse.accessToken && loginResponse.loginSuccess) {
-          this.accessToken = loginResponse.accessToken;
-          this.user = JSON.stringify(this.getLocalUserProfile(loginResponse.accessToken));
+          this.setUserLoginData(loginResponse);
           this.getLoggedInUserDetails().subscribe((user) => {
             console.log("getLoggedInUserDetails", user);
           });

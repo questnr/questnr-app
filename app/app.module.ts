@@ -43,6 +43,7 @@ import { UserFollowerService } from './services/user-follower.service';
 import { UserFollowersService } from './services/user-followers.service';
 import { UserInteractionService } from './services/user-interaction.service';
 import { UserListService } from './services/user-list.service';
+import { UserMenuService } from './services/user-menu.service';
 import { UserProfilePageService } from './services/user-profile-page.service';
 import { UserProfileService } from './services/user-profile.service';
 import { UserQuestionService } from './services/user-question.service';
@@ -123,7 +124,8 @@ if (applicationModule.android) {
     ImageCropService,
     UserProfilePageService,
     UserActivityService,
-    QRouterService
+    QRouterService,
+    UserMenuService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
