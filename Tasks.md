@@ -1,0 +1,4 @@
+- Skeleton for Community memebers
+- Input view change at login and signup pages
+- Hashtag at feed-text
+- Simple post, question and blog view component
