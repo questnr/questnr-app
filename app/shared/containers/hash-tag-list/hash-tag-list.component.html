@@ -1,0 +1,9 @@
+<StackLayout class="hash-tag-list-wrapper">
+  <Label class="title" [text]="title" *ngIf="title"></Label>
+  <FlexboxLayout flexWrap="wrap">
+    <StackLayout class="hash-tag" orientation="horizontal" *ngFor="let hashTag of hashTagList;" ripple
+      [rippleColor]="qColors.$primary" (tap)="onOpenHashTag(hashTag)">
+      <Label [text]="'#'+hashTag.hashTagValue"></Label>
+    </StackLayout>
+  </FlexboxLayout>
+</StackLayout>

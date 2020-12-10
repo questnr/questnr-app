@@ -1,0 +1,21 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.hash-tag-list-wrapper {
+    .title {
+        @include make-font-size(4);
+        color: $gray-font-2;
+        padding: 2;
+    }
+    .hash-tag {
+        @include make-font-size(3);
+        background: $hash-tag-background;
+        color: $gray-font-2;
+        padding-top: 3;
+        padding-bottom: 3;
+        padding-right: 5;
+        padding-left: 5;
+        margin: 2;
+        border-radius: 30;
+    }
+}

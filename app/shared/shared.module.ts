@@ -26,6 +26,7 @@ import { CommentContainerComponent } from './containers/comment-container/commen
 import { CommunityMembersComponent } from './containers/community-members/community-members.component';
 import { CreatePostComponent } from './containers/create-post/create-post.component';
 import { FeedTextComponent } from './containers/feed-text/feed-text.component';
+import { HashTagListComponent } from './containers/hash-tag-list/hash-tag-list.component';
 import { HorizontalProfileComponent } from './containers/horizontal-profile/horizontal-profile.component';
 import { JoinedCommunityComponent } from './containers/joined-community/joined-community.component';
 import { MediaContainerComponent } from './containers/media-container/media-container.component';
@@ -91,7 +92,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     SuggestedCommunityComponent,
     TrendingCommunityComponent,
     UserRelationActionButtonComponent,
-    FormStepHeaderComponent
+    FormStepHeaderComponent,
+    HashTagListComponent
   ],
   providers: [
   ],
@@ -135,7 +137,8 @@ import { QNRVideoComponent } from './util/video/q-n-r-video.component';
     SuggestedCommunityComponent,
     TrendingCommunityComponent,
     UserRelationActionButtonComponent,
-    FormStepHeaderComponent
+    FormStepHeaderComponent,
+    HashTagListComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

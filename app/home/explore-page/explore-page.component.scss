@@ -1,0 +1,97 @@
+@import "~/variables";
+@import "scss/mixins/index";
+
+.explore-page-wrapper {
+    margin-left: 5;
+    margin-right: 5;
+    .hash-tag-control-wrapper {
+        margin-top: 5;
+        .input-field-wrapper {
+            .input-field-container {
+                border-width: 2;
+                border-color: $heading;
+                border-radius: 10;
+                background-color: $white;
+                .input-field {
+                    @include make-font-size(2);
+                    color: $gray-font-2;
+                    placeholder-color: $colors-placeholder;
+                    padding-left: 5;
+                    margin-top: -1;
+                    margin-bottom: 0;
+                    border-width: 0;
+                    width: 100%;
+                    padding-top: 5;
+                    padding-bottom: 5;
+                }
+                .vertical-border {
+                    // margin: 1;
+                    width: 1;
+                    background-color: $gray;
+                    padding-top: 5;
+                    padding-bottom: 5;
+                }
+                .submit {
+                    @include make-font-size(2);
+                    padding: 10;
+                    height: 100%;
+                    // margin-left: 8;
+                    // margin-right: 3;
+                    border-top-right-radius: 10;
+                    border-bottom-right-radius: 10;
+                    color: $black;
+                }
+            }
+            .field-label {
+                @include make-font-size(-1);
+                font-weight: bold;
+            }
+
+            .input-field-error {
+                border-width: 2;
+                border-color: $red;
+            }
+        }
+        .filter-select-wrapper {
+            .filter-select {
+                .hash-tag {
+                    @include make-font-size(1);
+                    color: $primary;
+                    margin-top: 1;
+                    margin-bottom: 1;
+                    padding: 2;
+                    border-radius: 5;
+                }
+            }
+        }
+        .tag-list-wrapper {
+            .tag-list-title {
+                @include make-font-size(1);
+            }
+            .tag-container {
+                @include make-font-size(3);
+                margin: 2;
+                padding: 4;
+                background-color: $heading-transparent;
+                border-radius: 10;
+                .tag {
+                    padding: 3;
+                }
+                .tag-remove {
+                    padding: 3;
+                }
+            }
+        }
+    }
+    .explore-body {
+        margin-top: 5;
+        .user-feed {
+            margin-top: 5;
+            margin-bottom: 5;
+            .popular-hash-tag-list {
+                margin-top: 5;
+                margin-bottom: 5;
+            }
+        }
+    }
+}

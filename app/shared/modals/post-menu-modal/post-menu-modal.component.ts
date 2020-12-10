@@ -54,7 +54,7 @@ export class PostMenuModalComponent implements OnInit {
           this.isOwner = true;
         }
 
-        if (typeof this.currentPost?.communityDTO.communityId != 'undefined') {
+        if (typeof this.currentPost?.communityDTO?.communityId != 'undefined') {
           this.isCommunityPost = true;
           this.displayNameOfEntity = this.currentPost.communityDTO.communityName;
         }

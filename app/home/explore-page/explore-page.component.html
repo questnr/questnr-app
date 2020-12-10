@@ -2,9 +2,69 @@
   [indicatorColor]="qColors.$white">
   <ScrollView (scroll)="onScroll($event)"
     [isUserInteractionEnabled]="userInteractionService.isUserInteractionEnabled$ | async">
-    <StackLayout>
-      <StackLayout #container>
-        <StackLayout *ngFor="let feed of userExploreFeeds;">
+    <StackLayout class="explore-page-wrapper">
+      <GridLayout class="hash-tag-control-wrapper" *ngIf="queryParams">
+        <GridLayout class="filter-wrapper">
+          <GridLayout class="keyword-wrapper" [rows]="searchResults?.length > 0 ? 'auto, 100, *' : 'auto, 10, *'">
+            <StackLayout class="input-field-wrapper" row="0">
+              <GridLayout class="input-field-container" orientation="horizontal" verticalAlignment="top"
+                [ngClass]="{'input-field-error': (hasHashTagInputErrors() || hasHashTagListErrors())}"
+                columns="*, auto">
+                <TextField class="input-field" hint="Search hash tag" [formControl]="hashTagControl" autocorrect="false"
+                  (focus)="onHashTagInputFocus()" col="0" returnKeyType="done">
+                </TextField>
+                <StackLayout col="1" orientation="horizontal">
+                  <StackLayout class="vertical-border"></StackLayout>
+                  <Label class="submit fa" ripple [rippleColor]="qColors.$primary"
+                    [rippleEnabled]="hashTagControl.valid"
+                    (tap)="addHashTagToSearchingBucketUsingInput(hashTagControl.value)"
+                    [isEnabled]="hashTagControl.valid" verticalAlignment="middle" text="&#xf149;">
+                  </Label>
+                </StackLayout>
+              </GridLayout>
+              <StackLayout class="m-t-2 field-label">
+                <StackLayout *ngIf="hasHashTagInputErrors()">
+                  <Label *ngIf="hashTagControl.hasError('pattern')" text="Use characters and number only"></Label>
+                  <Label *ngIf="tagExistsError" text="Tag already added"></Label>
+                  <Label *ngIf="hashTagControl.hasError('maxLength')" text="Tag is too long"></Label>
+                </StackLayout>
+                <StackLayout *ngIf="hasHashTagListErrors()">
+                  <Label *ngIf="tagsCount.hasError('max')" text="Up to only 5 tags are allowed"></Label>
+                  <Label *ngIf="tagsCount.hasError('min')" text="At least 2 tags are required"></Label>
+                </StackLayout>
+              </StackLayout>
+            </StackLayout>
+            <GridLayout class="filter-select-wrapper" row="1" [height]="searchResults?.length> 0 ? 100 : 0">
+              <ScrollView class="filter-select">
+                <StackLayout class="hash-tag" *ngFor="let hashTag of searchResults">
+                  <Label (tap)="addHashTagToSearchingBucket(hashTag, true)" ripple [rippleColor]="qColors.$gray"
+                    [text]="hashTag.hashTagValue"></Label>
+                </StackLayout>
+              </ScrollView>
+            </GridLayout>
+            <GridLayout row="1">
+              <qn-space [space]="10"></qn-space>
+            </GridLayout>
+            <GridLayout class="tag-list-wrapper" row="2">
+              <ScrollView *ngIf="selectedHashTagBucket.length > 0">
+                <StackLayout>
+                  <FlexboxLayout flexWrap="wrap">
+                    <StackLayout class="tag-container" orientation="horizontal"
+                      *ngFor="let hasTag of selectedHashTagBucket, let ind = index" [id]="'community-tag-'+ind">
+                      <Label class="tag" [text]="hasTag.hashTagValue"></Label>
+                      <Label (tap)="removeHashTagFromSearchingBucketEvent($event, hasTag)" class="tag-remove fa"
+                        text="&#xf12d;" verticalAlignment="middle">
+                      </Label>
+                    </StackLayout>
+                  </FlexboxLayout>
+                </StackLayout>
+              </ScrollView>
+            </GridLayout>
+          </GridLayout>
+        </GridLayout>
+      </GridLayout>
+      <StackLayout class="explore-body" #container>
+        <StackLayout *ngFor="let feed of userExploreFeeds;let postIndex = index" class="user-feed">
           <StackLayout *ngIf="feed.postType == postTypeClass.simple">
             <qn-simple-post [feed]="feed">
             </qn-simple-post>
@@ -12,6 +72,11 @@
           <StackLayout *ngIf="feed.postType == postTypeClass.question">
             <qn-simple-question [feed]="feed" [questionParentType]="questionParentTypeClass.feedPage">
             </qn-simple-question>
+          </StackLayout>
+          <StackLayout class="popular-hash-tag-list"
+            *ngIf="(userExploreFeeds?.length && postIndex === 2) || (userExploreFeeds?.length < 2 && postIndex == 0)">
+            <qn-hash-tag-list [hashTagList]="popularHashTagList" [title]="popularHashTagTitle"
+              (onHashTagTap)="onHashTagTap($event)" #hashTagListComp></qn-hash-tag-list>
           </StackLayout>
         </StackLayout>
         <StackLayout *ngIf="isLoading">

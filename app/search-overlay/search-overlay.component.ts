@@ -6,6 +6,7 @@ import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
 import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ApiService } from '~/services/api.service';
+import { QRouterService } from '~/services/q-router.service';
 import { GlobalConstants } from '~/shared/constants';
 import { StaticMediaSrc } from '~/shared/constants/static-media-src';
 import { Community } from '~/shared/models/community.model';
@@ -89,8 +90,9 @@ export class SearchOverlayComponent implements OnInit {
   communityAPISubscription: Subscription;
 
   constructor(private apiService: ApiService,
-    private routerExtenstions: RouterExtensions,
-    private _page: Page) {
+    private routerExtensions: RouterExtensions,
+    private _page: Page,
+    private qRouterService: QRouterService) {
   }
 
   ngOnInit(): void {
@@ -156,7 +158,7 @@ export class SearchOverlayComponent implements OnInit {
   }
 
   onNavBtnTap(args): void {
-    this.routerExtenstions.backToPreviousPage();
+    this.routerExtensions.backToPreviousPage();
   }
 
   selectSearchOption(selectedIndex: number) {
@@ -397,20 +399,16 @@ export class SearchOverlayComponent implements OnInit {
 
   onOpenUserPage(userSlug: string): void {
     if (userSlug)
-      this.routerExtenstions.navigate(['/', GlobalConstants.userPath, userSlug])
+      this.routerExtensions.navigate(['/', GlobalConstants.userPath, userSlug])
   }
 
   onOpenComunityPage(communitySlug: string): void {
     if (communitySlug)
-      this.routerExtenstions.navigate(['/', GlobalConstants.communityPath, communitySlug])
+      this.routerExtensions.navigate(['/', GlobalConstants.communityPath, communitySlug])
   }
 
   onOpenHashTagPage(hashTagValue: string): void {
     if (hashTagValue)
-      this.routerExtenstions.navigate(['/', GlobalConstants.hashTagPath], {
-        queryParams: {
-          q: hashTagValue
-        }
-      })
+      this.qRouterService.goToExploreTab(hashTagValue);
   }
 }

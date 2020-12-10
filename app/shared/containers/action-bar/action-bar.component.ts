@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, Input, NgZone, OnInit, ViewContainerRef } from '@angular/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { SearchBar } from '@nativescript/core';
 import { CubicBezierAnimationCurve } from '@nativescript/core/ui/animation';
@@ -21,7 +21,8 @@ export class ActionBarComponent implements OnInit {
 
   constructor(private authSerivce: AuthService,
     private routerExtenstions: RouterExtensions,
-    private qRouterService: QRouterService) { }
+    private qRouterService: QRouterService,
+    private ngZone: NgZone) { }
 
   ngOnInit(): void {
   }
@@ -52,11 +53,11 @@ export class ActionBarComponent implements OnInit {
       // Change Focus listener
       this.searchBar.android.setOnQueryTextFocusChangeListener(new android.view.View.OnFocusChangeListener({
         onFocusChange: (v: any, hasFocus: boolean) => {
-          if (hasFocus) {
-            this.showSearchModal();
-          } else {
-
-          }
+          this.ngZone.run(() => {
+            if (hasFocus) {
+              this.showSearchModal();
+            }
+          });
         }
       }));
     }

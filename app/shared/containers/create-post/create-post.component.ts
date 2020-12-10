@@ -31,7 +31,7 @@ export class CreatePostComponent implements OnInit {
     this.avatar = this.authSerivce.getAvatar();
     this.postMenuService.postEditRequest$.subscribe((postToBeEdited: Post) => {
       if (postToBeEdited && postToBeEdited.postActionId
-        && this.authService.isThisLoggedInUser(postToBeEdited.userDTO.userId)) {
+        && this.authService.isThisLoggedInUser(postToBeEdited.userDTO?.userId)) {
         this.editPost(postToBeEdited);
       }
     });
