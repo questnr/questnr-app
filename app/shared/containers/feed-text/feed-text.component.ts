@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { qColors } from '~/_variables';
 
 @Component({
   selector: 'qn-feed-text',
@@ -6,8 +7,9 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./feed-text.component.scss']
 })
 export class FeedTextComponent implements OnInit {
+  qColors = qColors;
   @Input() text: string;
-  @Input() maxLength: number = 300;
+  @Input() maxLength: number = 200;
   @Input() hashTagsData = {};
   // "read more" functionality to be use
   @Input() readMore: boolean = true;
@@ -22,14 +24,14 @@ export class FeedTextComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.text && this.text.length > 0) {
-      if (this.hashTagsData != {}) {
+      if (Object.keys(this.hashTagsData).length) {
         this.hashTagPosList = Object.keys(this.hashTagsData);
       }
       if (this.text.length > this.maxLength && this.readMore) {
-        this.readMoreText();
+        this.readLessText();
       } else {
-        this.textToShow = this.text;
-        this.hasMoreText = false;
+        this.readMore = false;
+        this.readMoreText();
       }
     }
   }
@@ -39,25 +41,21 @@ export class FeedTextComponent implements OnInit {
   //   }
   // }
 
-
-  readMoreText(): void {
-    if ((this.countReadMoreTimes + 1) * this.maxLength > this.text.length) {
-      this.appendText(this.textToShow.length, this.text.length);
-      this.hasMoreText = false;
+  toggleText(): void {
+    if (this.hasMoreText) {
+      this.readMoreText();
     } else {
-      this.appendText(this.textToShow.length, (this.countReadMoreTimes + 1) * this.maxLength);
-      this.hasMoreText = true;
+      this.readLessText();
     }
   }
 
-  appendText(startPos: number, endPos: number): void {
-    for (let i = 0; i < this.hashTagPosList.length; i++) {
-      if (endPos > Number(this.hashTagPosList[i])
-        && endPos < (Number(this.hashTagPosList[i]) + Number(this.hashTagsData[this.hashTagPosList[i]]))) {
-        endPos = (Number(this.hashTagPosList[i]) + Number(this.hashTagsData[this.hashTagPosList[i]]));
-      }
-    }
-    this.textToShow += this.text.substring(startPos, endPos);
-    this.countReadMoreTimes++;
+  readMoreText(): void {
+    this.textToShow = this.text;
+    this.hasMoreText = false;
+  }
+
+  readLessText(): void {
+    this.textToShow = this.text.substring(0, this.maxLength);
+    this.hasMoreText = true;
   }
 }

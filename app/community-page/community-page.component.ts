@@ -61,7 +61,7 @@ export class CommunityPageComponent implements OnInit {
   feedComponentHelperTimeout: any;
   questionParentTypeClass = QuestionParentType;
   postTypeClass = PostType;
-  pageSize = "4";
+  pageSize = "10";
   qColors = qColors;
   pendingRequests: number;
   isCommunityPrivate = false;
@@ -279,7 +279,7 @@ export class CommunityPageComponent implements OnInit {
     this.isLoading = true;
     this.feedSubscriber = this.communityService.getCommunityFeeds(this.community.communityId, this.pageNumber, this.pageSize).subscribe(
       (feedPage: QPage<Post>) => {
-        // console.log("feedPage", feedPage);
+        console.log("feedPage", feedPage);
         if (!feedPage.empty && feedPage.content.length) {
           this.pageNumber++;
           feedPage.content.forEach(post => {

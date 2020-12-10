@@ -68,7 +68,7 @@
               </qn-create-post>
             </GridLayout>
             <StackLayout id="community-post-feed" *ngIf="isAllowedIntoCommunity" #container>
-              <StackLayout class="no-posts-found" *ngIf="!communityFeeds?.length">
+              <StackLayout class="no-posts-found" *ngIf="!isLoading && !communityFeeds?.length">
                 <Label text="No posts found!" class="main-text h3" textWrap="true" horizontalAlignment="center"></Label>
                 <Label text="explore trending posts" class="explore-text h4" textWrap="true"
                   horizontalAlignment="center" (tap)="onOpenExplorePage($event)"></Label>

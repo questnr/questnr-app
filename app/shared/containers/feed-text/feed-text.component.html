@@ -1,8 +1,10 @@
 <StackLayout class="feed-text" *ngIf="text && text !== 'null'">
     <StackLayout>
-        <HtmlView class="pre" [html]="textToShow"></HtmlView>
+        <TextView class="pre" [text]="textToShow" editable="false"></TextView>
     </StackLayout>
-    <StackLayout *ngIf="hasMoreText" class="read-more-container">{{endPart}}
-        <Label class="read-more" (tap)="readMoreText()">read more</Label>
+    <StackLayout *ngIf="readMore" class="read-more-container">
+        <Label class="read-more" (tap)="toggleText()"
+            [text]="hasMoreText? endPart + '&nbsp;read more' : endPart + '&nbsp;read less'" ripple
+            [rippleColor]="qColors.$primary"></Label>
     </StackLayout>
 </StackLayout>

@@ -51,11 +51,19 @@ export class AuthService {
         if (loginResponse.accessToken && loginResponse.loginSuccess) {
           this.setUserLoginData(loginResponse);
           this.getLoggedInUserDetails().subscribe((user) => {
-            console.log("getLoggedInUserDetails", user);
+            // console.log("getLoggedInUserDetails", user);
           });
         }
         return loginResponse;
       }));
+  }
+
+  public saveRemoveUser(): void {
+    if (!this.remoteUser) {
+      this.getLoggedInUserDetails().subscribe((user) => {
+        // console.log("getLoggedInUserDetails", user);
+      });
+    }
   }
 
   loginWithGoogle(data) {
@@ -91,8 +99,9 @@ export class AuthService {
   }
 
   getLoggedInUserDetails(): Observable<User | void> {
-    let localUser = this.getLocalUserProfile(this.accessToken);
+    let localUser = this.getStoredUserProfile();
     return this.getUserDetails(localUser.id).pipe(map((user: User) => {
+      console.log("getUserDetails");
       if (localUser.id == user.userId) {
         this.remoteUser = user;
         this.avatar = this.remoteUser.avatarDTO;

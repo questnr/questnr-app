@@ -51,7 +51,7 @@ export class UserPageComponent implements OnInit {
   feedComponentHelperTimeout: any;
   questionParentTypeClass = QuestionParentType;
   postTypeClass = PostType;
-  pageSize = "4";
+  pageSize = "10";
   userInfo: UserInfo;
   qColors = qColors;
   scrollView: ScrollView;

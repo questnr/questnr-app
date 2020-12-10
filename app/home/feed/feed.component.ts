@@ -30,7 +30,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   feedComponentHelperTimeout: any;
   questionParentTypeClass = QuestionParentType;
   postTypeClass = PostType;
-  pageSize = "4";
+  pageSize = "10";
   qColors = qColors;
   feedSubscriber: Subscription;
 

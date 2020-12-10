@@ -1,8 +1,11 @@
 @import "~/variables";
+@import "scss/mixins/index";
 
 .feed-text {
     .pre {
+        @include make-font-size(0);
         margin: 0;
+        color: $gray-font-2;
     }
 
     .read-more-container {
@@ -10,9 +13,6 @@
             border-width: 0;
             background-color: transparent;
             color: $link-primary;
-        }
-        .read-more:hover {
-            text-decoration: underline;
         }
     }
 }

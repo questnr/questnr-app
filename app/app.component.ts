@@ -7,13 +7,14 @@ import { Video } from '@nstudio/nativescript-exoplayer';
 import { PullToRefresh } from '@nstudio/nativescript-pulltorefresh';
 import { Carousel, CarouselItem } from 'nativescript-carousel';
 import * as orientation from 'nativescript-orientation';
+import { AuthService } from './services/auth.service';
 import { CommunityMenuService } from './services/community-menu.service';
 import { LoaderService } from './services/loader.service';
 import { OverlayReasonType, OverlayService } from './services/overlay.service';
 import { PostMenuService } from './services/post-menu.service';
 import { UserInteractionService } from './services/user-interaction.service';
-import { GlobalConstants } from './shared/constants';
 import { qColors } from './_variables';
+
 const tnsfx = require('nativescript-effects');
 registerElement('Carousel', () => Carousel);
 registerElement('CarouselItem', () => CarouselItem);
@@ -34,7 +35,7 @@ export class AppComponent implements OnInit {
     public communityMenuService: CommunityMenuService,
     public userInteractionService: UserInteractionService,
     public overlayService: OverlayService,
-    private routerExtensions: RouterExtensions) {
+    private authService: AuthService) {
     // Set orientation to portrait
     orientation.setOrientation("portrait");
     // Disable rotation
@@ -49,6 +50,7 @@ export class AppComponent implements OnInit {
     //     'electronjs--5368833300105140974'])
     //   // 'javascript--5159400168648600117'])
     // }, 1000);
+    this.authService.saveRemoveUser();
   }
 
   onMainLayoutLoaded(args) {
@@ -74,7 +76,7 @@ export class AppComponent implements OnInit {
       //     page.borderRadius = 0;
       //   });
       // }
-    })
+    });
   }
 
   onMainLayoutTap(args: EventData) {
