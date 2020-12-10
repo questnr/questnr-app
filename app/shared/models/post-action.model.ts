@@ -45,6 +45,7 @@ export class PostMedia {
   postMediaLink: string;
   resourceType: ResourceType;
   fileExtension: string;
+  postMediaKey: string;
 }
 
 export class PostActionMeta {

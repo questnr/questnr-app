@@ -17,6 +17,7 @@ import { QuestionListPageComponent } from './question-list-page/question-list-pa
 import { SearchOverlayComponent } from './search-overlay/search-overlay.component';
 import { ApiService } from './services/api.service';
 import { AskQuestionService } from './services/ask-question.service';
+import { AWSService } from './services/aws.service';
 import { CommentSectionService } from './services/comment-section.service';
 import { CommonService } from './services/common.service';
 import { CommunityActivityService } from './services/community-activity.service';
@@ -125,7 +126,8 @@ if (applicationModule.android) {
     UserProfilePageService,
     UserActivityService,
     QRouterService,
-    UserMenuService
+    UserMenuService,
+    AWSService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

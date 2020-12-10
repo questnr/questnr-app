@@ -13,6 +13,15 @@
     },
     "android": {
       "version": "1.0.0"
+    },
+    "nodeify": {
+      "package-dependencies": {
+        "aws-sdk": [
+          {
+            "xml/browser_parser": "xml/node_parser"
+          }
+        ]
+      }
     }
   },
   "repository": "<fill-your-repository-here>",
@@ -36,6 +45,8 @@
     "@nstudio/nativescript-exoplayer": "^5.0.4",
     "@nstudio/nativescript-pulltorefresh": "^3.0.1",
     "@nstudio/nativescript-snackbar": "^2.1.0",
+    "aws-sdk": "^2.807.0",
+    "file-system": "^2.2.2",
     "nativescript-carousel": "^7.0.1",
     "nativescript-clipboard": "^2.0.0",
     "nativescript-effects": "^1.0.0",
@@ -43,6 +54,7 @@
     "nativescript-imagecropper": "^4.0.1",
     "nativescript-mediafilepicker": "^4.0.1",
     "nativescript-menu": "^1.1.6",
+    "nativescript-nodeify": "^0.8.0",
     "nativescript-orientation": "^2.2.5",
     "nativescript-ripple": "^4.0.1",
     "nativescript-social-share-ns-7": "^11.6.0",

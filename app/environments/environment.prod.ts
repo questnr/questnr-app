@@ -4,6 +4,7 @@ export const environment = {
   allowTracking: true,
   googleKey: '836632017511-na1k4gagi79qlvdp644q1shd0rjffoc9.apps.googleusercontent.com',
   fbKey: '1336590906533811',
+  s3Bucket: 'questnr-user-assets',
   firebase: {
     apiKey: "AIzaSyAgfiLd02cWEIMafWhLrl4kBzpQrRE266k",
     authDomain: "questnr-web-1586188588294.firebaseapp.com",

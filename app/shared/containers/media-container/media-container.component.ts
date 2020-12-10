@@ -1,8 +1,8 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { isAndroid } from '@nativescript/core';
 import { Carousel } from 'nativescript-carousel';
+import { AWSService } from '~/services/aws.service';
 import { FeedService } from '~/services/feed.service';
-import { VideoService } from '~/services/video.service';
 import { PostActionForMedia, PostMedia, ResourceType } from '~/shared/models/post-action.model';
 import { QNRVideoComponent } from '~/shared/util/video/q-n-r-video.component';
 import { qColors } from '~/_variables';
@@ -21,6 +21,7 @@ export class MediaContainerComponent implements OnInit {
   @Input() postActionId: number;
   @Input() viewMediaList: PostMedia[];
   @ViewChild("myCarousel", { static: false }) carouselView: ElementRef<Carousel>;
+  signedURLs = {};
   errorOnImageIndexList: number[] = [];
   qColors = qColors;
   resourceTypeClass = ResourceType;
@@ -29,8 +30,10 @@ export class MediaContainerComponent implements OnInit {
   waitingForVideoRendered: boolean = false;
   showIndicator: boolean = true;
 
+
   constructor(private feedService: FeedService,
-    private videoService: VideoService) { }
+    private awsService: AWSService) {
+  }
 
   ngOnInit(): void {
   }
@@ -48,6 +51,15 @@ export class MediaContainerComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.stopVideoIfAny();
+  }
+
+  getMediaLink(index: number): string {
+    if (!this.signedURLs || (!this.signedURLs.hasOwnProperty(index) &&
+      this.viewMediaList.length)) {
+      this.signedURLs[index] = this.awsService.getObjectURL(this.viewMediaList[index].postMediaKey);
+      return this.signedURLs[index];
+    }
+    return this.signedURLs[index];
   }
 
   playVideoIfAny(): void {
@@ -133,6 +145,7 @@ export class MediaContainerComponent implements OnInit {
   }
 
   onFailure(args, index: number) {
+    console.log("onFailure")
     this.errorOnImageIndexList.push(index);
   }
 

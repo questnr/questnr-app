@@ -1,5 +1,20 @@
+const shims = require('nativescript-nodeify/shims.json');
+const aliases = {};
+for (const key of Object.keys(shims)) {
+  const value = shims[key];
+  aliases[key + '$'] = value;
+}
+aliases['inherits$'] = 'inherits/inherits_browser';
+
 const { join, relative, resolve, sep, dirname } = require('path');
 const fs = require('fs');
+
+if (fs.existsSync(__dirname + "/hooks/after-prepare/nativescript-nodeify.js")) {
+  process.stdout.write("Found evil hook, deleting...\n");
+  fs.unlinkSync(__dirname + "/hooks/after-prepare/nativescript-nodeify.js");
+  process.stdout.write("Should be fixed now.\n");
+} else process.stdout.write("Hooks seem clean, moving on.\n");
+
 
 const webpack = require('webpack');
 const nsWebpack = require('@nativescript/webpack');
@@ -220,6 +235,7 @@ module.exports = env => {
       hashSalt
     },
     resolve: {
+      aliasFields: ["browser"],
       extensions: ['.ts', '.js', '.scss', '.css'],
       // Resolve {N} system modules from @nativescript/core
       modules: [
@@ -228,13 +244,13 @@ module.exports = env => {
         'node_modules/@nativescript/core',
         'node_modules'
       ],
-      alias: {
+      alias: Object.assign({
         '~/package.json': resolve(projectRoot, 'package.json'),
         '~': appFullPath,
         "tns-core-modules": "@nativescript/core",
         "nativescript-angular": "@nativescript/angular",
         ...fileReplacements
-      },
+      }, aliases),
       symlinks: true
     },
     resolveLoader: {

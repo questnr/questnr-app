@@ -8,7 +8,7 @@
                 <!-- <div *ngIf="viewMediaList.length > 1" class="media-count">
                     {{'('+(i+1)+'/'+(viewMediaList.length)+')'}}
                 </div> -->
-                <NSImg verticalAlignment="center" class="post-media" loadMode="async" [src]="media.postMediaLink"
+                <NSImg verticalAlignment="center" class="post-media" loadMode="async" [src]="getMediaLink(index)"
                     stretch="aspectFit" (failure)="onFailure($event, index)">
                 </NSImg>
                 <!-- autoPlayAnimations="true" -->
@@ -19,7 +19,7 @@
                     {{'('+(i+1)+'/'+(viewMediaList.length)+')'}}
                 </div> -->
                 <qn-video (loaded)="onQNRVideoLoaded($event, index)" (loadedEvent)="onQNRVideoRendered($event, index)"
-                    [src]="media.postMediaLink" [videoId]="getVideoControllerId(index)">
+                    [src]="getMediaLink(index)" [videoId]="getVideoControllerId(index)">
                 </qn-video>
                 <!-- <Placeholder (creatingView)="createVideoView($event, media)"></Placeholder> -->
             </GridLayout>
